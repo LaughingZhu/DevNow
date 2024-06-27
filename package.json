@@ -19,6 +19,7 @@
     "@astrojs/tailwind": "^5.1.0",
     "@fontsource/inter": "^5.0.18",
     "astro": "^4.11.3",
+    "astro-color-scheme": "^1.1.5",
     "astro-icon": "^1.1.0",
     "astro-seo": "^0.8.4",
     "install": "^0.13.0",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@astrojs/mdx": "^3.1.2",
+    "@iconify-json/mdi": "^1.1.67",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.13",
     "@types/classnames": "^2.3.1",

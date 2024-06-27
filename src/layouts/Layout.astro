@@ -1,4 +1,5 @@
 ---
+import Footer from "@components/footer.astro";
 import "@fontsource/inter/vietnamese.css";
 import { checkImageUrl } from "@utils/all";
 import { SEO } from "astro-seo";
@@ -48,6 +49,7 @@ const makeTitle = title
 	</head>
 	<body>
 		<slot />
+		<Footer  />
 		<style is:global>
 			/* Improve Page speed */
 			/* https://css-tricks.com/almanac/properties/c/content-visibility/ */
