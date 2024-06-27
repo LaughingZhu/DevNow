@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+const posts = await Astro.glob('../pages/docs/*.md');
+---
+
+<Layout title="Welcome to Astro.">
+	<main>
+		{posts.map((post, index) => (
+			<article>
+				<h1>{index + 1}、{post.frontmatter.title}</h1>
+			</article>
+		))}
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+</style>
