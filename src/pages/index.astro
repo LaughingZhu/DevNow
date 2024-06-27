@@ -1,26 +1,32 @@
 ---
+import { latestPosts } from "@utils/content";
+import Container from '../components/container.astro';
+import Postlist from '../components/postlist.astro';
 import Layout from '../layouts/Layout.astro';
-const posts = await Astro.glob('../pages/docs/*.md');
 ---
 
 <Layout title="Welcome to Astro.">
-	<main>
-		{posts.map((post, index) => (
-			<article>
-				<h1>{index + 1}、{post.frontmatter.title}</h1>
-			</article>
-		))}
-	</main>
+	<Container>
+    <main>
+      <div class="grid gap-10 lg:gap-10 md:grid-cols-2">
+        {
+          latestPosts
+            .slice(0, 2)
+            .map((post) => (
+              <Postlist post={post} aspect="landscape" preloadImage={true} />
+            ))
+        }
+      </div>
+      <div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
+        {
+          latestPosts
+            .slice(2)
+            .map((post) => <Postlist post={post} aspect="square" />)
+        }
+      </div>
+    </main>
+  </Container>
 </Layout>
 
-<style>
-	main {
-		margin: auto;
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
-	}
-</style>
+
+

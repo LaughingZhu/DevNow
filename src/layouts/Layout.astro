@@ -1,9 +1,22 @@
 ---
+import "@fontsource/inter/vietnamese.css";
+import { checkImageUrl } from "@utils/all";
+import { SEO } from "astro-seo";
+
 interface Props {
 	title: string;
+	desc?: string;
+  ogimage?: string;
 }
 
-const { title } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const { title, desc, ogimage = "/opengraph.jpg" } = Astro.props;
+
+const resolvedOGImage = checkImageUrl(ogimage, Astro.site);
+
+const makeTitle = title
+  ? title + " | " + "DevNow"
+  : "DevNow — Free Blog Website Template built with Astro & MDX";
 ---
 
 <!doctype html>
@@ -15,37 +28,32 @@ const { title } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<SEO
+      title={makeTitle}
+      description={desc ||
+        "DevNow is a Blog Starter Template built with Astro & MDX."}
+      canonical={canonicalURL}
+      openGraph={{
+        basic: {
+          url: canonicalURL,
+          type: "website",
+          title: `DevNow - Blog Starter Template for Astro`,
+          image: resolvedOGImage,
+        },
+        image: {
+          alt: "DevNow Screenshot",
+        },
+      }}
+    />
 	</head>
 	<body>
 		<slot />
+		<style is:global>
+			/* Improve Page speed */
+			/* https://css-tricks.com/almanac/properties/c/content-visibility/ */
+			img {
+				content-visibility: auto;
+			}
+		</style>
 	</body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-</style>
