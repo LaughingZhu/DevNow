@@ -7,13 +7,37 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
+    "@astrojs/sitemap": "^3.1.6",
     "@astrojs/tailwind": "^5.1.0",
+    "@fontsource/inter": "^5.0.18",
     "astro": "^4.11.3",
-    "tailwindcss": "^3.4.4",
+    "astro-icon": "^1.1.0",
+    "astro-seo": "^0.8.4",
+    "install": "^0.13.0",
+    "mdast-util-to-string": "^4.0.0",
+    "reading-time": "^1.5.0",
+    "rehype-plugin-image-native-lazy-loading": "^1.2.0",
     "typescript": "^5.5.2"
+  },
+  "devDependencies": {
+    "@astrojs/mdx": "^3.1.2",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@tailwindcss/typography": "^0.5.13",
+    "@types/classnames": "^2.3.1",
+    "autoprefixer": "^10.4.19",
+    "classnames": "^2.5.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
+    "postcss": "^8.4.38",
+    "prettier": "^3.3.2",
+    "tailwindcss": "^3.4.4"
   }
 }
