@@ -2,7 +2,7 @@ import { toString } from 'mdast-util-to-string';
 import getReadingTime from 'reading-time';
 
 /** Format Date */
-export const getFormattedDate = (date) =>
+export const getFormattedDate = (date: string | number | Date) =>
   date
     ? new Date(date).toLocaleDateString('en-us', {
         year: 'numeric',
@@ -13,16 +13,24 @@ export const getFormattedDate = (date) =>
 
 /** Estimated Reading time */
 export function remarkReadingTime() {
-  return function (tree, { data }) {
+  return function (
+    tree: any,
+    {
+      data: { astro }
+    }: {
+      data: {
+        astro: any;
+      };
+    }
+  ) {
     const textOnPage = toString(tree);
     const readingTime = getReadingTime(textOnPage);
-
-    data.astro.frontmatter.estReadingTime = readingTime.minutes;
+    astro.frontmatter.estReadingTime = readingTime.minutes;
   };
 }
 
 /** Check if an Image Path is Relative or Absolute */
-export const checkImageUrl = (image, url) => {
+export const checkImageUrl = (image: string | URL, url: string | URL | undefined) => {
   try {
     new URL(image);
     return image;

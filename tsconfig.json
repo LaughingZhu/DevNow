@@ -16,5 +16,8 @@
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"
-  }
+  },
+  "include": [
+    "src/**/*" // 此处示例表示包含src目录下的所有文件
+  ]
 }
