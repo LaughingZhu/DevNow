@@ -10,6 +10,9 @@ import { getCollection, type CollectionEntry } from "astro:content";
 
 type Props = {doc: CollectionEntry<"post">};
 
+// 在 server 模式中选择加入预渲染
+export const prerender = true
+
 export async function getStaticPaths() {
   const docs = await getCollection('doc');
 
@@ -46,24 +49,11 @@ const category = categories.find(
       <div class="flex justify-center mt-3 space-x-3 text-gray-500">
         <div class="flex items-center gap-3">
           <div class="relative flex-shrink-0 w-10 h-10">
-            <!-- {
-              author.image && (
-                <Image
-                  src={author.image}
-                  alt="Author Photo"
-                  width={80}
-                  height={80}
-                  loading="eager"
-                  class="rounded-full"
-                />
-              )
-            } -->
-              author image
+            author image
           </div>
 
           <div>
             <p class="text-gray-800 dark:text-gray-400">
-              <!-- {author.name} -->
               author.name
             </p>
             <div class="flex items-center space-x-2 text-sm">
