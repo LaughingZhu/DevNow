@@ -30,10 +30,10 @@ export function remarkReadingTime() {
 }
 
 /** Check if an Image Path is Relative or Absolute */
-export const checkImageUrl = (image: string | URL, url: string | URL | undefined) => {
+export const checkImageUrl = (image: string | URL, url: string | URL | undefined): string => {
   try {
     new URL(image);
-    return image;
+    return image as string;
   } catch (error) {
     return new URL(image, url).toString();
   }
