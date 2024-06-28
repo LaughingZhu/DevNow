@@ -145,3 +145,26 @@
 .shadow {
   box-shadow: -5px 3px 8px 1px rgba(0, 0, 0, 0.12);
 }
+
+.scrollbar {
+  &::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+  }
+  &.white::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  &.black::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    visibility: hidden;
+    border-radius: 5px;
+    transition: background-color 200ms ease-in-out 0s;
+  }
+  &::-webkit-scrollbar {
+    width: 7;
+    height: 7;
+    background-color: transparent;
+  }
+}

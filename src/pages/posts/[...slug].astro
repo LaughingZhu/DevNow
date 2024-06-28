@@ -3,8 +3,6 @@ import TableOfContents from '@components/TableOfContents.astro';
 import Container from '@components/container.astro';
 import Code from '@components/mdx/Code.astro';
 import SButton from '@components/mdx/MDButton.astro';
-import type { Category } from '@data/category';
-import { categories } from '@data/category';
 import BlogPost from '@layouts/BlogPost.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 type Props = { doc: CollectionEntry<'post'> };
@@ -22,10 +20,7 @@ export async function getStaticPaths() {
 }
 
 const { doc: post } = Astro.props;
-
 const { Content, remarkPluginFrontmatter, headings } = await post.render();
-
-const category = categories.find((item) => item.slug === post.data.category) as Category;
 ---
 
 <BlogPost
@@ -50,14 +45,14 @@ const category = categories.find((item) => item.slug === post.data.category) as 
           </div>
         </div>
 
-        <div class='flex justify-center mt-7 mb-7'>
+        <!-- <div class='flex justify-center mt-7 mb-7'>
           <a
             href='/'
             class='px-5 py-3 text-sm text-blue-600 transition rounded-md dark:text-blue-500 bg-blue-50 hover:bg-blue-100'
           >
             ← View all posts
           </a>
-        </div>
+        </div> -->
       </article>
     </Container>
   </div>

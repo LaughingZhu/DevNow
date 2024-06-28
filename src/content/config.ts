@@ -9,7 +9,9 @@ const BlogPosts = defineCollection({
     draft: z.boolean().optional(),
     tags: z.array(z.string()),
     image: z.string().optional(),
-    publishDate: z.string().transform((str) => new Date(str))
+    publishDate: z.string().transform((str) => new Date(str)),
+    // 是否置顶
+    pin: z?.boolean()
   })
 });
 
