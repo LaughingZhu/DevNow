@@ -1,4 +1,5 @@
 import mdx from '@astrojs/mdx';
+import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
@@ -18,12 +19,15 @@ export default defineConfig({
     service: squooshImageService()
   },
   integrations: [
-    tailwind(),
+    tailwind({
+      applyBaseStyles: false
+    }),
     mdx(),
     sitemap(),
     icon({
       mdi: ['*'] // (Default) Loads entire Material Design Icon set
       // mdi: ['account'] // Loads only Material Design Icon's "account" SVG
-    })
+    }),
+    react()
   ]
 });

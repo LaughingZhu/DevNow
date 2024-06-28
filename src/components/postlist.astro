@@ -1,6 +1,6 @@
 ---
 import { Picture } from "astro:assets";
-import cx from "classnames";
+import cx from "clsx";
 import Label from "./ui/label.astro";
 // import Label from "@components/ui/label.astro";
 // import type { Author } from "@data/authors";
@@ -48,7 +48,6 @@ const category = categories.find(
       }
     </a>
   </div>
-
   <a href="/#">
     <Label theme={category.color}>{category.title}</Label>
   </a>
