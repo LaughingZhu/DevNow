@@ -1,6 +1,6 @@
 ---
 import Container from "./container.astro";
-import Themeswitch from "./themeswitch.astro";
+import { ThemeSwitch } from "./themeSwitch";
 ---
 
 <Container class="mt-10 border-t border-gray-100 dark:border-gray-800">
@@ -13,21 +13,16 @@ import Themeswitch from "./themeswitch.astro";
       <span>
         Made by{" "}
         <a
-          href="https://web3templates.com/?ref=stablo-astro"
+          href="https://github.com/LaughingZhu"
           rel="noopener"
           target="_blank">
-          Web3Templates
+          LaughingZhu
         </a>
-        <!--
-    Can we ask you a favor 🙏
-    Please keep this backlink on your website if possible.
-    or Purchase a commercial license from https://web3templates.com
-  -->
       </span>
       <span>&middot;</span>
       <span>
         <a
-          href="https://github.com/web3templates/stablo-astro"
+          href="https://github.com/LaughingZhu"
           rel="noopener"
           target="_blank">
           Github
@@ -35,7 +30,7 @@ import Themeswitch from "./themeswitch.astro";
       </span>
     </div>
     <div class="flex items-center justify-between mt-2">
-      <Themeswitch />
+      <ThemeSwitch client:load />
     </div>
   </footer>
 </Container>

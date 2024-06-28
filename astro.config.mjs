@@ -2,7 +2,6 @@ import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
-import icon from 'astro-icon';
 import { defineConfig, squooshImageService } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
 import { remarkReadingTime } from './src/utils/all';
@@ -24,10 +23,6 @@ export default defineConfig({
     }),
     mdx(),
     sitemap(),
-    icon({
-      mdi: ['*'] // (Default) Loads entire Material Design Icon set
-      // mdi: ['account'] // Loads only Material Design Icon's "account" SVG
-    }),
     react()
   ]
 });

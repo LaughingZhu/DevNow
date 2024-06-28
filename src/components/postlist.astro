@@ -7,7 +7,6 @@ import Label from "./ui/label.astro";
 import type { Category } from "@data/category";
 import { categories } from "@data/category";
 import { getFormattedDate } from "@utils/all";
-// import { Icon } from "astro-icon";
 const { post, aspect, preloadImage } = Astro.props;
 const category = categories.find(
   (item) => item.slug === post.data.category
