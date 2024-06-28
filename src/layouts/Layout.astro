@@ -1,11 +1,13 @@
 ---
 import '@common/globals.css';
 import Footer from "@components/footer.astro";
+import Header from "@components/header.astro";
+
 import { checkImageUrl } from "@utils/all";
 import { SEO } from "astro-seo";
 
 interface Props {
-	title: string;
+	title?: string;
 	desc?: string;
   ogimage?: string;
 }
@@ -17,7 +19,7 @@ const resolvedOGImage = checkImageUrl(ogimage, Astro.site);
 
 const makeTitle = title
   ? title + " | " + "DevNow"
-  : "DevNow — Free Blog Website Template built with Astro & MDX";
+  : "DevNow — 开发技术周刊";
 ---
 
 <script is:inline>
@@ -45,19 +47,19 @@ const makeTitle = title
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href="/logo.png" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<SEO
       title={makeTitle}
       description={desc ||
-        "DevNow is a Blog Starter Template built with Astro & MDX."}
+        "DevNow — 开发技术周刊"}
       canonical={canonicalURL}
       openGraph={{
         basic: {
           url: canonicalURL,
           type: "website",
-          title: `DevNow - Blog Starter Template for Astro`,
+          title: `DevNow — 开发技术周刊`,
           image: resolvedOGImage,
         },
         image: {
@@ -67,7 +69,7 @@ const makeTitle = title
     />
 	</head>
 	<body>
-		
+		<Header />
 		<slot />
 		<Footer  />
 		<style is:global>
