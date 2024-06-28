@@ -13,19 +13,12 @@ export const getFormattedDate = (date: string | number | Date) =>
 
 /** Estimated Reading time */
 export function remarkReadingTime() {
-  return function (
-    tree: any,
-    {
-      data: { astro }
-    }: {
-      data: {
-        astro: any;
-      };
-    }
-  ) {
+  return function (tree: unknown, { data }: any) {
     const textOnPage = toString(tree);
     const readingTime = getReadingTime(textOnPage);
-    astro.frontmatter.estReadingTime = readingTime.minutes;
+    // readingTime.text will give us minutes read as a friendly string,
+    // i.e. "3 min read"
+    data.astro.frontmatter.minutesRead = readingTime.text;
   };
 }
 

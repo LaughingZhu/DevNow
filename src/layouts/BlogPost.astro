@@ -1,0 +1,122 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '@layouts/Layout.astro';
+import Tag from '@components/Tag.astro';
+import type { MarkdownHeading } from 'astro';
+import { Image, Picture } from 'astro:assets';
+import FormattedDate from '@components/FormattedDate.astro';
+import Container from '@components/container.astro';
+
+type Props = {
+  id: CollectionEntry<'doc'>['id'];
+  data: CollectionEntry<'doc'>['data'];
+  headings: MarkdownHeading[];
+  readTime: string;
+};
+
+const { data, readTime, headings, id } = Astro.props;
+const { title, description, publishDate, heroImage, tags } = data;
+---
+
+<BaseLayout title={title} desc={description} ogimage={heroImage?.src}>
+  <Container>
+    <article class='min-w-full md:py-4 sm:max-w-none md:max-w-none'>
+      <header class='mb-3 flex flex-col justify-center items-center gap-6'>
+        <div class='flex flex-col gap-2'>
+          <div class='flex items-center justify-center gap-x-1'>
+            <p class='text-center text-sm text-opacity-50'>
+              Published <FormattedDate date={publishDate} />
+            </p>
+            <p class='text-center text-sm text-opacity-50 font-bold'>
+              - {readTime}
+            </p>
+          </div>
+          <h1 class='text-center text-4xl md:text-6xl md:pb-2.5 font-semibold'>
+            {title}
+          </h1>
+        </div>
+
+        <div class='flex flex-wrap justify-center items-center gap-2 gap-y-4 md:gap-5'>
+          {tags.map((tag: string) => <Tag tag={tag} />)}
+        </div>
+      </header>
+
+      <div class='relative z-0 max-w-screen-lg mx-auto overflow-hidden lg:rounded-lg aspect-video'>
+        {
+          data.image && (
+            <Picture
+              src={data.image}
+              widths={[200, 400, 800]}
+              sizes='(max-width: 640px) 90vw, 480px'
+              width={1024}
+              inferSize
+              decoding={'async'}
+              alt='Thumbnail'
+              loading='eager'
+              class='rounded-md w-full max-h-[300px]  md:max-h-[500px] my-8 object-cover'
+            />
+          )
+        }
+      </div>
+
+      <hr />
+
+      <div>
+        <slot />
+      </div>
+    </article>
+  </Container>
+</BaseLayout>
+
+<script>
+  const fnObserver = () => {
+    function handleIntersection(
+      entries: IntersectionObserverEntry[],
+      observer: IntersectionObserver
+    ) {
+      entries.forEach((entry) => {
+        const index = document.querySelector(`aside a[href="#${entry.target.id}"]`);
+
+        if (entry.isIntersecting) {
+          index?.classList.remove('bg-slate-200', 'dark:bg-slate-800'); // remove bg
+          index?.classList.add(
+            'bg-indigo-600',
+            'dark:bg-indigo-700',
+            'text-white',
+            'font-bold',
+            'transition-colors',
+            'duration-200'
+          );
+        } else {
+          index?.classList.add('bg-slate-200', 'dark:bg-slate-800'); // add bg
+          index?.classList.remove(
+            'bg-indigo-600',
+            'dark:bg-indigo-700',
+            'text-white',
+            'font-bold',
+            'transition-colors',
+            'duration-200'
+          );
+        }
+      });
+    }
+
+    const headings = document.querySelectorAll(
+      'div.prose h1, div.prose h2, div.prose h3, div.prose h4, div.prose h5, div.prose h6'
+    );
+
+    const options = {
+      root: null,
+      rootMargin: ' 15% 0px 0% 0px ',
+      threshold: 1
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, options);
+
+    headings.forEach((heading) => {
+      observer.observe(heading);
+    });
+  };
+  fnObserver();
+  document.addEventListener('astro:after-swap', fnObserver);
+</script>

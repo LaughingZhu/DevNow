@@ -1,8 +1,9 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   darkMode: ['class'],
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-  prefix: '',
   theme: {
     container: {
       center: true,
@@ -12,6 +13,12 @@ module.exports = {
       }
     },
     extend: {
+      fontFamily: {
+        body: ['Manrope', ...defaultTheme.fontFamily.sans]
+      },
+      gridTemplateColumns: {
+        list: 'repeat(auto-fill, minmax(400px, max-content))'
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -68,5 +75,5 @@ module.exports = {
       }
     }
   },
-  plugins: [require('tailwindcss-animate')]
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')]
 };

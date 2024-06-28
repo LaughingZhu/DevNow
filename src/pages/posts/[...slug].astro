@@ -1,120 +1,64 @@
 ---
-import Container from "@components/container.astro";
-import Label from "@components/ui/label.astro";
-import type { Category } from "@data/category";
-import { categories } from "@data/category";
-import Layout from "@layouts/Layout.astro";
-import { getFormattedDate } from "@utils/all";
-import { Picture } from "astro:assets";
-import { getCollection, type CollectionEntry } from "astro:content";
-
-type Props = {doc: CollectionEntry<"post">};
+import TableOfContents from '@components/TableOfContents.astro';
+import Container from '@components/container.astro';
+import Code from '@components/mdx/Code.astro';
+import SButton from '@components/mdx/MDButton.astro';
+import type { Category } from '@data/category';
+import { categories } from '@data/category';
+import BlogPost from '@layouts/BlogPost.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+type Props = { doc: CollectionEntry<'post'> };
 
 // 在 server 模式中选择加入预渲染
-export const prerender = true
+export const prerender = true;
 
 export async function getStaticPaths() {
   const docs = await getCollection('doc');
 
   return docs.map((post) => ({
     params: { slug: post.slug },
-    props: { doc: post },
+    props: { doc: post }
   }));
 }
 
 const { doc: post } = Astro.props;
 
-const { Content, remarkPluginFrontmatter } = await post.render();
+const { Content, remarkPluginFrontmatter, headings } = await post.render();
 
-const category = categories.find(
-  (item) => item.slug === post.data.category
-) as Category;
+const category = categories.find((item) => item.slug === post.data.category) as Category;
 ---
 
-<Layout
-  title={post.data.title}
-  desc={post.data.excerpt}
-  ogimage={post.data.image}>
-  <Container>
-    <div class="max-w-screen-md mx-auto">
-      <div class="text-center">
-        <Label theme={category.color}>{category.title}</Label>
+<BlogPost
+  id={post.id as any}
+  data={post.data}
+  headings={headings}
+  readTime={remarkPluginFrontmatter.minutesRead}
+>
+  <div class='grid grid-cols-1 md:grid-cols-[20%_auto] gap-10 mt-8'>
+    <!-- aside -->
+    <aside class='md:flex flex-col gap-8 hidden'>
+      <div class='sticky top-24 self-start hidden md:block transition-all duration-200'>
+        {headings && headings.length > 0 && <TableOfContents {headings} />}
       </div>
+    </aside>
 
-      <h1
-        class="mt-2 mb-3 text-3xl font-semibold tracking-tight text-center lg:leading-snug text-brand-primary lg:text-4xl dark:text-white">
-        {post.data.title}
-      </h1>
-
-      <div class="flex justify-center mt-3 space-x-3 text-gray-500">
-        <div class="flex items-center gap-3">
-          <div class="relative flex-shrink-0 w-10 h-10">
-            author image
-          </div>
-
-          <div>
-            <p class="text-gray-800 dark:text-gray-400">
-              author.name
-            </p>
-            <div class="flex items-center space-x-2 text-sm">
-              <time
-                class="text-gray-500 dark:text-gray-400"
-                datetime={getFormattedDate(post.data.publishDate)}>
-                {getFormattedDate(post.data.publishDate)}
-              </time>
-              <span>
-                · {Math.round(remarkPluginFrontmatter?.estReadingTime) || "5"} min
-                read
-              </span>
-            </div>
+    <Container>
+      <article class='max-w-screen-md mx-auto'>
+        <div class='mx-auto my-3 prose prose-base dark:prose-invert prose-a:text-blue-600'>
+          <div class='prose prose-lg md:prose-xl dark:prose-invert mb-12 min-w-full'>
+            <Content components={{ pre: Code, SButton }} />
           </div>
         </div>
-      </div>
-    </div>
-  </Container>
 
-  <div
-    class="relative z-0 max-w-screen-lg mx-auto overflow-hidden lg:rounded-lg aspect-video">
-    {
-      post.data.image && (
-        <Picture
-          src={post.data.image}
-          widths={[200, 400, 800]}
-          sizes="(max-width: 640px) 90vw, 480px"
-          width={1024}
-          inferSize
-          decoding={"async"}
-          alt="Thumbnail"
-          loading="eager"
-          class="w-full"
-        />
-      )
-    }
+        <div class='flex justify-center mt-7 mb-7'>
+          <a
+            href='/'
+            class='px-5 py-3 text-sm text-blue-600 transition rounded-md dark:text-blue-500 bg-blue-50 hover:bg-blue-100'
+          >
+            ← View all posts
+          </a>
+        </div>
+      </article>
+    </Container>
   </div>
-
-  <Container>
-    <article class="max-w-screen-md mx-auto">
-      <div
-        class="mx-auto my-3 prose prose-base dark:prose-invert prose-a:text-blue-600">
-        <Content />
-
-        <div class="flex flex-wrap items-center w-full gap-3 md:w-auto">
-          {
-            post.data.tags.map((tag: string) => (
-              <span class="text-sm text-gray-500">#{tag}</span>
-            ))
-          }
-        </div>
-      </div>
-
-      <div class="flex justify-center mt-7 mb-7">
-        <a
-          href="/"
-          class="px-5 py-3 text-sm text-blue-600 transition rounded-md dark:text-blue-500 bg-blue-50 hover:bg-blue-100">
-          ← View all posts
-        </a>
-      </div>
-      <!-- {author && <Authorcard author={author} />} -->
-    </article>
-  </Container>
-</Layout>
+</BlogPost>
