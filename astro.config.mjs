@@ -2,6 +2,7 @@ import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
+import vercel from '@astrojs/vercel/serverless';
 import { defineConfig, squooshImageService } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
 import { remarkReadingTime } from './src/utils/all';
@@ -15,6 +16,8 @@ export default defineConfig({
     extendDefaultPlugins: true
   },
   image: {
+    domains: ['astro.build'],
+    remotePatterns: [{ protocol: 'https' }],
     service: squooshImageService()
   },
   integrations: [
@@ -24,7 +27,7 @@ export default defineConfig({
     mdx(),
     sitemap(),
     react()
-  ]
-  // output: 'server'
-  // adapter: vercel()
+  ],
+  output: 'server',
+  adapter: vercel()
 });

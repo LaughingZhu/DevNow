@@ -92,7 +92,8 @@ const category = categories.find(
           widths={[200, 400, 800]}
           sizes="(max-width: 640px) 90vw, 480px"
           width={1024}
-          // inferSize={true}          
+          inferSize
+          decoding={"async"}
           alt="Thumbnail"
           loading="eager"
           class="w-full"
