@@ -67,7 +67,7 @@ const category = categories.find((item) => item.slug === post.data.category) as 
     <div class='flex items-center gap-3'>
       <span class='text-sm'>{post.data.author}</span>
     </div>
-    <span class='text-xs text-gray-300 dark:text-gray-600'> &bull;</span>
+    <span class='text-xl text-gray-300 dark:text-gray-600'> &bull;</span>
     <time class='text-sm' datetime={post.data.publishDate}>
       {getFormattedDate(post.data.publishDate)}
     </time>
