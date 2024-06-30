@@ -1,0 +1,6 @@
+node_modules/**
+.astro/**
+release/**
+public/**
+dist/**
+.vercel/**
