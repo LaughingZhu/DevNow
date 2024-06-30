@@ -5,7 +5,7 @@ import Code from '@components/mdx/Code.astro';
 import SButton from '@components/mdx/MDButton.astro';
 import BlogPost from '@layouts/BlogPost.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
-type Props = { doc: CollectionEntry<'post'> };
+type Props = { doc: CollectionEntry<'doc'> };
 
 // 在 server 模式中选择加入预渲染
 export const prerender = true;

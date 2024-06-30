@@ -1,83 +1,74 @@
 ---
 import '@common/globals.css';
-import Footer from "@components/footer.astro";
-import Header from "@components/header.astro";
-
-import { checkImageUrl } from "@utils/all";
-import { SEO } from "astro-seo";
+import Footer from '@components/footer.astro';
+import Header from '@components/header.astro';
+import { checkImageUrl } from '@utils/all';
+import { SEO } from 'astro-seo';
 
 interface Props {
-	title?: string;
-	desc?: string;
-  ogimage?: string;
+  title?: string;
+  desc?: string;
+  image?: string;
 }
 
+const { title, desc = 'DevNow — 开发技术周刊', image = '/logo.png' } = Astro.props;
+const resolvedOGImage = checkImageUrl(image, Astro.site);
+const makeTitle = title ? title + ' | ' + 'DevNow' : 'DevNow — 开发技术周刊';
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
-const { title, desc, ogimage = "/opengraph.jpg" } = Astro.props;
-
-const resolvedOGImage = checkImageUrl(ogimage, Astro.site);
-
-const makeTitle = title
-  ? title + " | " + "DevNow"
-  : "DevNow — 开发技术周刊";
 ---
 
 <script is:inline>
-	const getThemePreference = () => {
-		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-			return localStorage.getItem('theme');
-		}
-		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-	};
-	const isDark = getThemePreference() === 'dark';
-	document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+  const getThemePreference = () => {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      return localStorage.getItem('theme');
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  };
+  const isDark = getThemePreference() === 'dark';
+  document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
 
-	if (typeof localStorage !== 'undefined') {
-		const observer = new MutationObserver(() => {
-			const isDark = document.documentElement.classList.contains('dark');
-			localStorage.setItem('theme', isDark ? 'dark' : 'light');
-		});
-		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-	}
+  if (typeof localStorage !== 'undefined') {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  }
 </script>
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/logo.png" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<SEO
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.ico' />
+    <meta name='generator' content={Astro.generator} />
+    <SEO
       title={makeTitle}
-      description={desc ||
-        "DevNow — 开发技术周刊"}
+      description={desc}
       canonical={canonicalURL}
       openGraph={{
         basic: {
           url: canonicalURL,
-          type: "website",
-          title: `DevNow — 开发技术周刊`,
-          image: resolvedOGImage,
+          type: 'website',
+          title: makeTitle,
+          image: resolvedOGImage
         },
         image: {
-          alt: "DevNow Screenshot",
-        },
+          alt: 'DevNow Screenshot'
+        }
       }}
     />
-	</head>
-	<body>
-		<Header />
-		<slot />
-		<Footer  />
-		<style is:global>
-			/* Improve Page speed */
-			/* https://css-tricks.com/almanac/properties/c/content-visibility/ */
-			img {
-				content-visibility: auto;
-			}
-		</style>
-	</body>
+  </head>
+  <body>
+    <Header />
+    <slot />
+    <Footer />
+    <style is:global>
+      /* Improve Page speed */
+      /* https://css-tricks.com/almanac/properties/c/content-visibility/ */
+      img {
+        content-visibility: auto;
+      }
+    </style>
+  </body>
 </html>

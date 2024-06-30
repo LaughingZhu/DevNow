@@ -1,20 +1,31 @@
 import { defineCollection, z } from 'astro:content';
 
-const BlogPosts = defineCollection({
-  schema: z.object({
-    title: z.string(),
-    excerpt: z.string(),
-    category: z.string().trim(),
-    author: z.string().trim(),
-    draft: z.boolean().optional(),
-    tags: z.array(z.string()),
-    image: z.string().optional(),
-    publishDate: z.string().transform((str) => new Date(str)),
-    // 是否置顶
-    pin: z?.boolean()
-  })
+const SCHEMA = z.object({
+  title: z.string(),
+  desc: z.string(),
+  // 是否是草稿
+  draft: z.boolean().optional(),
+  // 分类
+  category: z.string().trim(),
+  // 作者
+  author: z.string().trim(),
+  // 标签
+  tags: z.array(z.string()),
+  // 封面图
+  image: z.string().optional(),
+  // 发布时间
+  publishDate: z.string().transform((str) => new Date(str)),
+  // 是否置顶
+  pin: z.boolean().optional()
+});
+
+const Docs = defineCollection({
+  schema: SCHEMA
 });
 
 export const collections = {
-  post: BlogPosts
+  doc: Docs
 };
+
+/** 文档类型 */
+export type DOC_TYPE = z.infer<typeof SCHEMA>;

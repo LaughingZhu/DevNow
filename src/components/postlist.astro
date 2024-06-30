@@ -55,9 +55,9 @@ const category = categories.find((item) => item.slug === post.data.category) as 
 
   <div class='hidden'>
     {
-      post.data.excerpt && (
+      post.data.desc && (
         <p class='mt-2 text-sm text-gray-500 dark:text-gray-400 line-clamp-3'>
-          <a href={'/posts/' + post.slug}>{post.data.excerpt}</a>
+          <a href={'/posts/' + post.slug}>{post.data.desc}</a>
         </p>
       )
     }
