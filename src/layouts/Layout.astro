@@ -44,7 +44,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name='generator' content={Astro.generator} />
     <SEO
       title={makeTitle}
-      description={desc}
+      description={desc.slice(0, 160)}
       canonical={canonicalURL}
       openGraph={{
         basic: {
