@@ -3,6 +3,8 @@ import { defineCollection, z } from 'astro:content';
 const SCHEMA = z.object({
   title: z.string(),
   desc: z.string(),
+  // 是否是草稿
+  draft: z.boolean().optional(),
   // 分类
   category: z.string().trim(),
   // 作者
