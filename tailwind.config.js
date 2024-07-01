@@ -14,7 +14,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        body: ['Manrope', ...defaultTheme.fontFamily.sans]
+        sans: ['lxgw-wenkai', ...defaultTheme.fontFamily.sans]
       },
       gridTemplateColumns: {
         list: 'repeat(auto-fill, minmax(400px, max-content))'
