@@ -1,8 +1,10 @@
-## 🚀Hello World!
+## 🚀Hello World
 
 **DevNow** 是一个能够精准捕捉科技与开发领域精华内容的平台。
 
 我们致力于打造一个 **轻量级、高效率** 的内容平台，让科技与开发领域的动态快速、准确地呈现在你的面前。
+
+官网直达： <https://devnow.laughingzhu.cn/>
 
 ## Who am i?
 
