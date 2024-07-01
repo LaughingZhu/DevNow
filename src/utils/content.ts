@@ -7,3 +7,18 @@ export const latestPosts = (
     return data.draft !== true;
   })
 ).sort((a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf());
+
+/**
+ * 根据分类筛选最新帖子
+ * @param category 分类字符串，用于筛选帖子
+ * @returns 返回一个数组，包含所有与分类匹配的帖子
+ */
+export const filterPostsByCategory = async (category = '') => {
+  return latestPosts.filter((post) => post.data.category.toLowerCase() === category);
+};
+
+export const filterPostsByTag = async (tag = '') => {
+  return latestPosts.filter((post) =>
+    post.data.tags.map((item) => item.toLowerCase()).includes(tag)
+  );
+};
