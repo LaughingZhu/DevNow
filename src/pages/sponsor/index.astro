@@ -1,0 +1,36 @@
+---
+import Container from '../../components/container.astro';
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title='Sponser'>
+  <div
+    class=`w-full min-h-screen bg-[url('/src/assets/wave-dark.svg')] dark:bg-[url('/src/assets/wave-light.svg')] bg-no-repeat bg-bottom bg-contain pb-20`
+  >
+    <Container>
+      <main
+        class='flex flex-col justify-start items-start px-8 py-5 lg:py-8 mx-auto xl:px-20 max-w-screen-lg'
+      >
+        <h1 class='text-3xl md:text-6xl py-5'>Buy me a Coffee ☕️</h1>
+
+        <div class='flex-auto leading-normal'>
+          <p>DevNow 是采用 MIT 许可的开源项目，使用完全免费。</p>
+          <br />
+          <p>
+            <a
+              href='https://github.com/LaughingZhu/DevNow'
+              target='_blank'
+              rel='noopener noreferrer'>喜欢可以来点个 Star ⭐️</a
+            >
+          </p>
+          <br />
+          <p>
+            DevNow
+            是一个为开发者打造的开源信息聚合平台。我们希望可以大家提供最新、最全面的开发资讯。您的支持将帮助我们走得更远，为更多开发者服务！
+          </p>
+        </div>
+      </main>
+    </Container>
+  </div>
+  <!-- </div> -->
+</Layout>
