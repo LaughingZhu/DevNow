@@ -5,18 +5,20 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title='关于'>
   <Container>
-    <main class='flex flex-col justify-start items-start'>
-      <h1>🚀Hello World!</h1>
-      <div class='flex-auto'>
+    <main
+      class='flex flex-col justify-start items-start px-8 py-5 lg:py-8 mx-auto xl:px-20 max-w-screen-lg'
+    >
+      <h1 class='text-3xl md:text-6xl py-5'>🚀Hello World!</h1>
+      <div class='flex-auto leading-normal'>
         DevNow 是一个能够精准捕捉科技与开发领域精华内容的平台。 我们致力于打造一个 轻量级、高效率
         的内容平台，让科技与开发领域的动态快速、准确地呈现在你的面前。
       </div>
-      <h1>Who am i?</h1>
-      <div class='flex-auto'>
+      <h1 class='text-3xl md:text-6xl py-5'>Who am i?</h1>
+      <div class='flex-auto leading-normal'>
         DevNow
         是一个致力于为开发者和科技爱好者提供高质量内容的周刊网站。我们深知你的时间宝贵，因此每周都会精心筛选并汇总近期最值得关注的科技新闻、开发趋势、实用工具和技术深度解析，将它们浓缩成一篇内容丰富、易于消化的周刊，助你轻松掌握行业动态。
       </div>
-      <h1>为什么选择 DevNow？</h1>
+      <h1 class='text-3xl md:text-6xl py-5'>为什么选择 DevNow？</h1>
       <ul>
         <li>
           高效便捷： 无需花费大量时间浏览各类网站和博客，DevNow
@@ -29,20 +31,8 @@ import Layout from '../layouts/Layout.astro';
         <li>专业视角： 由经验丰富的开发者和技术编辑团队精心筛选和撰写，保证内容的专业性和深度。</li>
         <li>持续更新： 每周定期更新，确保你始终走在科技前沿。</li>
       </ul>
-
-      <h1>技术栈</h1>
-      <ul>
-        <li>Astro</li>
-        <li>TypeScript</li>
-        <li>React</li>
-        <li>Shadcn/ui</li>
-        <li>Tailwind CSS</li>
-        <li>Mdx</li>
-        <li>Vercel 部署</li>
-      </ul>
-
-      <h1>支持的功能</h1>
-      <ul>
+      <h1 class='text-3xl md:text-6xl py-5'>支持的功能</h1>
+      <ul class='leading-normal'>
         <li>✅ Minimal styling</li>
         <li>✅ Mobile responsive</li>
         <li>✅ SEO-friendly with canonical URLs and OpenGraph data</li>
@@ -54,8 +44,8 @@ import Layout from '../layouts/Layout.astro';
         <li>✅ Related posts</li>
         <li>✅ Copy code block</li>
       </ul>
-      <h1>迭代计划</h1>
-      <ul>
+      <h1 class='text-3xl md:text-6xl py-5'>迭代计划</h1>
+      <ul class='leading-normal'>
         <li>🆙 Sitemap support</li>
         <li>🆙 RSS Feed support</li>
         <li>🆙 Comments(Giscus)</li>
@@ -63,7 +53,7 @@ import Layout from '../layouts/Layout.astro';
         <li>🆙 Search Post</li>
         <li>🆙 等待 Issue、Pr 中</li>
       </ul>
-      支持 DevNow 就给俺来个Star吧！
+      <div class='pt-[20px] text-xl'>支持 DevNow 就给俺来个Star吧！</div>
     </main>
   </Container>
 </Layout>
