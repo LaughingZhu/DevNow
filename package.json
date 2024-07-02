@@ -11,8 +11,8 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "**/*": [
-      "prettier --write"
+    "*.{astro,js,jsx,ts,tsx,md,mdx,json}": [
+      "prettier --write --plugin-search-dir="
     ]
   },
   "dependencies": {
