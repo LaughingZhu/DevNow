@@ -39,13 +39,13 @@
 - ✅ Dark mode
 - ✅ Related posts
 - ✅ Copy code block
+- ✅ Sitemap support
+- ✅ RSS Feed support
+- ✅ Draft mode
 
 ## 迭代计划
 
-- 🆙 Sitemap support
-- 🆙 RSS Feed support
 - 🆙 Share posts (Linkedin, twitter)
-- 🆙 Draft mode
 - 🆙 Comments (Giscus)
 - 🆙 Pagination
 - 🆙 等待 Issue、Pr 中
