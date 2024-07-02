@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "pre-commit": "lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "husky": {
     "hooks": {
