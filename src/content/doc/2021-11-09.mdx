@@ -1,0 +1,107 @@
+---
+title: 老版本React（v15）
+desc: React15的简要概括，分析stack reconciler 同步更新存在的问题
+publishDate: '2021-11-09'
+image: https://cdn.laughingzhu.cn/9d9961fc-a74c-400a-8115-8dc67c261c32.png
+category: blog
+author: LaughingZhu
+tags: [Blog, React]
+---
+
+# React15架构
+
+---
+
+React15架构可以分为两层：
+
+- Reconciler（协调器）--负责找出变化的组件
+- Renderer（渲染器）--负责将变化的组件渲染到页面上
+
+# Reconciler（协调器 -- stack reconciler）
+
+我们知道，在 React 中可以通过 this.setState 、 this.forceUpdate 、 ReactDOM.render 等API触发更新。
+
+每当有更新发生时，Reconciler会做如下工作：
+
+- 调用函数组件、或class组件的render方法、将返回的JSX转化为虚拟的DOM
+- 将虚拟DOM和上次更新时的虚拟DOM对比
+- 通过对比找出本次更新中变化的虚拟DOM
+- 通知Renderer将变化的虚拟DOM渲染到页面上
+
+> React 官方对于 [Reconciler](https://zh-hans.reactjs.org/docs/codebase-overview.html#reconcilers) 的解释，v15 对应的是 Stack reconciler，v16重构后是基于Fiber reconciler，也就是我们常说的Fiber架构。
+
+# Renderer（渲染器）
+
+由于React支持跨平台，所以不同的Renderer。前端最熟悉的是负责在浏览器环境渲染的Renderer--[ReactDOM](https://www.npmjs.com/package/react-dom)
+
+除此之外还有：
+
+- [ReactNative](https://www.npmjs.com/package/react-native) 渲染器，渲染App原生组件
+- [ReactTest](https://www.npmjs.com/package/react-test-renderer) 渲染器，渲染出纯JSON树用于测试
+- [ReactArt](https://www.npmjs.com/package/react-art) 渲染器，渲染到Canvas，SVG
+
+在每次更新发生时，Renderer接到Reconciler通知，将变化的组件渲染在当前宿主环境。
+
+> React 官方对于 [Renderer](https://zh-hans.reactjs.org/docs/codebase-overview.html#renderers) 的解释
+
+# React15架构的缺点
+
+---
+
+在**Reconciler**中，mount 的组件会调用mountComponent，update 组件会调用updateComponent。这两个方法都会递归更新子组件。
+
+## 递归更新的缺点
+
+由于递归执行，所以更新一旦开始，中途就无法中断。当层级很深是，递归更新时间超过了**16ms**，用户交互就会卡顿。解决方法就是将**同步更新**变成**可中断的异步更新**。
+
+```javascript
+export default class App extends React.Component {
+  constructor(...props) {
+    super(...props);
+    this.state = {
+      count: 1
+    };
+  }
+  onClick() {
+    this.setState({
+      count: this.state.count + 1
+    });
+  }
+  render() {
+    return (
+      <ul>
+        <button onClick={() => this.onClick()}>乘以{this.state.count}</button>
+        <li>{1 * this.state.count}</li>
+        <li>{2 * this.state.count}</li>
+        <li>{3 * this.state.count}</li>
+      </ul>
+    );
+  }
+}
+```
+
+例如上边这个例子，我们通过点击button来修改state中count的值，下边用红色标注了更新的步骤
+
+![v15.png](https://cdn.laughingzhu.cn/1636424637394-9fa3604e-7232-476e-8d4e-36844add4a6a.png)
+同步更新执行流程
+
+可以看出**Reconciler**和**Renderer**是交替工作的，当第一个li在页面上已经变化后，第二个li在进入**Reconciler**。
+
+由于整个过程都是同步的，所以在用户看来所有的DOM是同时更新的。
+
+接下来模拟一下，如果中断更新会怎么样？
+
+> **注意**
+> 以下是模拟中断的情况，实际上React15并不会中断进行中的更新
+
+![dist.png](https://cdn.laughingzhu.cn/1636424961364-c39620f6-ae99-42ce-856d-cb21c9bc726f.png)
+
+当第一个li完成个你完成更新是中断更新，即步骤3完成后中断更新，此时后面的步骤都还未执行。
+
+用户本来期望123变为456。实际却看见更新不完全的DOM！（即223）
+
+**注：但实际上React15并不会中断渲染，当有很多节点需要更新时，由于是同步更新，所以更新的时间可能超过16ms，用户直观的体验就是屏幕卡顿。**
+
+基于这个原因，React16就诞生了。
+
+参考资料：[卡颂的React技术揭秘](https://react.iamkasong.com/preparation/oldConstructure.html#react15%E6%9E%B6%E6%9E%84)

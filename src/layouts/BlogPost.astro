@@ -3,7 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '@layouts/Layout.astro';
 import Tag from '@components/Tag.astro';
 import type { MarkdownHeading } from 'astro';
-import { Image, Picture } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import FormattedDate from '@components/FormattedDate.astro';
 import Container from '@components/container.astro';
 import type { DOC_TYPE } from '../content/config';
@@ -46,7 +46,7 @@ const { title, desc, publishDate, image, tags } = data;
           data.image && (
             <Picture
               src={data.image}
-              widths={[200, 400, 800]}
+              widths={[800]}
               sizes='(max-width: 640px) 90vw, 480px'
               width={1024}
               inferSize
@@ -68,10 +68,7 @@ const { title, desc, publishDate, image, tags } = data;
 
 <script>
   const fnObserver = () => {
-    function handleIntersection(
-      entries: IntersectionObserverEntry[],
-      observer: IntersectionObserver
-    ) {
+    function handleIntersection(entries: IntersectionObserverEntry[]) {
       entries.forEach((entry) => {
         const index = document.querySelector(`aside a[href="#${entry.target.id}"]`);
 

@@ -1,0 +1,139 @@
+---
+title: 国内Homebrew安装太慢问题
+desc: 介绍Homebrew是一款Mac OS平台下的软件包管理工具，拥有安装、卸载、更新、查看、搜索等很多实用的功能。
+publishDate: '2022-04-09'
+image: https://cdn.laughingzhu.cn/5b7ffe28-351b-4fab-b555-f9fe3dea0adb.png
+category: blog
+author: LaughingZhu
+tags: [Blog, Homebrew]
+---
+
+# 介绍
+
+Homebrew是一款Mac OS平台下的软件包管理工具，拥有安装、卸载、更新、查看、搜索等很多实用的功能。简单的一条指令，就可以实现包管理，而不用你关心各种依赖和文件路径的情况，十分方便快捷。
+
+本文主要解决问题：Homebrew常规安装太慢；以及通过brew install安装软件太慢，还有时不时的自动updating巨耗时的问题。
+
+Homebrew官网链接：[https://brew.sh/index_zh-cn](https://brew.sh/index_zh-cn)
+
+```bash
+安装：
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+
+卸载：
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+```
+
+# 问题
+
+国内官网安装基本很慢，速度不忍直视，5KB/s……；这速度怎么对得起科学上网？
+
+一开始大概是这个样子
+
+```bash
+==> This script will install:
+/usr/local/bin/brew
+/usr/local/share/doc/homebrew
+/usr/local/share/man/man1/brew.1
+/usr/local/share/zsh/site-functions/_brew
+/usr/local/etc/bash_completion.d/brew
+/usr/local/Homebrew
+Press RETURN to continue or any other key to abort
+==> Downloading and installing Homebrew...
+
+```
+
+大部分情况是安装了一会就报错，然后是这个样子：
+
+```bash
+curl: (7) Failed to connect to raw.githubusercontent.com port 443: Connection refused
+
+-----f**k-----
+```
+
+#
+
+# 解决方案
+
+## 1.创建HomeBrew文件夹
+
+```bash
+// 首先确保/usr/local/Homebrew文件夹不存在，存在的话删除，然后执行：
+
+sudo mkdir /usr/local/Homebrew
+```
+
+## 2.克隆git仓库
+
+```bash
+sudo git clone https://mirrors.ustc.edu.cn/brew.git /usr/local/Homebrew
+// 或
+sudo git clone https://mirrors.aliyun.com/homebrew/brew.git /usr/local/Homebrew
+
+// 回车后，会提示Receiving objects: xx% 等待下载完成。
+
+Cloning into '/usr/local/Homebrew'...
+remote: Counting objects: 132526, done.
+remote: Total 132526 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (132526/132526), 32.16 MiB | 1.09 MiB/s, done.
+Resolving deltas: 100% (97548/97548), done.
+```
+
+## 3.创建一个快捷方式到/usr/local/bin目录
+
+```bash
+// 如果存在，先删掉
+sudo ln -s /usr/local/Homebrew/bin/brew /usr/local/bin/brew
+```
+
+## 4.创建core文件夹 并再次git克隆
+
+```bash
+// 存在先删掉
+sudo mkdir -p /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core
+
+sudo git clone https://mirrors.ustc.edu.cn/homebrew-core.git /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core
+
+
+// 完成后输出以下信息：
+Cloning into '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core'...
+remote: Counting objects: 688626, done.
+remote: Total 688626 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (688626/688626), 223.64 MiB | 6.83 MiB/s, done.
+Resolving deltas: 100% (455339/455339), done.
+```
+
+## 5.获取权限并运行更新
+
+```bash
+sudo chown -R $(whoami) /usr/local/Homebrew
+
+// 更新
+brew update
+```
+
+大功告成了。
+
+# Homebrew 安装时如何避坑
+
+### 1.若出现 Error: Checksum mismatch
+
+```bash
+curl: (56) LibreSSL SSL_read: SSL_ERROR_SYSCALL, errno 54
+Error: Checksum mismatch.
+Expected: b065e5e3783954f3e65d8d3a6377ca51649bfcfa21b356b0dd70490f74c6bd86
+Actual: e8a348fe5d5c2b966bab84052062f0317944122dea5fdfdc84ac6d0bd513c137
+Archive: /Users/joyce/Library/Caches/Homebrew/portable-ruby-2.6.3_2.yosemite.bottle.tar.gz
+To retry an incomplete download, remove the file above.
+Error: Failed to install Homebrew Portable Ruby (and your system version is too old)!
+Failed during: /usr/local/bin/brew update --force
+```
+
+出现以上类似问题，是由Homebrew目录下的portable-ruby-2.6.3_2.yosemite.bottle.tar.gz文件引起的安装中断，只需要到上面对应的路径里，删掉这个文件，重新执行安装命令即可：
+
+```bash
+// 删除对应的portable-ruby-** 文件
+/usr/bin/ruby -e "$(curl -fsSL https://cdn.jsdelivr.net/gh/ineo6/homebrew-install/install)"
+```
+
+参考文档：1.[解决国内Homebrew安装太慢问题](https://xixincan.github.io/2020/05/23/Skill/%E8%A7%A3%E5%86%B3%E5%9B%BD%E5%86%85Homebrew%E5%AE%89%E8%A3%85%E5%A4%AA%E6%85%A2%E9%97%AE%E9%A2%98/) 2.[mac下高效安装 homebrew 及完美避坑姿势 （亲测有效） ](https://www.cnblogs.com/joyce33/p/13376752.html)
