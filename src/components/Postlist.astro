@@ -5,7 +5,7 @@ import { getFormattedDate } from '@utils/all';
 import { Picture } from 'astro:assets';
 import cx from 'clsx';
 import Label from './ui/label.astro';
-const { post, aspect, preloadImage } = Astro.props;
+const { post, preloadImage } = Astro.props;
 const category = categories.find((item) => item.slug === post.data.category) as Category;
 ---
 

@@ -1,4 +1,5 @@
 ---
+import Comment from '@components/Comment.astro';
 import TableOfContents from '@components/TableOfContents.astro';
 import Code from '@components/mdx/Code.astro';
 import SButton from '@components/mdx/MDButton.astro';
@@ -41,6 +42,7 @@ const { Content, remarkPluginFrontmatter, headings } = await post.render();
         <div class='prose prose-lg md:prose-xl dark:prose-invert mb-12 min-w-full'>
           <Content components={{ pre: Code, SButton }} />
         </div>
+        <Comment />
       </div>
     </article>
   </div>
