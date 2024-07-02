@@ -1,0 +1,290 @@
+---
+title: JavaScript中的“事件”
+desc: 最近读再读《JavaScript高级程序设计》事件这一章时，发现对JavaScript事件有一点迷惑，特意整理出来，方便巩固学习。通过冒泡和捕获延伸出来的事件委托，经常出现在前端面试题中，重点标记。
+publishDate: '2022-07-30'
+image: https://cdn.laughingzhu.cn/09b7397a-b844-4311-a70f-21264e200cac.png
+category: blog
+author: LaughingZhu
+tags: [Blog, JavaScript]
+---
+
+## 1.描述
+
+JavaScript与HTML之间的交互是通过事件实现的。事件就是文档或浏览器窗口中发生的一些特定的交互瞬间。可以使用侦听器（或处理程序）来预定事件，以便事件发生时执行相应的代码。这中在传统软件工程中称为观察员模式的模型，支持页面的行为（JavaScript代码）与页面的外观（HTML和CSS代码）之间的松散耦合。
+
+## 2.事件流
+
+事件流描述的是从页面中接收事件的顺序。但有意思的是，IE和Netscape开发团队提出了差不多是完全相反的事件流的概念。IE的事件流是事件冒泡流，而NetScape的事件流是事件捕获流。
+
+### 2.1事件冒泡(dubbed bubbling)
+
+IE的事件流叫做事件冒泡（event bubbing），即事件开始时由最具体的元素（文档中嵌套层次最深的那个节点）接收，然后逐级向上传播到较为不具体的节点（文档）
+阻止事件冒泡：
+**w3c的方法是    e.stopPropagation()，IE则是使用    e.cancelBubble = true**
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Js Event</title>
+  </head>
+  <body>
+    <div id="1">
+      <div id="2">
+        <button id="button">click</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    document.getElementById('button').addEventListener('click', (e) => {
+      console.log('button');
+    });
+    document.getElementById('2').addEventListener('click', (e) => {
+      console.log(2);
+    });
+    document.getElementById('1').addEventListener('click', (e) => {
+      console.log(1);
+    });
+    document.body.addEventListener('click', (e) => {
+      console.log('body');
+    });
+    document.addEventListener('click', (e) => {
+      console.log('document');
+    });
+  </script>
+</html>
+
+// 点击button 打印结果 button 2 1 body document
+```
+
+执行过程如下图
+![WX20191112-215218@2x.png](https://cdn.laughingzhu.cn/1573566830009-e68017e7-778b-4b59-a475-e7db826763c2.png)
+
+### 2.2事件捕获(event capturing)
+
+Netscape团队提出的事件流叫做事件捕获（event capturing）。事件捕获的思想是不太具体的节点应该更早接收到事件，而最具体的节点应该最后接收到事件。事件捕获的用意在与在事件到达预定目标之前捕获它。
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Js Event</title>
+  </head>
+  <body>
+    <div id="1">
+      <div id="2">
+        <button id="button">click</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    document.getElementById('button').addEventListener(
+      'click',
+      (e) => {
+        console.log('button');
+      },
+      true
+    );
+    // 新增一个捕获事件
+    document.getElementById('2').addEventListener(
+      'click',
+      (e) => {
+        console.log(2);
+      },
+      true
+    );
+    document.getElementById('1').addEventListener(
+      'click',
+      (e) => {
+        console.log(1);
+      },
+      true
+    );
+    document.body.addEventListener(
+      'click',
+      (e) => {
+        console.log('body');
+      },
+      true
+    );
+    document.addEventListener(
+      'click',
+      (e) => {
+        console.log('document');
+      },
+      true
+    );
+  </script>
+</html>
+
+// 点击button 打印结果 document body 2 1 button
+```
+
+执行过程如下图：
+![WX20191112-225722@2x.png](https://cdn.laughingzhu.cn/1573570658506-2868009f-43b7-440d-b7b7-75ae13d6da3c.png)
+
+### 2.3.事件委托（代理）
+
+事件委托就是利用事件冒泡，只指定一个事件处理程序，就可以管理某一类型的所有事件。
+在JavaScript中，添加到页面上的事件处理数量将直接关系到页面的整体运行性能，因为需要不断的与dom节点进行交互，访问dom的次数越多，引起浏览器重绘与渲染的次数也就越多，就会延长整个页面的交互时间，这就是为什么性能优化的主要思想之一就是减少DOM操作的原因；如果要用事件委托，就会将所有的操作放在js程序里面，与dom的操作就只需要交互一次，这样就能大大减少与dom的交互次数，提高性能。
+一般来讲，会把一个或者一组元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素，当事件响应到需要绑定的元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件上，然后在外层元素上去执行函数。
+
+```html
+<ul id="list">
+  <li>item 1</li>
+  <li>item 2</li>
+  <li>item 3</li>
+  ......
+  <li>item n</li>
+</ul>
+```
+
+我们来实现把 `#list` 下的 `li` 元素的事件代理委托到它的父层元素也就是 `#list` 上：
+
+```javascript
+// 给父层元素绑定事件
+document.getElementById('list').addEventListener('click', function (e) {
+  // 兼容性处理
+  var event = e || window.event;
+  var target = event.target || event.srcElement;
+  // 判断是否匹配目标元素
+  if (target.nodeName.toLocaleLowerCase === 'li') {
+    console.log('the content is: ', target.innerHTML);
+  }
+});
+```
+
+如果我们想更精确地匹配到某一类 `#list li` 元素上，可以使用 `Element.matches` API。
+但是该 API 存在兼容性问题，我们可以自己做一层 **Polyfill**：
+
+```javascript
+if (!Element.prototype.matches) {
+  Element.prototype.matches =
+    Element.prototype.matchesSelector ||
+    Element.prototype.mozMatchesSelector ||
+    Element.prototype.msMatchesSelector ||
+    Element.prototype.oMatchesSelector ||
+    Element.prototype.webkitMatchesSelector ||
+    function (s) {
+      var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+        i = matches.length;
+      while (--i >= 0 && matches.item(i) !== this) {}
+      return i > -1;
+    };
+}
+```
+
+然后我们就可以使用Element.matches了：
+
+```javascript
+document.getElementById('list').addEventListener('click', function (e) {
+  // 兼容性处理
+  var event = e || window.event;
+  var target = event.target || event.srcElement;
+  if (target.matches('li.class-1')) {
+    console.log('the content is: ', target.innerHTML);
+  }
+});
+```
+
+**封装**
+这里就有几个关键点：
+
+- 对于父层代理的元素可能有多个，需要一一绑定事件；
+- 对于绑定的事件类型可能有多个，需要一一绑定事件；
+- 在处理匹配被代理的元素之中需要考虑到兼容性问题；
+- 在执行所绑定的函数的时候需要传入正确的参数以及考虑到 this 的问题；
+
+```javascript
+/**
+ * @param String parentSelector 选择器字符串, 用于过滤需要实现代理的父层元素，既事件需要被真正绑定之上
+ * @param String targetSelector 选择器字符串, 用于过滤触发事件的选择器元素的后代，既我们需要被代理事件的元素
+ * @param String events 一个或多个用空格分隔的事件类型和可选的命名空间，如 click 或 keydown.click
+ * @param Function callback 代理事件响应的函数
+ */
+function eventDelegate(parentSelector, targetSelector, events, callback) {
+  // 触发执行的函数
+  function triFunction(e) {
+    // 兼容性处理
+    var event = e || window.event;
+
+    // 获取到目标阶段指向的元素
+    var target = event.target || event.srcElement;
+
+    // 获取到代理事件的函数
+    var currentTarget = event.currentTarget;
+
+    // 处理 matches 的兼容性
+    if (!Element.prototype.matches) {
+      Element.prototype.matches =
+        Element.prototype.matchesSelector ||
+        Element.prototype.mozMatchesSelector ||
+        Element.prototype.msMatchesSelector ||
+        Element.prototype.oMatchesSelector ||
+        Element.prototype.webkitMatchesSelector ||
+        function (s) {
+          var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+            i = matches.length;
+          while (--i >= 0 && matches.item(i) !== this) {}
+          return i > -1;
+        };
+    }
+
+    // 遍历外层并且匹配
+    while (target !== currentTarget) {
+      // 判断是否匹配到我们所需要的元素上
+      if (target.matches(targetSelector)) {
+        var sTarget = target;
+        // 执行绑定的函数，注意 this
+        callback.call(sTarget, Array.prototype.slice.call(arguments));
+      }
+
+      target = target.parentNode;
+    }
+  }
+
+  // 如果有多个事件的话需要全部一一绑定事件
+  events.split('.').forEach(function (evt) {
+    // 多个父层元素的话也需要一一绑定
+    Array.prototype.slice.call(document.querySelectorAll(parentSelector)).forEach(function ($p) {
+      $p.addEventListener(evt, triFunction);
+    });
+  });
+}
+```
+
+使用：
+
+```javascript
+eventDelegate('#list', 'li', 'click', function () {
+  console.log(this);
+});
+```
+
+事件委托的优点：1.提高 JavaScript 性能。事件委托比起事件分发（即一个 DOM 一个事件处理程序），可以显著的提高事件的处理速度，减少内存的占用。2.动态的添加 DOM 元素，不需要因为元素的改动而修改事件绑定
+事件委托的局限性：
+比如 `focus`、`blur` 之类的事件本身没有事件冒泡机制，所以无法委托；
+`mousemove`、`mouseout` 这样的事件，虽然有事件冒泡，但是只能不断通过位置去计算定位，对性能消耗高，因此也是不适合于事件委托的；
+
+总结：
+
+- 适合用事件委托的事件：`click`，`mousedown`，`mouseup`，`keydown`，`keyup`，`keypress`。
+- 所有的鼠标事件中，只有 `mouseenter` 和 `mouseleave` 不冒泡，其他鼠标事件都是冒泡的
+
+## 3.DOM事件流(event flow)
+
+“DOM2级事件”规定的事件流包括三个阶段：事件捕获阶段、处于目标阶段和事件冒泡阶段。
+
+**首先** 发生的是事件捕获，为截获事件提供了机会。
+**然后** 是实际的目标接收到事件。
+**最后一个阶段** 是冒泡阶段，可以在这个阶段对事件做出响应。以前面简单的HTML页面为例。在DOM事件流中，实际的目标（div 元素）在捕获阶段不会接收到事件。这意味着在捕获阶段，事件从document 到 html 再到 body 后就停止了。下一个阶段是“处于目标”阶段，于是事件在div 上发生，然后，冒泡阶段发生，事件又传播回文档。
+多数支持DOM事件流的浏览器都实现了一种特定的行为；即使“DOM2级事件”规范明确要求捕获阶段不会涉及事件目标，但IE9、Safari、Chrome、Firefox和Opera 9.5及更高版本都会在捕获阶段触发事件对象上的事件。
+**结果**，就是有两个机会在目标对象上面操作事件。
+
+![NeatReader-1573573041449.png](https://cdn.laughingzhu.cn/1573573057609-382be7aa-3054-4036-ae7e-a11d221a2374.png)

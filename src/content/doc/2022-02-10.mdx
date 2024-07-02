@@ -1,0 +1,86 @@
+---
+title: 新版本的React（v16）
+desc: 新版本React16的新架构，主要是新增的Scheduler和基于Fiber重构的Reconciler，解决了v15中不能异步更新的问题。
+publishDate: '2022-02-10'
+image: https://cdn.laughingzhu.cn/8df31f0e-bcd0-49f4-b073-7d78740cbf11.png
+category: blog
+author: LaughingZhu
+tags: [Blog, React]
+---
+
+[老版本React（v15）](https://laughingzhu.cn/detail/19)中我们聊到React15架构不能支撑异步更新以至于React团队重构相关的代码，这一篇我们聊一下React16是如何支持异步更新的。React16团队实现了基于Fiber架构的Reconciler，Fiber架构又是怎样工作的呢？
+
+# React16架构
+
+---
+
+React16架构可以分为三层：
+
+- Scheduler（调度器） -- 调度任务的优先级lane，高优任务优先进入**Reconciler**。
+- Reconciler（协调器）-- 负责找出变化的组件（也就是我们常说的Diff算法）
+- Renderer（渲染器） -- 负责将变化的组件渲染到页面上。
+
+可以看到相较于v15版本，v16新增了**Scheduler（调度器）**来优化调度算法。
+
+## Scheduler（调度器）
+
+我们以浏览器是否有剩余时间作为任务中断的标准，那我们就需要一种机制，当浏览器有剩余时间就通知我们。
+
+这个API现在主流的浏览器都已经实现了，就是[requestIdleCallback](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestIdleCallback),但是由于以下两个主要因素，React放弃使用：
+
+- 浏览器兼容性的问题（IE、Safari）
+- 触发频率不稳定，受很多因素影响。比如当我们浏览器切换tab后，之前tab注册的**requestIdleCallback**触发的频率会变得很低
+
+基于以上原因，React实现了功能更完备的requestIdleCallback polyfill，这就是Scheduler。除了在空闲时触发回调的频率功能外，**Scheduler**还提供了多种调度优先级任务设置，
+
+> [**Scheduler**](https://github.com/facebook/react/tree/1fb18e22ae66fdb1dc127347e169e73948778e5a/packages/scheduler)是独立于React的库
+
+## Reconciler（协调器）
+
+我们知道，在React中Reconciler是递归处理虚拟DOM的，再看[React16的 Reconciler](https://github.com/facebook/react/blob/1fb18e22ae66fdb1dc127347e169e73948778e5a/packages/react-reconciler/src/ReactFiberWorkLoop.new.js#L1673)。
+
+可以看到，更新工作从递归变成了可以中断的循环过程，每次循环都会调用**shouldYield**判断当前是否有剩余时间。
+
+```javascript
+/** @noinline */
+function workLoopConcurrent() {
+  // Perform work until Scheduler asks us to yield
+  while (workInProgress !== null && !shouldYield()) {
+    performUnitOfWork(workInProgress);
+  }
+}
+```
+
+React16是如何解决中断更新时DOM渲染不完全的问题呢?
+
+在React中，Reconciler与Renderer不再是交替工作。当Scheduler将任务交给Reconciler后，Reconciler会为变化的虚拟DOM打上代表增、删、改、更新的标记，类似：
+
+```javascript
+export const Placement = /*             */ 0b0000000000010;
+export const Update = /*                */ 0b0000000000100;
+export const PlacementAndUpdate = /*    */ 0b0000000000110;
+export const Deletion = /*              */ 0b0000000001000;
+...
+```
+
+> 全部的标记在[这里](https://github.com/facebook/react/blob/1fb18e22ae66fdb1dc127347e169e73948778e5a/packages/react-reconciler/src/ReactSideEffectTags.js)。
+
+整个Scheduler与Reconciler的工作都在内存中进行。只有当所有组件都完成Reconciler的工作，才会统一交给Renderer渲染到界面中。
+
+> 这是React官方对于React16中[Fiber Reconciler](https://zh-hans.reactjs.org/docs/codebase-overview.html#fiber-reconciler)的解释。
+
+## Renderer（渲染器）
+
+Renderer根据Reconciler为虚拟DOM打的标记，同步执行对应的DOM操作。
+整个更新流程的大致为：
+
+![process.png](https://cdn.laughingzhu.cn/1636529784121-2e5cc983-f704-4808-a4d1-dfe20c0b1eff.png)
+
+其中红框中的步骤随时可能由于以下原因被中断：
+
+- 有其他更高优先级任务需要更新
+- 当前帧没有剩余时间
+
+由于工况中的工作都是在内存中，不会更新到页面上的DOM，所以即使返回中断，用户也不会看见更新不完全的DOM。
+
+参考资料：[卡颂的React技术解密](https://react.iamkasong.com/#%E5%AF%BC%E5%AD%A6%E8%A7%86%E9%A2%91)

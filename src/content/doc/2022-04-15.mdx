@@ -1,0 +1,304 @@
+---
+title: memo、useMemo、useCallback在React中的使用场景
+desc: 通过一些场景来介绍一下memo、useMemo、useCallback在React项目中的使用场景，主要是在新项目中看到了好多使用的场景以及之前在相对较小的项目中未考虑的一些优化问题，借此文来学习记录一下。
+publishDate: '2022-04-15'
+image: https://cdn.laughingzhu.cn/2dd2c8dd-b108-4b02-86d7-5cd295e12df8.png
+category: blog
+author: LaughingZhu
+tags: [Blog, React]
+---
+
+## 背景：
+
+通过一些场景来介绍一下memo、useMemo、useCallback在React项目中的使用场景，主要是在新项目中看到了好多使用的场景以及之前在相对较小的项目中未考虑的一些优化问题，借此文来学习记录一下。
+
+## 前置的知识：
+
+需了解变量的两种类型：基本类型(number、string、boolean等)、引用类型(array、object、function等)。
+了解了两种类型后就很好理解：
+
+```typescript
+'a' === 'a'   // true
+{} === {}    // false
+```
+
+## 1.React.memo()
+
+### 场景描述：
+
+我们知道在React中组件的props、state的改变会**重新渲染页面**，但有些情况下我们并不期望。如下面的例子。
+
+```typescript
+// Parent
+import { useState } from "react";
+import { Child } from "./child";
+export const Parent = () => {
+  const [count, setCount] = useState(0);
+  const increment = () => setCount(count + 1);
+  return (
+    <div>
+      <button onClick={increment}>add count：{count}</button>
+      <Child />
+    </div>
+  );
+};
+
+// Child
+export const Child = () => {
+  console.log("child render");
+  return <div>子组件</div>;
+};
+```
+
+点击父组件中按钮，会修改 count 变量的值，进而导致父组件重新渲染，此时子组件没有任何变化(props、state)，但在控制台中仍然看到子组件被渲染的打印信息。
+![image.png](https://cdn.laughingzhu.cn/1649942616526-e56a1204-c778-4100-9b73-768aa4668600.png)
+由于这里子组件并没有依赖父组件的state、props，所以理论上我们是不期望Child多次渲染的，这里就可以通过使用[React.memo()](https://cdn.laughingzhu.cn/https://zh-hans.reactjs.org/docs/react-api.html#reactmemo)来解决。
+
+### 解决方案：
+
+React.memo()是React v16.6引入的属性，用来解决函数的重新渲染问题。将组件作为函数(memo)的参数，函数的返回值(Child)是一个新的组件。
+
+```typescript
+// 场景1：适用于props为基础类型或者无需依赖props的场景中
+const MyComponent = React.memo(function MyComponent(props) {
+  /* 使用 props 渲染 */
+});
+
+// 场景2：适用于场景1，切适用于props为引用类型
+// 需要比较props,可以通过一个比较函数来判断是否要需要重新渲染
+function MyComponent(props) {
+  /* 使用 props 渲染 */
+}
+function areEqual(prevProps, nextProps) {
+  /*
+  如果把 nextProps 传入 render 方法的返回结果与
+  将 prevProps 传入 render 方法的返回结果一致则返回 true，
+  否则返回 false
+  与Class中shouldComponentUpdate返回值相反
+  */
+}
+export default React.memo(MyComponent, areEqual);
+
+
+<!----------------将我们的代码使用memo优化-------------------->
+
+// Child
+const Child = React.memo(() => {
+  console.log("child render");
+  return <div>Child</div>;
+});
+```
+
+效果如下，父组件渲染了多次，但子组件只渲染了一次：
+![image.png](https://cdn.laughingzhu.cn/1649943652691-e382e4e4-4e02-4e83-9a28-fce2767492e8.png)
+
+## 2.React.useCallback()
+
+### 场景描述：
+
+上面memo的场景中我们只是简单的调用组件，并没有给组件传递任何属性，接下来我们传值看看：
+
+```typescript
+// 父组件
+export const Parent = () => {
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState("LaughingZhu");
+  const add = () => setCount(count + 1);
+  const onClick = (name: string) => {
+    setName(name);
+  };
+  return (
+    <div>
+      <button onClick={add}>点击次数：{count}</button>
+      <Child name={name} onClick={onClick} />
+    </div>
+  );
+};
+
+// 子组件
+export const Child = memo((props: { name: string; onClick: (value: any) => void}) => {
+    const { name, onClick } = props;
+    console.log("渲染了", name, onClick);
+    return (
+      <>
+        <div>子组件</div>
+        <button onClick={() => onClick("晓")}> 改变 name 值</button>
+      </>
+    );
+  }
+);
+```
+
+点击父组件count，看到子组件每次都重新渲染了。
+
+![image.png](https://cdn.laughingzhu.cn/1649950569865-871babb0-bfed-47b1-ae9e-f395eeb05b57.png)
+![image.png](https://cdn.laughingzhu.cn/1649950527044-196fc0ea-9836-4f39-b0e3-70b3a6a6c78e.png)
+
+**分析原因：**
+点击父组件按钮，改变了父组件中count变量，进而导致父组件重新渲染；
+父组件重新渲染时，会重新创建onClick函数，即传给子组件的onClick属性发生了变化，导致子组件渲染；
+如果传给子组件的props只有基本类型同上一个memo事例就不会重新渲染。
+
+**注意: **如果直接使用**useState解构**的setName传给子组件, 子组件将不会重复渲染，因为解构出来的是一个**memoized 函数**。
+
+```typescript
+// 如下边的例子, 多次点击button，子组件不会重新渲染
+import { useState } from "react";
+import { Child } from "./child";
+
+export const Parent = () => {
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState("小明");
+  const increment = () => setCount(count + 1);
+
+  return (
+    <div>
+      <button onClick={increment}>点击次数：{count}</button>
+      <Child setName={setName} />
+    </div>
+  );
+};
+
+```
+
+### 解决方案：
+
+把内联回调函数及依赖项作为参数传入[useCallback](https://zh-hans.reactjs.org/docs/hooks-reference.html#usecallback)，它将返回改函数的memoized回调函数，该回调函数仅在某个依赖项改变时才会更新。当你把回调函数传递给经过优化的并使用引用相等性去避免非必要渲染（列入class 组件的shouldComponentUpdate）的子组件时，他将非常有用。
+
+> **memoized回调函数：**使用一组参数**初次调用函数时，缓存参数和计算结果**，当再次使用相同的参数调用该函数时，直接返回相应的**缓存结果**。（返回对应的引用，即引用地址没有变，所以 === 成立）。
+>
+> **注意：**依赖项数组不会作为参数传递给回调函数，虽然从**概念上来说它表现为**：所有回调函数中引用的值都应该出现在依赖项数组中。
+
+接下来使用**useCallback**函数包裹我们上述例子中的onClick函数：
+
+```typescript
+// 父组件
+export const Parent = () => {
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState("LaughingZhu");
+  const add = () => setCount(count + 1);
+  const onClick = useCallback(() => {
+    setName(name);
+  }, [name])
+
+  return (
+    <div>
+      <button onClick={add}>点击次数：{count}</button>
+      <Child name={name} onClick={onClick} />
+    </div>
+  );
+};
+
+```
+
+![image.png](https://cdn.laughingzhu.cn/1649988234999-9abac76d-e38e-4a80-997d-890b3b36a9a9.png)
+![image.png](https://cdn.laughingzhu.cn/1649988254079-b7d75e06-62b9-4ad8-bddf-991efbfcf4e7.png)
+
+从代码可知，除了组件初始化之外，只有当父组件中**name的属性改变**外，onClick函数才会返回一个新的引用，除此之外不会引起子组件的重新渲染。
+
+## 3.React.useMemo()
+
+### 场景描述：
+
+上述的例子中，name是个字符串，思考如果换成传递引用类型（array、object等）会怎样🤔？我们动手操作试试看。
+
+```typescript
+// 父组件
+const Parent = () => {
+  const [count, setCount] = useState(0);
+  // const [userInfo, setUserInfo] = useState({
+  // 	 name: 'Laughingzhu',
+  //   sex: 'boy'
+  // });
+  const userInfo = {
+    name: "LaughingZhu",
+    sex: "boy"
+  };
+  const add = () => {
+    setCount(count + 1);
+  };
+  return (
+    <div>
+      <button onClick={add}>点击次数：{count}</button>
+      <Child userInfo={userInfo} />
+    </div>
+  );
+};
+
+// 子组件
+const Child = memo((props: { userInfo: { name: string, sex: string } }) => {
+  const { userInfo } = props;
+  console.log("渲染了", props.userInfo);
+  return (
+    <>
+      <div>姓名： {userInfo.name}</div>
+      <div>性别： {userInfo.sex}</div>
+    </>
+  );
+});
+```
+
+![image.png](https://cdn.laughingzhu.cn/1649990478202-cfb604e1-dd64-4ac8-9335-817570d57ecb.png)
+如图，当点击父组件count时，每次子组件都重新渲染了，但其实子组件接受的参数userInfo内容是没有变更的
+**分析原因**跟直接传一个函数是一样的：
+
+```
+- 点击父组件按钮，触发父组件重新渲染；
+- 父组件渲染，const userInfo = { name: 'LaughingZhu', sex: 'boy' }; 一行会重新生成一个新对象，导致传递给子组件的userInfo属性值变化（由于是**引用类型**，这里指userInfo在内存中的**指针**指向变了），进而导致子组件重新渲染。
+- 注意：如果使用**useState解构**的userInfo，子组件不会重新渲染，因为**解构**出来的是一个**memoized值**。
+```
+
+### 解决方案：
+
+使用[useMemo](https://zh-hans.reactjs.org/docs/hooks-reference.html#usememo)将对象属性包一层，代码如下：
+
+```typescript
+// 父组件
+export const Parent = () => {
+  const [count, setCount] = useState(0);
+  const userInfo = useMemo(() => (
+    {
+      name: "LaughingZhu",
+      sex: "boy"
+    }
+  ), []);
+  const add = () => {
+    setCount(count + 1);
+  };
+  return (
+    <div>
+      <button onClick={add}>点击次数：{count}</button>
+      <Child userInfo={userInfo} />
+    </div>
+  );
+};
+
+// 子组件
+const Child = memo((props:
+  {
+    userInfo: {
+      name: string,
+      sex: string
+    }
+  }
+) => {
+  const { userInfo } = props;
+  console.log("渲染了", props.userInfo);
+  return (
+    <>
+      <div>姓名： {userInfo.name}</div>
+      <div>性别： {userInfo.sex}</div>
+    </>
+  );
+});
+```
+
+![image.png](https://cdn.laughingzhu.cn/1649991464040-c04626f3-e9e9-4679-a2c2-629405526aca.png)
+
+**useMemo()**返回一个**memoized**值。把“创建”函数和依赖项数组作为参数传入useMemo,它会仅在**某个依赖改变**时才**重新计算memoized值**，这中优化有助于**避免每次渲染**时都进行高开销的计算。
+
+**注意：**传入useMemo的函数在渲染期间执行，请不要在这个函数内部执行与渲染无关的操作，诸如副作用这类的操作属于useEffect的使用范畴。
+
+如果没有提供依赖数组项，在每次渲染时都会计算新的值，此时和没使用useMemo作用相同。
+
+**总结：**React.memo、React.useCallback、React.useMemo都是针对函数组件使用的，目的是避免子组件重复无效的渲染。
