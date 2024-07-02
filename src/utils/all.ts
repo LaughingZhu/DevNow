@@ -31,9 +31,3 @@ export const checkImageUrl = (image: string | URL, url: string | URL | undefined
     return new URL(image, url).toString();
   }
 };
-
-// 格式化图片cdn链接
-export const formatImageUrl = (url = '') => {
-  if (!url) return '';
-  return url.endsWith('-thumb') ? url : `${url}-thumb`;
-};

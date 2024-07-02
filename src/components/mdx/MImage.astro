@@ -6,7 +6,6 @@ type MD_TYPE = {
 };
 const props = Astro.props as MD_TYPE;
 
-import { formatImageUrl } from '@utils/all';
 import { Picture } from 'astro:assets';
 import cx from 'clsx';
 ---
@@ -15,7 +14,7 @@ import cx from 'clsx';
   props ? (
     <Picture
       {...props}
-      src={formatImageUrl(props.src)}
+      src={props.src}
       widths={[800]}
       sizes='(max-width: 640px) 90vw, 480px'
       inferSize

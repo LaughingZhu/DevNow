@@ -3,7 +3,6 @@ import TableOfContents from '@components/TableOfContents.astro';
 import Container from '@components/container.astro';
 import Code from '@components/mdx/Code.astro';
 import SButton from '@components/mdx/MDButton.astro';
-import MImage from '@components/mdx/MImage.astro';
 import BlogPost from '@layouts/BlogPost.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 type Props = { doc: CollectionEntry<'doc'> };
@@ -42,7 +41,7 @@ const { Content, remarkPluginFrontmatter, headings } = await post.render();
       <article class='max-w-screen-md mx-auto'>
         <div class='mx-auto my-3 prose prose-base dark:prose-invert prose-a:text-blue-600'>
           <div class='prose prose-lg md:prose-xl dark:prose-invert mb-12 min-w-full'>
-            <Content components={{ pre: Code, SButton, img: MImage }} />
+            <Content components={{ pre: Code, SButton }} />
           </div>
         </div>
       </article>
