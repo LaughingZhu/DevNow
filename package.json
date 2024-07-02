@@ -8,16 +8,16 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "prepare": "husky",
     "pre-commit": "lint-staged"
   },
   "hooks": {
     "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
-    "pre-commit": "lint-staged",
-    "pre-push": "zx scripts/force.base.master.mjs"
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "**/*": [
+      "prettier --write --plugin-search-dir=."
+    ]
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
@@ -58,11 +58,7 @@
     "@tailwindcss/typography": "^0.5.13",
     "@types/markdown-it": "^14.1.1",
     "@types/sanitize-html": "^2.11.0",
-    "@typescript-eslint/parser": "^7.15.0",
     "autoprefixer": "^10.4.19",
-    "eslint": "^9.6.0",
-    "eslint-plugin-astro": "^1.2.2",
-    "eslint-plugin-jsx-a11y": "^6.9.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.7",
     "postcss": "^8.4.38",
