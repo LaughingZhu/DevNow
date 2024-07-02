@@ -12,8 +12,7 @@ const category = categories.find((item) => item.slug === post.data.category) as 
 <div class='cursor-pointer group'>
   <div
     class={cx(
-      'relative overflow-hidden transition-all shadow-sm bg-gray-100 rounded-md dark:bg-gray-800 hover:scale-105',
-      aspect === 'landscape' ? 'aspect-video' : 'aspect-square'
+      'relative overflow-hidden transition-all shadow-sm bg-gray-100 rounded-md dark:bg-gray-800 hover:scale-105 aspect-[3/2]'
     )}
   >
     <a href={'/posts/' + post.slug}>
@@ -27,10 +26,7 @@ const category = categories.find((item) => item.slug === post.data.category) as 
             inferSize
             decoding={'async'}
             loading={preloadImage ? 'eager' : 'lazy'}
-            class={cx(
-              'w-full h-full rounded-md object-cover ',
-              aspect === 'landscape' ? 'aspect-video' : 'aspect-square'
-            )}
+            class={cx('w-full rounded-md object-cover aspect-[3/2]')}
           />
         ) : (
           <span class='absolute w-16 h-16 text-gray-200 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>

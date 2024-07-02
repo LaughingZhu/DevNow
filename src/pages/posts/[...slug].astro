@@ -1,5 +1,4 @@
 ---
-import Container from '@components/Container.astro';
 import TableOfContents from '@components/TableOfContents.astro';
 import Code from '@components/mdx/Code.astro';
 import SButton from '@components/mdx/MDButton.astro';
@@ -37,14 +36,12 @@ const { Content, remarkPluginFrontmatter, headings } = await post.render();
       </div>
     </aside>
 
-    <Container>
-      <article class='max-w-screen-md mx-auto'>
-        <div class='mx-auto my-3 prose prose-base dark:prose-invert prose-a:text-blue-600'>
-          <div class='prose prose-lg md:prose-xl dark:prose-invert mb-12 min-w-full'>
-            <Content components={{ pre: Code, SButton }} />
-          </div>
+    <article class='max-w-screen-md mx-auto'>
+      <div class='mx-auto my-3 prose prose-base dark:prose-invert prose-a:text-blue-600'>
+        <div class='prose prose-lg md:prose-xl dark:prose-invert mb-12 min-w-full'>
+          <Content components={{ pre: Code, SButton }} />
         </div>
-      </article>
-    </Container>
+      </div>
+    </article>
   </div>
 </BlogPost>
