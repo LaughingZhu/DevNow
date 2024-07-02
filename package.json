@@ -8,7 +8,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "pre-commit": "lint-staged"
+    "prepare": "husky install"
   },
   "hooks": {
     "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
