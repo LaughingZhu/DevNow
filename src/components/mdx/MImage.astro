@@ -1,0 +1,27 @@
+---
+type MD_TYPE = {
+  src: string;
+  alt: string;
+  loading: 'lazy' | 'eager';
+};
+const props = Astro.props as MD_TYPE;
+
+import { formatImageUrl } from '@utils/all';
+import { Picture } from 'astro:assets';
+import cx from 'clsx';
+console.log(props.src, '--props');
+---
+
+{
+  props ? (
+    <Picture
+      {...props}
+      src={formatImageUrl(props.src)}
+      widths={[200, 400, 800]}
+      sizes='(max-width: 640px) 90vw, 480px'
+      inferSize
+      decoding={'async'}
+      class={cx('w-full h-full rounded-md')}
+    />
+  ) : null
+}

@@ -2,7 +2,7 @@
 import '@common/globals.css';
 import Footer from '@components/footer.astro';
 import Header from '@components/header.astro';
-import { checkImageUrl } from '@utils/all';
+import { checkImageUrl, formatImageUrl } from '@utils/all';
 import { SEO } from 'astro-seo';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { title, desc = 'DevNow — 开发技术周刊', image = '/logo.png' } = Astro.props;
-const resolvedOGImage = checkImageUrl(image, Astro.site);
+const resolvedOGImage = checkImageUrl(formatImageUrl(image), Astro.site);
 const makeTitle = title ? title + ' | ' + 'DevNow' : 'DevNow — 开发技术周刊';
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 ---
