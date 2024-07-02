@@ -1,8 +1,8 @@
 ---
+import Postlist from '@components/Postlist.astro';
 import TitlePage from '@components/TitlePage.astro';
-import Postlist from '@components/postlist.astro';
 import { filterPostsByTag } from '@utils/content';
-import Container from '../../components/container.astro';
+import Container from '../../components/Container.astro';
 import Layout from '../../layouts/Layout.astro';
 
 const { tag = '' } = Astro.params;
