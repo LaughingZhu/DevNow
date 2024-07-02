@@ -143,10 +143,6 @@
   z-index: -1;
 }
 
-/* .shadow {
-  box-shadow: -5px 3px 8px 1px rgba(0, 0, 0, 0.12);
-} */
-
 .scrollbar {
   &::-webkit-scrollbar-track-piece {
     background-color: transparent;
