@@ -1,7 +1,7 @@
 ---
 import type { Category } from '@data/category';
 import { categories } from '@data/category';
-import { getFormattedDate } from '@utils/all';
+import { formatImageUrl, getFormattedDate } from '@utils/all';
 import { Picture } from 'astro:assets';
 import cx from 'clsx';
 import Label from './ui/label.astro';
@@ -20,7 +20,7 @@ const category = categories.find((item) => item.slug === post.data.category) as 
       {
         post.data.image ? (
           <Picture
-            src={post.data.image}
+            src={formatImageUrl(post.data.image)}
             widths={[200, 400, 800]}
             sizes='(max-width: 640px) 90vw, 480px'
             alt='Thumbnail'
@@ -40,7 +40,7 @@ const category = categories.find((item) => item.slug === post.data.category) as 
       }
     </a>
   </div>
-  <a href='/#'>
+  <a href={'/category/' + category.slug}>
     <Label theme={category.color}>{category.title}</Label>
   </a>
   <h2 class='mt-2 text-lg font-semibold tracking-normal text-brand-primary dark:text-white'>

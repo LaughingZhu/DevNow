@@ -1,5 +1,6 @@
 import { toString } from 'mdast-util-to-string';
 import getReadingTime from 'reading-time';
+import config from '/src/config/index';
 
 /** Format Date */
 export const getFormattedDate = (date: string | number | Date) =>
@@ -30,4 +31,10 @@ export const checkImageUrl = (image: string | URL, url: string | URL | undefined
   } catch (error) {
     return new URL(image, url).toString();
   }
+};
+
+// 格式化图片cdn链接
+export const formatImageUrl = (url = '') => {
+  if (!url) return '';
+  return url.startsWith('http') ? url : `${config.img_host}/${url}-thumb`;
 };

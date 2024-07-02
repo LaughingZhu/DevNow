@@ -7,6 +7,7 @@ import { Image, Picture } from 'astro:assets';
 import FormattedDate from '@components/FormattedDate.astro';
 import Container from '@components/container.astro';
 import type { DOC_TYPE } from '../content/config';
+import { formatImageUrl } from '@utils/all';
 type Props = {
   id: CollectionEntry<'doc'>['id'];
   data: DOC_TYPE;
@@ -18,7 +19,7 @@ const { data, readTime } = Astro.props;
 const { title, desc, publishDate, image, tags } = data;
 ---
 
-<BaseLayout title={title} desc={desc} image={image}>
+<BaseLayout title={title} desc={desc} image={formatImageUrl(image)}>
   <Container>
     <article class='min-w-full md:py-4 sm:max-w-none md:max-w-none'>
       <header class='mb-3 flex flex-col justify-center items-center gap-6'>
@@ -45,7 +46,7 @@ const { title, desc, publishDate, image, tags } = data;
         {
           data.image && (
             <Picture
-              src={data.image}
+              src={formatImageUrl(data.image)}
               widths={[200, 400, 800]}
               sizes='(max-width: 640px) 90vw, 480px'
               width={1024}
