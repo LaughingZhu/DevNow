@@ -20,7 +20,7 @@ export function ThemeSwitch() {
   }, []);
 
   return (
-    <div className='flex items-center space-x-2'>
+    <div className='flex items-center'>
       <label className='theme'>
         <input type='checkbox' checked={theme == 'theme-light'} onChange={onHandleChange} />
         <span className='slider'></span>

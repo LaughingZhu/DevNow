@@ -38,9 +38,7 @@ const rightmenu: Menu[] = [
 const mobilemenu: Menu[] = [...leftmenu, ...rightmenu];
 ---
 
-<div
-  class={'container px-8 py-5 lg:py-8 mx-auto xl:px-5 max-w-screen-lg sticky top-[0] z-10 backdrop-blur-md shadow-sm'}
->
+<div class={'px-8 py-5 lg:py-8 w-full xl:px-5 sticky top-[0] z-10 backdrop-blur-md shadow-sm'}>
   <nav>
     <div class='flex flex-wrap justify-between md:gap-10 md:flex-nowrap'>
       <div
@@ -102,7 +100,7 @@ const mobilemenu: Menu[] = [...leftmenu, ...rightmenu];
           ))
         }
       </div>
-      <div class='absolute md:right-0 right-1/2'>
+      <div class='absolute md:right-8 right-1/2'>
         <ThemeSwitch client:load />
       </div>
     </div>
