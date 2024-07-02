@@ -11,6 +11,9 @@ dependencies:
   '@astrojs/react':
     specifier: ^3.6.0
     version: 3.6.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(vite@5.3.1)
+  '@astrojs/rss':
+    specifier: ^4.0.7
+    version: 4.0.7
   '@astrojs/sitemap':
     specifier: ^3.1.6
     version: 3.1.6
@@ -318,6 +321,16 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - vite
+    dev: false
+
+  /@astrojs/rss@4.0.7:
+    resolution:
+      {
+        integrity: sha512-ZEG55XFB19l+DplUvBISmz04UbjDtKliRO4Y5+ERRhAMjgCVVobEBNE6ZwWG1h6orWUocy4nfPihKXDyB73x9g==
+      }
+    dependencies:
+      fast-xml-parser: 4.4.0
+      kleur: 4.1.5
     dev: false
 
   /@astrojs/sitemap@3.1.6:
@@ -3334,6 +3347,16 @@ packages:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.7
+
+  /fast-xml-parser@4.4.0:
+    resolution:
+      {
+        integrity: sha512-kLY3jFlwIYwBNDojclKsNAC12sfD6NwW74QB2CoNGPvtVxjliYehVunB3HYyNi+n4Tt1dAcgwYvmKF/Z18flqg==
+      }
+    hasBin: true
+    dependencies:
+      strnum: 1.0.5
+    dev: false
 
   /fastq@1.17.1:
     resolution:
@@ -6431,6 +6454,13 @@ packages:
         integrity: sha512-dOESqjYr96iWYylGObzd39EuNTa5VJxyvVAEm5Jnh7KGo75V43Hk1odPQkNDyXNmUR6k+gEiDVXnjB8HJ3crXw==
       }
     engines: { node: '>=12' }
+
+  /strnum@1.0.5:
+    resolution:
+      {
+        integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==
+      }
+    dev: false
 
   /style-to-object@0.4.4:
     resolution:

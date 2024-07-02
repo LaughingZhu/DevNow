@@ -42,6 +42,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name='viewport' content='width=device-width' />
     <link rel='icon' type='image/svg+xml' href='/favicon.ico' />
     <link rel='sitemap' href='/sitemap-index.xml' />
+    <link rel='alternate' type='application/rss+xml' title='DevNow' href={'/rss.xml'} />
     <meta name='generator' content={Astro.generator} />
     <SEO
       title={makeTitle}

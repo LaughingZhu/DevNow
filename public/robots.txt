@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://devnow.laughingzhu.cn/sitemap-index.xml
