@@ -28,7 +28,7 @@ const category = categories.find((item) => item.slug === post.data.category) as 
             decoding={'async'}
             loading={preloadImage ? 'eager' : 'lazy'}
             class={cx(
-              'w-full h-full rounded-md object-cover',
+              'w-full h-full rounded-md object-cover shadow-lg',
               aspect === 'landscape' ? 'aspect-video' : 'aspect-square'
             )}
           />
