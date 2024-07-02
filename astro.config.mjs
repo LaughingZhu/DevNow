@@ -9,7 +9,7 @@ import { remarkReadingTime } from './src/utils/all';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://devnow.laughingzhu.cn/',
+  site: 'https://devnow.laughingzhu.cn',
   image: {
     domains: ['astro.build'],
     remotePatterns: [{ protocol: 'https' }],
@@ -38,7 +38,9 @@ export default defineConfig({
       },
       drafts: true
     }),
-    sitemap(),
+    sitemap({
+      entryLimit: 10000
+    }),
     react(),
     tailwind()
   ],

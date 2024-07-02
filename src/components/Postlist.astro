@@ -12,7 +12,7 @@ const category = categories.find((item) => item.slug === post.data.category) as 
 <div class='cursor-pointer group'>
   <div
     class={cx(
-      'relative overflow-hidden transition-all bg-gray-100 rounded-md dark:bg-gray-800 hover:scale-105',
+      'relative overflow-hidden transition-all shadow-sm bg-gray-100 rounded-md dark:bg-gray-800 hover:scale-105',
       aspect === 'landscape' ? 'aspect-video' : 'aspect-square'
     )}
   >
@@ -28,7 +28,7 @@ const category = categories.find((item) => item.slug === post.data.category) as 
             decoding={'async'}
             loading={preloadImage ? 'eager' : 'lazy'}
             class={cx(
-              'w-full h-full rounded-md object-cover shadow-lg',
+              'w-full h-full rounded-md object-cover ',
               aspect === 'landscape' ? 'aspect-video' : 'aspect-square'
             )}
           />
