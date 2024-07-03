@@ -3,6 +3,7 @@ import logoLight from '@assets/text-logo.svg';
 import logoDark from '@assets/text-logo-dark.svg';
 import { Image } from 'astro:assets';
 import ToggleTheme from './ToggleTheme.astro';
+import Search from './Search.tsx';
 
 interface Menu {
   label: string;
@@ -57,11 +58,11 @@ const mobilemenu: Menu[] = [...leftmenu, ...rightmenu];
 
       <div class='flex items-center justify-between w-full md:w-auto'>
         <a class='w-20 dark:hidden' href='/'>
-          <Image src={logoLight} alt='Logo' />
+          <Image src={logoLight} alt='Logo' loading={'eager'} />
         </a>
 
         <a class='hidden w-20 dark:block' href='/'>
-          <Image src={logoDark} alt='Logo' />
+          <Image src={logoDark} alt='Logo' loading={'eager'} />
         </a>
 
         <button
@@ -99,7 +100,8 @@ const mobilemenu: Menu[] = [...leftmenu, ...rightmenu];
           ))
         }
       </div>
-      <div class='absolute md:right-8 right-1/2'>
+      <div class='absolute md:flex md:right-8 right-1/2 hidden'>
+        <Search client:only='react' />
         <ToggleTheme />
       </div>
     </div>

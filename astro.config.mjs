@@ -1,4 +1,5 @@
 import mdx from '@astrojs/mdx';
+import react from "@astrojs/react";
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel/serverless';
@@ -11,7 +12,9 @@ export default defineConfig({
   site: 'https://devnow.laughingzhu.cn',
   image: {
     domains: ['astro.build'],
-    remotePatterns: [{ protocol: 'https' }],
+    remotePatterns: [{
+      protocol: 'https'
+    }],
     service: squooshImageService()
   },
   markdown: {
@@ -25,23 +28,30 @@ export default defineConfig({
       wrap: true
     }
   },
-
+  optimizeDeps: {
+    exclude: ['@astrojs/react-client']
+  },
   integrations: [
     mdx({
-      syntaxHighlight: 'shiki',
-      shikiConfig: {
-        experimentalThemes: {
-          dark: 'material-theme-darker'
-        },
-        wrap: true
+    syntaxHighlight: 'shiki',
+    shikiConfig: {
+      experimentalThemes: {
+        dark: 'material-theme-darker'
       },
-      drafts: true
+      wrap: true
+    },
+    drafts: true
     }),
     sitemap({
-      entryLimit: 10000
+    entryLimit: 10000
     }),
-    tailwind()
+    tailwind(),
+    react(),
   ],
   output: 'server',
-  adapter: vercel()
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
 });

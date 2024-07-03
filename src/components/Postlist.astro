@@ -39,7 +39,9 @@ const category = categories.find((item) => item.slug === post.data.category) as 
   <a href={'/category/' + category.slug}>
     <Label theme={category.color}>{category.title}</Label>
   </a>
-  <h2 class='mt-2 text-lg font-semibold tracking-normal text-brand-primary dark:text-white'>
+  <h2
+    class='mt-2 text-lg line-clamp-2 overflow-hidden font-semibold tracking-normal text-brand-primary dark:text-white'
+  >
     <a href={'/posts/' + post.slug}>
       <span
         class='bg-gradient-to-r from-green-200 to-green-100 dark:from-purple-800 dark:to-purple-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]'
@@ -48,16 +50,6 @@ const category = categories.find((item) => item.slug === post.data.category) as 
       </span>
     </a>
   </h2>
-
-  <div class='hidden'>
-    {
-      post.data.desc && (
-        <p class='mt-2 text-sm text-gray-500 dark:text-gray-400 line-clamp-3'>
-          <a href={'/posts/' + post.slug}>{post.data.desc}</a>
-        </p>
-      )
-    }
-  </div>
 
   <div class='flex items-center mt-3 space-x-3 text-gray-500 dark:text-gray-400'>
     <div class='flex items-center gap-3'>
