@@ -12,7 +12,8 @@
       "@layouts/*": ["layouts/*"],
       "@assets/*": ["assets/*"],
       "@pages/*": ["pages/*"],
-      "@common/*": ["common/*"]
+      "@common/*": ["common/*"],
+      "@config/*": ["config/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"
