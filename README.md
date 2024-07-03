@@ -1,4 +1,4 @@
-## 🚀Hello World
+## 🚀Hello there
 
 **DevNow** 是一个能够精准捕捉科技与开发领域精华内容的平台。
 
@@ -40,14 +40,18 @@
 - ✅ Sitemap support
 - ✅ RSS Feed support
 - ✅ Draft mode
+- ✅ Search Post
+- ✅ Comments (Giscus)
 
 ## 迭代计划
 
 - 🆙 Share posts (Linkedin, twitter)
-- 🆙 Comments (Giscus)
 - 🆙 Pagination
 - 🆙 等待 Issue、Pr 中
-- 🆙 Search Post
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=laughingzhu/devnow&type=Date)](https://star-history.com/#laughingzhu/devnow&Date)
 
 **做大做强，再创辉煌！**
 
