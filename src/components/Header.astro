@@ -1,9 +1,8 @@
 ---
 import logoLight from '@assets/text-logo.svg';
 import logoDark from '@assets/text-logo-dark.svg';
-
 import { Image } from 'astro:assets';
-import { ThemeSwitch } from './ThemeSwitch';
+import ToggleTheme from './ToggleTheme.astro';
 
 interface Menu {
   label: string;
@@ -101,7 +100,7 @@ const mobilemenu: Menu[] = [...leftmenu, ...rightmenu];
         }
       </div>
       <div class='absolute md:right-8 right-1/2'>
-        <ThemeSwitch client:load />
+        <ToggleTheme />
       </div>
     </div>
     <div class='navmenu-toggle hidden'>

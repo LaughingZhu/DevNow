@@ -21,8 +21,6 @@
 
 - Astro
 - TypeScript
-- React
-- Shadcn/ui
 - Tailwind CSS
 - Mdx (大家在投稿时，可以有优先使用.mdx)
 - Vercel 部署

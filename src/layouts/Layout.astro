@@ -2,6 +2,7 @@
 import '@common/globals.css';
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
+import ThemeSwitch from '@components/ThemeSwitch.astro';
 import { checkImageUrl } from '@utils/all';
 import { SEO } from 'astro-seo';
 
@@ -62,6 +63,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     />
   </head>
   <body>
+    <ThemeSwitch />
     <Header />
     <slot />
     <Footer />
