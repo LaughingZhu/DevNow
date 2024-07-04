@@ -1,0 +1,19 @@
+---
+import Postlist from '@components/Postlist.astro';
+import TitlePage from '@components/TitlePage.astro';
+import { filterPostsByTag } from '@utils/content';
+import Container from '../../components/Container.astro';
+import Layout from '../../layouts/Layout.astro';
+
+const { tag = '' } = Astro.params;
+const posts = await filterPostsByTag(tag);
+---
+
+<Layout>
+  <Container>
+    <TitlePage title={tag} />
+    <div class='grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3'>
+      {posts.map((post) => <Postlist post={post} aspect='square' />)}
+    </div>
+  </Container>
+</Layout>

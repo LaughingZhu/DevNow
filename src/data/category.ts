@@ -15,18 +15,16 @@ export const categories: Props[] = [
       'Keep up with the latest tech trends and learn about the latest innovations in software development, hardware design, cybersecurity, and more.'
   },
   {
-    title: 'Personal',
-    slug: 'personal',
+    title: 'Book',
+    slug: 'book',
     color: 'green',
-    description:
-      'Discover tips and strategies for self-improvement, personal development, and achieving your goals, and find resources to help you grow as a person.'
+    description: 'Something about Books'
   },
   {
-    title: 'Design',
-    slug: 'design',
+    title: 'Blog',
+    slug: 'blog',
     color: 'purple',
-    description:
-      'Get insights and inspiration from the world of design, with articles covering graphic design, product design, interior design, and more.'
+    description: 'Something about Blog posts'
   },
   {
     title: 'DevNow',

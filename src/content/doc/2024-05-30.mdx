@@ -1,0 +1,138 @@
+---
+title: 'ComfyUI：等风来不如追风去'
+desc: '最近在逛 YouTube (后边发现B站也有)时刷到一个介绍生成黏土风格的 ComfyUi 工作流的视频，丑萌丑萌的feel感觉还挺好玩的，于是就开始研究如何自己部署玩一下。这篇文章会把我最近的学习过程总结下。'
+publishDate: '2024-05-30 21:39:36'
+image: 'https://cdn.laughingzhu.cn/bD__8hGBvqMinngRJ9ZR7.png'
+category: 'blog'
+author: 'LaughingZhu'
+tags: [Blog, AIGC]
+---
+
+# 背景
+
+最近在逛 [YouTube](https://www.youtube.com/watch?v=K919O8BCY_M) (后边发现[B站](https://www.bilibili.com/video/BV1Ns421N7Tt/?spm_id_from=333.999.0.0)也有)时刷到一个介绍生成黏土风格的 ComfyUi 工作流的视频，丑萌丑萌的feel感觉还挺好玩的，于是就开始研究如何自己部署玩一下。这篇文章会把我最近的学习过程总结下。
+
+# 前言
+
+随着人工智能技术的飞速发展，艺术创作领域也迎来了革命性的变化。AI 艺术，一种结合了机器学习和创意表达的新形式，正在逐渐改变我们对艺术的理解。在这一浪潮中，Stable Diffusion 作为一种先进的图像生成模型，为艺术家们提供了前所未有的创作自由度。然而，对于许多创作者来说，如何有效地利用这一技术仍然是一个挑战。
+
+这就是 ComfyUI 出现的原因。作为一个功能强大且高度模块化的 Stable Diffusion 图形用户界面和后端，ComfyUI 旨在简化 AI 艺术创作过程，让艺术家们能够专注于创意本身，而不是技术细节。通过直观的节点和流程图界面，ComfyUI 使得即使是没有编程背景的用户也能轻松设计和执行复杂的图像生成工作流。这种节点式的工作流方式对于像我这样的`研发人员`来说可能更加的优化，对流层的可控性和调试更加方便。
+
+# 正文
+
+> 本文只针对我的工作环境：
+> 电脑：Mac mini m2 系列
+
+## 1.安装 [PyTorch](https://developer.apple.com/metal/pytorch/) 环境
+
+```shell
+pip3 install --pre torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/nightly/cpu
+```
+
+## 2.克隆 ComfyUi仓库
+
+```shell
+git clone https://github.com/comfyanonymous/ComfyUI.git
+```
+
+## 3.安装依赖
+
+```shell
+cd ComfyUi
+pip install -r requirements.txt
+```
+
+## 4.run
+
+```shell
+python main.py
+```
+
+到这里 ComfyUi 就运行起来了，成功会显示一个 GUI 地址 `http://127.0.0.1:8188`。
+由于目前项目里是没有模型的，所以运行会报错，我们这里先不执行。
+
+# [插件](https://cdn.laughingzhu.cn/_w1gIS07fzNgC74nl1wFg.png)
+
+## 1.ComfyUI-Manager
+
+地址：https://github.com/ltdrdata/ComfyUI-Manager
+
+介绍：旨在增强 ComfyUI 的可用性。它提供了安装、删除、禁用和启用 ComfyUI 的各种自定义节点的管理功能。此外，此扩展还提供了集线器功能和便利功能，可在 ComfyUI 中访问各种信息。
+
+![DFKFAq4LSSLxhkPsaD6rL](https://cdn.laughingzhu.cn/DFKFAq4LSSLxhkPsaD6rL.png)
+
+## 2. comfyui-workspace-manager
+
+地址：https://github.com/11cafe/comfyui-workspace-manager
+
+介绍：ComfyUI 工作流程和模型管理器扩展，可在一个地方组织和管理所有工作流程、模型和生成的图像。在工作流程之间无缝切换，跟踪版本历史记录和图像生成历史记录，一键安装 Civit ai 的模型，浏览/更新已安装的模型。
+
+## 3. ComfyUI-WD14-Tagger
+
+插件：https://github.com/pythongosssss/ComfyUI-WD14-Tagger
+
+介绍：一个 ComfyUI 扩展，允许从图像中查询 booru 标签，支持标记和输出多个批处理输入。可搭配ipadapter一起食用，实现一键复刻目标图像。
+
+## 4. ComfyUI_InstantID
+
+地址：https://github.com/cubiq/ComfyUI_InstantID
+
+介绍：可以用来增强和转换人物肖像。它可以将人物肖像转换为各种艺术风格，例如水彩画、电影胶片、霓虹灯、丛林、火星、鲜艳色彩、雪景和线条艺术
+
+### 注意：
+
+ComfyUI_InstantID 这个插件比较特殊，需要 [下载 antelopev2](https://pan.quark.cn/s/620311713e95) 并将其解压到ComfyUI/models/insightface/models/antelopev2
+
+> 大部分插件的安装方式：
+>
+> cd ComfyUI/custom_nodes/
+>
+> git clone repo
+>
+> ## 具体的话看对应插件的 Readme
+
+## 模型
+
+### Lora模型
+
+位置：models/loras/
+
+1. https://civitai.com/models/208168/claymate-claymation-style-for-sdxl
+
+2. https://civitai.com/models/181962/doctor-diffusions-claymation-style-lora
+
+### SDXL3D模型
+
+位置：models/checkpoints/
+
+https://civitai.com/models/212426/disneyrealcartoonmix
+
+## 备注：
+
+**工作流地址**：https://openart.ai/workflows/sweetvalberry/characters-consistent-clay-style/fN6lYlSr5SawKZiBWlDs
+
+**注意：**
+
+针对这个工作流，作者改了一些模型的名字，这些是用到的四个模型文件的下载及放置目录信息：
+
+1. ip-adapter.bin
+
+在 https://huggingface.co/InstantX/InstantID/tree/main 下载ip-adapter.bin文件，放在\ComfyUI\models\instantid 目录
+
+2.  ControlNet_For_InstantID
+
+在 https://huggingface.co/InstantX/InstantID/tree/main/ControlNetModel 下载diffusion_pytorch_model.safetensors，改名为ControlNet_For_InstantID，放在ComfyUI\models\controlnet目录
+
+3. thibaud_xl_openpose
+
+在 https://huggingface.co/lllyasviel/sd_control_collection/tree/main 下载thibaud_xl_openpose.safetensors文件，放在ComfyUI\models\controlnet目录
+
+4. TencentARCt2i-adapter-depth-zoe-sdxl
+
+在 https://huggingface.co/TencentARC/t2i-adapter-depth-zoe-sdxl-1.0/tree/main 下载diffusion_pytorch_model.safetensors，改名为TencentARCt2i-adapter-depth-zoe-sdxl，放在ComfyUI\models\controlnet目录
+
+到这里需要我们手动安装的模型就完事了，重新 run 一下，进入GUI面板，我们导入 工作流的json，然后可能会看到缺少一些节点模型，这个时候我们在 ComfyUI-manmger中安装缺少的节点，安装好后 restart 后就可以正常执行了。
+
+效果图：
+
+![6YgGpujglEYgbFNgnTGgG](https://cdn.laughingzhu.cn/6YgGpujglEYgbFNgnTGgG.jpeg)

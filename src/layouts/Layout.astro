@@ -1,10 +1,12 @@
 ---
 import '@common/globals.css';
-import Footer from '@components/footer.astro';
-import Header from '@components/header.astro';
+import Analytics from '@components/Analytics.astro';
+import Footer from '@components/Footer.astro';
+import Header from '@components/Header.astro';
+import ThemeSwitch from '@components/ThemeSwitch.astro';
 import { checkImageUrl } from '@utils/all';
 import { SEO } from 'astro-seo';
-
+const PUBLIC_GOOGLE_ANALYTICS_ID = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
 interface Props {
   title?: string;
   desc?: string;
@@ -41,6 +43,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width' />
     <link rel='icon' type='image/svg+xml' href='/favicon.ico' />
+    <link rel='sitemap' href='/sitemap-index.xml' />
+    <link rel='alternate' type='application/rss+xml' title='DevNow' href={'/rss.xml'} />
+    <!-- faster docsearch https://docsearch.algolia.com/docs/DocSearch-v3#preconnect  -->
+    <link rel='preconnect' href='https://YOUR_APP_ID-dsn.algolia.net' crossorigin />
     <meta name='generator' content={Astro.generator} />
     <SEO
       title={makeTitle}
@@ -59,7 +65,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
       }}
     />
   </head>
+
   <body>
+    <ThemeSwitch />
     <Header />
     <slot />
     <Footer />
@@ -70,5 +78,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
         content-visibility: auto;
       }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <Analytics id={PUBLIC_GOOGLE_ANALYTICS_ID} />
   </body>
 </html>

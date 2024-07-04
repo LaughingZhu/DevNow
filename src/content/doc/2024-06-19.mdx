@@ -1,0 +1,107 @@
+---
+title: interface 和 type 的区别
+desc: TypeScript 中 interface 和 type 的区别呢？
+publishDate: '2024-06-19'
+image: https://cdn.laughingzhu.cn/g6avJhmH9FSuT6oltL3Nl.png
+category: blog
+author: LaughingZhu
+tags: [Blog, TypeScript]
+---
+
+在 TypeScript 中，interface 和 type 都用于定义数据类型，但它们之间有一些关键区别：
+
+# 一. 区别
+
+## 1.声明合并
+
+- interface 可以进行声明合并。这意味着你可以多次声明同一个 interface，TypeScript 会将它们合并成一个单一的声明。这对于逐步构建大型接口或扩展来自第三方库的接口非常有用。
+
+- type 不能进行声明合并。重复定义同一个 type 名称会导致错误。
+
+```javascript
+//示例：
+// 使用 interface 进行声明合并
+interface Point {
+	x: number;
+}
+interface Point {
+	y: number;
+}
+const p: Point = { x: 1, y: 2 }; // 正确
+
+// 使用 type 会报错
+type Point = {
+	x: number;
+};
+
+type Point = { // 错误：重复的标识符
+	'Point' y: number;
+};
+```
+
+## 2.表示方式
+
+- interface 只能定义对象类型
+- type 可以定义任何类型，包括：
+  - 对象类型
+  - 原始类型（string、number、boolean）
+  - 联合类型（如 string | number）
+  - 交叉类型
+    ```javascript
+    （如 {c: string } & { b:n umber }）
+    ```
+  - 元祖类型（如 [string, number]）
+  - 函数类型
+
+```javascript
+//示例：
+// 使用 type 定义各种类型
+type Name = string;
+type Age = number;
+type Person = { name: Name; age: Age };
+type StringOrNumber = string | number;
+type Callback = () => void;
+
+```
+
+## 3.可扩展性
+
+- interface 可以扩展。可以使用 extends 关键字扩展现有的 interface ,添加新的属性或者方法。
+- type 不能直接扩展。你可以使用交叉类型（&）或者组合多个类型，单这与接口扩展并不完全相同。
+
+```javascript
+// 使用 interface 扩展
+interface Animal {
+	name: string;
+}
+
+interface Dog extends Animal {
+	breed: string;
+}
+
+// 使用 type 组合类型
+type Animal = {
+	name: string;
+};
+
+type Dog = Animal & {
+	breed: string;
+};
+```
+
+# 2.场景
+
+通常，以下情况下建议使用 interface：
+
+- 定义描述对象的类型，特别是当需要进行声明合并或扩展时。
+- 与现有的 JavaScript 代码交互，因为对象字面量可以隐式地满足接口。
+
+以下情况下建议使用 type:
+
+- 表示非对象类型，例如联合类型、交叉类型或元组类型。
+- 创建类型别名，以提高代码可读性。
+- 需要更强大的类型操作，例如条件类型或映射类型。
+
+# 3.总结
+
+interface 和 type 都是强大的类型定义工具，选择哪一个取决于具体的场景和需求。在大多数情况下，interface 足以满足需求，但在需要更灵活或更强大的类型操作时，type 是更好的选择。

@@ -1,57 +1,23 @@
 ---
-import Container from '@components/container.astro';
 import logoLight from '@assets/text-logo.svg';
 import logoDark from '@assets/text-logo-dark.svg';
-
 import { Image } from 'astro:assets';
-import { ThemeSwitch } from './themeSwitch';
-
-interface Menu {
-  label: string;
-  href: string;
-  external?: boolean;
-  badge?: string;
-}
-const leftmenu: Menu[] = [
-  {
-    label: 'Home',
-    href: '/'
-  },
-  {
-    label: 'About',
-    href: '/about'
-  }
-];
-
-const rightmenu: Menu[] = [
-  {
-    label: 'Sponsor',
-    href: '/sponsor'
-  },
-  {
-    label: 'Github',
-    href: 'https://github.com/LaughingZhu/DevNow',
-    external: true,
-    badge: 'new'
-  }
-];
-
-const mobilemenu: Menu[] = [...leftmenu, ...rightmenu];
+import ToggleTheme from './ToggleTheme.astro';
+import Search from './Search.tsx';
+import { LEFT_MENU, MOBILE_MENU, RIGHT_MENU } from '@data/nav';
 ---
 
-<div
-  class={'container px-8 py-5 lg:py-8 mx-auto xl:px-5 max-w-screen-lg sticky top-[0] z-10 backdrop-blur-md shadow-sm'}
->
+<div class={'px-8 py-5 lg:py-8 w-full xl:px-5 sticky top-[0] z-10 backdrop-blur-md shadow-sm'}>
   <nav>
     <div class='flex flex-wrap justify-between md:gap-10 md:flex-nowrap'>
       <div
         class='flex-col items-center justify-start order-1 hidden w-full md:flex md:flex-row md:justify-end md:w-auto md:order-none md:flex-1'
       >
         {
-          leftmenu.map((item) => (
+          LEFT_MENU.map((item) => (
             <a
               href={item.href}
-              class='px-5 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500'
+              class='px-5 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-500'
             >
               {item.label}
             </a>
@@ -61,11 +27,11 @@ const mobilemenu: Menu[] = [...leftmenu, ...rightmenu];
 
       <div class='flex items-center justify-between w-full md:w-auto'>
         <a class='w-20 dark:hidden' href='/'>
-          <Image src={logoLight} alt='Logo' />
+          <Image src={logoLight} alt='Logo' loading={'eager'} />
         </a>
 
         <a class='hidden w-20 dark:block' href='/'>
-          <Image src={logoDark} alt='Logo' />
+          <Image src={logoDark} alt='Logo' loading={'eager'} />
         </a>
 
         <button
@@ -93,24 +59,25 @@ const mobilemenu: Menu[] = [...leftmenu, ...rightmenu];
         class='flex-col items-center justify-start order-2 hidden w-full md:flex md:flex-row md:w-auto md:flex-1 md:order-none'
       >
         {
-          rightmenu.map((item) => (
+          RIGHT_MENU.map((item) => (
             <a
               href={item.href}
-              class='px-5 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500'
+              class='px-5 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 dark:hover:text-blue-500 hover:text-blue-500'
             >
               {item.label}
             </a>
           ))
         }
       </div>
-      <div class='absolute md:right-0 right-1/2'>
-        <ThemeSwitch client:load />
+      <div class='absolute md:flex md:right-8 right-1/2 hidden'>
+        <Search client:only='react' />
+        <ToggleTheme />
       </div>
     </div>
     <div class='navmenu-toggle hidden'>
       <div class='flex flex-col items-center justify-start order-2 w-full md:hidden'>
         {
-          mobilemenu.map((item, index) => (
+          MOBILE_MENU.map((item) => (
             <a
               href={item.href}
               class='px-5 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500'

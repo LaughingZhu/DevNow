@@ -4,3 +4,5 @@ release/**
 public/**
 dist/**
 .vercel/**
+.husky/**
+commitlint.config.js

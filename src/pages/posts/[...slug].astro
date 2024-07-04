@@ -1,6 +1,6 @@
 ---
+import Comment from '@components/Comment.astro';
 import TableOfContents from '@components/TableOfContents.astro';
-import Container from '@components/container.astro';
 import Code from '@components/mdx/Code.astro';
 import SButton from '@components/mdx/MDButton.astro';
 import BlogPost from '@layouts/BlogPost.astro';
@@ -29,31 +29,22 @@ const { Content, remarkPluginFrontmatter, headings } = await post.render();
   headings={headings}
   readTime={remarkPluginFrontmatter.minutesRead}
 >
-  <div class='grid grid-cols-1 md:grid-cols-[20%_auto] gap-10 mt-8'>
+  <div class='flex mt-8 w-full'>
     <!-- aside -->
-    <aside class='md:flex flex-col gap-8 hidden'>
+    <aside class='md:flex flex-col w-[20%] hidden mr-10 flex-none'>
       <div class='sticky top-24 self-start hidden md:block transition-all duration-200'>
         {headings && headings.length > 0 && <TableOfContents {headings} />}
       </div>
     </aside>
-
-    <Container>
-      <article class='max-w-screen-md mx-auto'>
-        <div class='mx-auto my-3 prose prose-base dark:prose-invert prose-a:text-blue-600'>
+    <div class='flex-auto overflow-hidden'>
+      <article class='max-w-screen-2xl'>
+        <div class='my-3 prose-base dark:prose-invert prose-a:text-blue-600'>
           <div class='prose prose-lg md:prose-xl dark:prose-invert mb-12 min-w-full'>
             <Content components={{ pre: Code, SButton }} />
           </div>
+          <Comment />
         </div>
-
-        <!-- <div class='flex justify-center mt-7 mb-7'>
-          <a
-            href='/'
-            class='px-5 py-3 text-sm text-blue-600 transition rounded-md dark:text-blue-500 bg-blue-50 hover:bg-blue-100'
-          >
-            ← View all posts
-          </a>
-        </div> -->
       </article>
-    </Container>
+    </div>
   </div>
 </BlogPost>

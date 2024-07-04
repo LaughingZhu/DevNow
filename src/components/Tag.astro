@@ -5,9 +5,9 @@ export interface Props {
 const { tag } = Astro.props;
 ---
 
-<a href={`/tags/${tag.toLowerCase()}`} aria-label={tag}>
+<a href={`/tag/${tag.toLowerCase()}`} aria-label={tag}>
   <span
-    class='bg-indigo-600 font-semibold text-white dark:bg-indigo-900 dark:text-white shadow text-sm w-fit px-2 py-1 md:px-5 md:py-2 rounded-full'
+    class='bg-indigo-600 font-blod text-white dark:bg-indigo-900 dark:text-white shadow text-sm w-fit px-2 py-1 md:px-5 md:py-2 rounded-full'
   >
     {tag ?? 'Blog Tag'}
   </span>

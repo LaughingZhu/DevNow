@@ -3,9 +3,9 @@ import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '@layouts/Layout.astro';
 import Tag from '@components/Tag.astro';
 import type { MarkdownHeading } from 'astro';
-import { Image, Picture } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import FormattedDate from '@components/FormattedDate.astro';
-import Container from '@components/container.astro';
+import Container from '@components/Container.astro';
 import type { DOC_TYPE } from '../content/config';
 type Props = {
   id: CollectionEntry<'doc'>['id'];
@@ -21,7 +21,7 @@ const formatDesc = desc + ' | ' + headings?.map((item) => item?.text);
 
 <BaseLayout title={title} desc={formatDesc} image={image}>
   <Container>
-    <article class='min-w-full md:py-4 sm:max-w-none md:max-w-none'>
+    <article class='min-w-full px-8 md:py-4 sm:max-w-none md:max-w-none'>
       <header class='mb-3 flex flex-col justify-center items-center gap-6'>
         <div class='flex flex-col gap-2'>
           <div class='flex items-center justify-center gap-x-1'>
@@ -42,24 +42,25 @@ const formatDesc = desc + ' | ' + headings?.map((item) => item?.text);
         </div>
       </header>
 
-      <div class='relative z-0 max-w-screen-lg mx-auto overflow-hidden lg:rounded-lg aspect-video'>
+      <div
+        class='relative z-0 max-w-screen-2xl px-8 mx-auto overflow-hidden lg:rounded-lg aspect-video'
+      >
         {
           data.image && (
             <Picture
               src={data.image}
-              widths={[200, 400, 800]}
+              widths={[800]}
               sizes='(max-width: 640px) 90vw, 480px'
               width={1024}
               inferSize
               decoding={'async'}
               alt='Thumbnail'
               loading='eager'
-              class='rounded-md w-full max-h-[300px]  md:max-h-[500px] my-8 object-cover'
+              class='rounded-md shadow w-full max-h-[300px] md:max-h-[500px] my-8 object-cover'
             />
           )
         }
       </div>
-      <hr />
       <div>
         <slot />
       </div>
@@ -69,10 +70,7 @@ const formatDesc = desc + ' | ' + headings?.map((item) => item?.text);
 
 <script>
   const fnObserver = () => {
-    function handleIntersection(
-      entries: IntersectionObserverEntry[],
-      observer: IntersectionObserver
-    ) {
+    function handleIntersection(entries: IntersectionObserverEntry[]) {
       entries.forEach((entry) => {
         const index = document.querySelector(`aside a[href="#${entry.target.id}"]`);
 

@@ -1,0 +1,240 @@
+---
+title: JavaScript规范之CommonJS
+desc: CommonJS 规范的由来、模块化的实现和使用方法。
+publishDate: '2022-06-30'
+image: https://cdn.laughingzhu.cn/7955ed1d-ba75-4824-a404-1fc064449cec.png
+category: blog
+author: LaughingZhu
+tags: [Blog, JavaScript]
+---
+
+🤔🤔为什么模块很重要？
+
+随着技术的更新迭代，项目的复杂程度增加，功能模块化、可复用性变的越来越重要。而且有了模块，我们也可以站在别人的肩膀上开发，共享其它技术伙伴封装的功能模块，让开发在一定程度上简化了许多👨‍💻。
+
+**但是**：如果大家都想共用彼此封装的模块，就需要一套统一的规范，不然大家一人一个想法，一人一种方式，这样大家在使用起来就很容易乱套，于是[CommonJS ](http://javascript.ruanyifeng.com/nodejs/module.html)和 AMD 两个js相关的模块化规范就出现了。
+
+## CommonJs背景
+
+**Nodejs**的出现让JavaScript在服务端编程中可以大展身手，浏览器中没有模块化影响不是很大，因为早期的web项目复杂度相对不大，即使没有模块化依然可以很容易的实现，但是在服务端，都是一个一个的功能模块，这样也便于和操作系统和其它应用程序交互。所以可以说Nodejs的出现**加速**了"**JavaScript模块化编程**"的出现。
+
+## CommonJS规范
+
+Nodejs就是基于CommonJS规范去实现的，[维基百科](https://zh.wikipedia.org/wiki/CommonJS)中这样描述CommonJS。
+
+> CommonJS 是一个项目，其目标是为 JavaScript 在网页浏览器之外创建模块约定。创建这个项目的主要原因是当时缺乏普遍可接受形式的 JavaScript 脚本模块单元，模块在与运行JavaScript 脚本的常规网页浏览器所提供的不同的环境下可以重复使用。
+
+## CommonJS概述
+
+Node应用由模块组成，采用 CommonJS 模块规范。每个文件就是一个模块，有自己的作用域。在一个文件里面定义的变量、函数、类，都是私有的，对其他文件不可见。
+
+```javascript
+// example.js
+var x = 5;
+var addX = function (value) {
+  return value + x;
+};
+```
+
+上线代码中变量x和喊出addX是当前文件example.js私有的，其他文件不可见。如果想在多个文件分享变量们必须定义为global对象的属性。
+
+```javascript
+global.warning = true;
+```
+
+上面代码的warning变量可以被所有文件读取。但是这种写法很容易造成变量的值不按逻辑出现（类型局部变量和全局变量）。
+
+CommonJS规范规定，每个模块内部有两个变量可以使用，require和module。module变量代表当前模块，是一个对象，它的exports属性（及module.exports）是对外的接口即保存了当前模块要导出的接口或者变量，使用require加载的某个模块获取到的值就是那个模块使用exports导出的属性值。
+
+```javascript
+// example.js
+var x = 5;
+var addX = function (value) {
+  return value + x;
+};
+module.exports.x = x;
+module.exports.addX = addX;
+
+// main.js
+var example = require('./example.js');
+
+console.log(example.x); // 5
+console.log(example.addX(1)); // 6
+```
+
+上面代码example.js通过module.exports 输出变量 x 和函数 addX，在main.js 页面中通过require加载模块。
+
+## CommonJS之exports变量
+
+为了方便，Node为每个模块提供一个exports变量，指向module.exports。这等同于在每个模块头部，添加了一样这样的代码。
+
+```javascript
+var exports = module.exports;
+```
+
+造成的结果是，在对外输出模块接口时，可以直接向exports对象添加方法。
+
+```javascript
+exports.area = function (r) {
+  return Math.PI * r * r;
+};
+
+exports.circumference = function (r) {
+  return 2 * Math.PI * r;
+};
+```
+
+![v2-bb07cfbabecbda5ce54e0f3d0f7c3a17_1440w.jpg](https://cdn.laughingzhu.cn/v2-bb07cfbabecbda5ce54e0f3d0f7c3a17_1440w.jpg)
+**注意：不能直接将exports变量指向一个值，因为这样等于切断了exports于module.exports的联系。**
+
+![v2-84892ebe670d53a22c44a652923c18f2_1440w.jpg](https://cdn.laughingzhu.cn/v2-84892ebe670d53a22c44a652923c18f2_1440w.jpg)
+
+**这意味如果一个模块的对外接口是一个单一的值或者函数的话，不能使用exports输出，只能使用module.exports输出。**
+
+```javascript
+// example_1
+module.exports = function (x) {
+  console.log(x);
+};
+
+// example_2
+var name = 'morrain';
+module.exports = name;
+```
+
+## CommonJS之require变量
+
+Node使用CommonJS规范，内置的require命令用于加载模块文件。
+require命令的基本功能四读入并执行一个JavaScript文件，然后返回该模块的exports对象。如果没有发现该模块，会报错。
+
+```javascript
+// module.js
+var name = 'morrain';
+var age = 18;
+exports.name = name;
+exports.getAge = function () {
+  return age;
+};
+
+// main.js
+var a = require('a.js');
+console.log(a.name); // 'morrain'
+a.name = 'rename';
+var b = require('a.js');
+console.log(b.name); // 'rename'
+```
+
+**模块的缓存：**
+第一次加载某个模块时，Node会缓存该模块。以后再加载该模块，就直接从缓存取出该模块的module.exports属性。
+
+```javascript
+// a.js
+var name = 'morrain';
+var age = 18;
+exports.name = name;
+exports.getAge = function () {
+  return age;
+};
+// b.js
+var a = require('a.js');
+console.log(a.name); // 'morrain'
+a.name = 'rename';
+var b = require('a.js');
+console.log(b.name); // 'rename'
+```
+
+如上所示，第二次require加载模块A时，并没有重新加载并执行模块A。而是直接返回了第一次require的结果，也就是模块A的module.exports。
+
+![v2-c8ffb2894b275a7ad27f27a12378f57b_1440w.jpg](https://cdn.laughingzhu.cn/v2-c8ffb2894b275a7ad27f27a12378f57b_1440w.jpg)
+
+还有一点需要注意，CommonJs模块加载的机制是，输入的是对输出值的拷贝。也就是说，一旦输出一个值，模块内部的变化就影响不到这个值。
+
+```javascript
+// lib.js
+var counter = 3;
+function incCounter() {
+  counter++;
+}
+
+module.exports = {
+  counter: counter,
+  incCounter: incCounter
+};
+```
+
+上面代码输出内部变量counter和改写这个变量的内部方法incCounter。
+然后加载上面的模块。
+
+```javascript
+/ main.js
+var mod = require('./lib');
+
+console.log(mod.counter);  // 3
+mod.incCounter();
+console.log(mod.counter); // 3
+```
+
+上面代码说明counter输出之后，lib.js模块内部的变化就影响不到counter了。这是因为mod.counter是一个原始类型的值，会被缓存。除非写成一个喊出，才能获取到内部变动的值。修改身边lib.js文件如下：
+
+```javascript
+// lib.js
+var counter = 3;
+function incCounter() {
+  counter++;
+}
+module.exports = {
+  get counter() {
+    return counter
+  },
+  incCounter: incCounter,
+};
+
+
+// test，执行main.js 输出结果如下
+$ node main.js
+3
+4
+```
+
+## CommonJS实现
+
+了解了CommonJs的规范之后，不难发现我们在符合CommonJs规范的模块时，无外乎就是使用了require、exports、module三个东西，然后一个js文件就是一个模块。
+
+```javascript
+// a.js
+var name = 'lilei';
+var age = 15;
+exports.name = name;
+exports.getAge = function () {
+  return age;
+};
+
+// index.js
+var b = require('b.js');
+console.log('b.name=', b.name);
+```
+
+如果我们向一个立即执行函数提供 require、exports、module 三个参数，模块代码放在这个立即执行函数里面，模块的导出值放在 module.exports 中，这样就实现了模块的加载。如下：
+
+```javascript
+(function (module, exports, require) {
+  var name = 'lilei';
+  var age = 15;
+  exports.name = name;
+  exports.getAge = function () {
+    return age;
+  };
+})(module, module.exports, require);
+```
+
+知道这个原理后，我们就很容易写出符合CommonJS规范的代码模块，输出一些高品质的Nodejs库。
+
+---
+
+## 参考链接：
+
+[前端科普系列-CommonJS：不是前端却革命了前端](https://zhuanlan.zhihu.com/p/113009496)
+[CommonJS规范（alpha）](http://javascript.ruanyifeng.com/nodejs/module.html)
+[ECMAScript6入门](https://es6.ruanyifeng.com/#docs/module-loader)
+
+如有版权问题请联系我😑
