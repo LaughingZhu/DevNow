@@ -14,11 +14,12 @@ type Props = {
   readTime: string;
 };
 
-const { data, readTime } = Astro.props;
+const { data, readTime, headings } = Astro.props;
 const { title, desc, publishDate, image, tags } = data;
+const formatDesc = desc + ' | ' + headings?.map((item) => item?.text);
 ---
 
-<BaseLayout title={title} desc={desc} image={image}>
+<BaseLayout title={title} desc={formatDesc} image={image}>
   <Container>
     <article class='min-w-full px-8 md:py-4 sm:max-w-none md:max-w-none'>
       <header class='mb-3 flex flex-col justify-center items-center gap-6'>
