@@ -18,10 +18,10 @@ export const LEFT_MENU: Menu[] = [
   }
 ];
 export const RIGHT_MENU: Menu[] = [
-  {
-    label: 'Category',
-    href: '/category'
-  },
+  // {
+  //   label: 'Category',
+  //   href: '/category'
+  // },
   {
     label: 'Sponsor',
     href: '/sponsor'
