@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 
 export const latestPosts = (
   await getCollection('doc', ({ data }) => {
-    return data.draft !== true;
+    return import.meta.env.PROD ? data.draft !== true : true;
   })
 ).sort((a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf());
 

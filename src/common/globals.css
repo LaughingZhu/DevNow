@@ -57,6 +57,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: lxgw-wenkai;
   }
 
   html .shiki {

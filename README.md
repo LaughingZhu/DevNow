@@ -33,20 +33,18 @@
 - ✅ Markdown & MDX support
 - ✅ Syntax highlighting
 - ✅ Image optimization
-- ✅ Table of contents
 - ✅ Dark mode
-- ✅ Related posts
 - ✅ Copy code block
 - ✅ Sitemap support
 - ✅ RSS Feed support
 - ✅ Draft mode
 - ✅ Search Post
 - ✅ Comments (Giscus)
+- ✅ Pagination
 
 ## 迭代计划
 
 - 🆙 Share posts (Linkedin, twitter)
-- 🆙 Pagination
 - 🆙 等待 Issue、Pr 中
 
 ## Star History

@@ -5,5 +5,7 @@ export default {
   giscus: true,
   // use DocSearch?
   // doc: https://docsearch.algolia.com/docs/what-is-docsearch
-  search: true
+  search: true,
+  // pagntion 配置
+  pageSize: 18
 };

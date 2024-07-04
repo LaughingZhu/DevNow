@@ -1,41 +1,35 @@
 ---
 interface Props {
-  size?: "md" | "lg";
+  size?: 'md' | 'lg';
   block?: boolean;
-  style?: "outline" | "primary" | "inverted";
+  style?: 'outline' | 'primary' | 'inverted';
   class?: string;
   [x: string]: any;
 }
 
-const {
-  size = "md",
-  style = "primary",
-  block,
-  class: className,
-  ...rest
-} = Astro.props;
+const { size = 'md', style = 'primary', block, class: className, ...rest } = Astro.props;
 
 const sizes = {
-  md: "px-5 py-2.5",
-  lg: "px-6 py-3",
+  md: 'px-5 py-2.5',
+  lg: 'px-6 py-3'
 };
 
 const styles = {
-  outline: "border-2 border-black hover:bg-black text-black hover:text-white",
+  outline: 'border-2 border-black hover:bg-black text-black hover:text-white',
   inverted: 'inverted-style',
   primary:
-    "bg-black text-white hover:bg-gray-900  border-2 border-transparent dark:bg-white dark:text-black",
+    'bg-black text-white hover:bg-gray-900 border-2 border-transparent dark:bg-white dark:text-black'
 };
 ---
 
 <button
   {...rest}
   class:list={[
-    "rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200",
-    block && "w-full",
+    'rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200',
+    block && 'w-full',
     sizes[size],
     styles[style],
-    className,
+    className
   ]}
   ><slot />
 </button>
