@@ -7,7 +7,9 @@ import sentry from "@sentry/astro";
 import { defineConfig, squooshImageService } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
 import { remarkReadingTime } from './src/utils/all';
-const PUBLIC_SENTRY_DNS =  import.meta.env.PUBLIC_SENTRY_DNS
+const PUBLIC_SENTRY_DNS = import.meta.env.PUBLIC_SENTRY_DNS
+const PUBLIC_SENTRY_TOKEN = import.meta.env.PUBLIC_SENTRY_TOKEN
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://devnow.laughingzhu.cn',
@@ -49,10 +51,10 @@ export default defineConfig({
   react(),
   sentry({
     dsn: PUBLIC_SENTRY_DNS,
-      sourceMapsUploadOptions: {
-        project: "javascript-astro",
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-      },
+    sourceMapsUploadOptions: {
+      project: "javascript-astro",
+      authToken: PUBLIC_SENTRY_TOKEN,
+    },
   })],
   output: 'server',
   adapter: vercel({
