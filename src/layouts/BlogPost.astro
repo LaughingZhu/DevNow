@@ -20,7 +20,7 @@ const { title, desc, publishDate, image, tags } = data;
 
 <BaseLayout title={title} desc={desc} image={image}>
   <Container>
-    <article class='min-w-full md:py-4 sm:max-w-none md:max-w-none'>
+    <article class='min-w-full px-8 md:py-4 sm:max-w-none md:max-w-none'>
       <header class='mb-3 flex flex-col justify-center items-center gap-6'>
         <div class='flex flex-col gap-2'>
           <div class='flex items-center justify-center gap-x-1'>
@@ -41,7 +41,9 @@ const { title, desc, publishDate, image, tags } = data;
         </div>
       </header>
 
-      <div class='relative z-0 max-w-screen-lg mx-auto overflow-hidden lg:rounded-lg aspect-video'>
+      <div
+        class='relative z-0 max-w-screen-2xl px-8 mx-auto overflow-hidden lg:rounded-lg aspect-video'
+      >
         {
           data.image && (
             <Picture
