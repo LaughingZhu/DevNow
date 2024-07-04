@@ -9,7 +9,7 @@ import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-
 import { remarkReadingTime } from './src/utils/all';
 const PUBLIC_SENTRY_DNS = import.meta.env.PUBLIC_SENTRY_DNS
 const PUBLIC_SENTRY_TOKEN = import.meta.env.PUBLIC_SENTRY_TOKEN
-console.log(import.meta.env, '-------env')
+console.log(import.meta.env,process.env.SENTRY_AUTH_TOKEN,process.env.PUBLIC_SENTRY_TOKEN, '-------env')
 // https://astro.build/config
 export default defineConfig({
   site: 'https://devnow.laughingzhu.cn',
