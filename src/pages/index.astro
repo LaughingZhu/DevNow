@@ -1,7 +1,10 @@
 ---
+import Container from '@components/Container.astro';
+import Postlist from '@components/Postlist.astro';
+import ArrowUp from '@components/icons/ArrowUp.astro';
+import Button from '@components/ui/button.astro';
+import config from '@config/index';
 import { latestPosts } from '@utils/content';
-import Container from '../components/Container.astro';
-import Postlist from '../components/Postlist.astro';
 import Layout from '../layouts/Layout.astro';
 ---
 
@@ -16,8 +19,32 @@ import Layout from '../layouts/Layout.astro';
         }
       </div>
       <div class='grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3'>
-        {latestPosts.filter((item) => !item.data?.pin).map((post) => <Postlist post={post} />)}
+        {
+          latestPosts
+            .filter((item) => !item.data?.pin)
+            .slice(0, config.pageSize)
+            .map((post) => <Postlist post={post} />)
+        }
       </div>
+      {
+        latestPosts.length > config.pageSize && (
+          <div class='text-center mt-8'>
+            <Button>
+              <a
+                href='/page/2'
+                target='_blank'
+                class='flex font-bold justify-center items-center rounded-full hover:translate-x-1 transition-transform duration-150 ease-in-out gap-1 group'
+                rel='noopener noreferrer'
+              >
+                查看更多
+                <span class='group-hover:rotate-45 transition-transform duration-250 ease-in-out'>
+                  <ArrowUp width='18' height='18' />
+                </span>
+              </a>
+            </Button>
+          </div>
+        )
+      }
     </main>
   </Container>
 </Layout>
