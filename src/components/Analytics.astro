@@ -4,13 +4,12 @@ export interface Props {
 }
 
 const { id } = Astro.props;
-
 const gtagUrl = `https://www.googletagmanager.com/gtag/js?id=${id}`;
 ---
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src={gtagUrl}></script>
-<script define:vars={{ id }}>
+<script is:inline async src={gtagUrl}></script>
+<script is:inline define:vars={{ id }}>
   window.dataLayer = window.dataLayer || [];
   function gtag() {
     dataLayer.push(arguments);
