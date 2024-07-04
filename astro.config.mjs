@@ -3,10 +3,11 @@ import react from "@astrojs/react";
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel/serverless';
+import sentry from "@sentry/astro";
 import { defineConfig, squooshImageService } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
 import { remarkReadingTime } from './src/utils/all';
-
+const PUBLIC_SENTRY_DNS =  import.meta.env.PUBLIC_SENTRY_DNS
 // https://astro.build/config
 export default defineConfig({
   site: 'https://devnow.laughingzhu.cn',
@@ -31,8 +32,7 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['@astrojs/react-client']
   },
-  integrations: [
-    mdx({
+  integrations: [mdx({
     syntaxHighlight: 'shiki',
     shikiConfig: {
       experimentalThemes: {
@@ -41,17 +41,23 @@ export default defineConfig({
       wrap: true
     },
     drafts: true
-    }),
-    sitemap({
+  }),
+  sitemap({
     entryLimit: 10000
-    }),
-    tailwind(),
-    react(),
-  ],
+  }),
+  tailwind(),
+  react(),
+  sentry({
+    dsn: PUBLIC_SENTRY_DNS,
+      sourceMapsUploadOptions: {
+        project: "javascript-astro",
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+      },
+  })],
   output: 'server',
   adapter: vercel({
     webAnalytics: {
-      enabled: true,
-    },
-  }),
+      enabled: true
+    }
+  })
 });
