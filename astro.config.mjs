@@ -7,9 +7,9 @@ import sentry from "@sentry/astro";
 import { defineConfig, squooshImageService } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
 import { remarkReadingTime } from './src/utils/all';
-const PUBLIC_SENTRY_DNS = import.meta.env.PUBLIC_SENTRY_DNS
-const PUBLIC_SENTRY_TOKEN = import.meta.env.PUBLIC_SENTRY_TOKEN
-console.log(import.meta.env,process.env.SENTRY_AUTH_TOKEN,process.env.PUBLIC_SENTRY_TOKEN, '-------env')
+const PUBLIC_SENTRY_DNS = process.env.PUBLIC_SENTRY_DNS
+const PUBLIC_SENTRY_TOKEN = process.env.PUBLIC_SENTRY_TOKEN
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://devnow.laughingzhu.cn',
