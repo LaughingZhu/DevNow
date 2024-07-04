@@ -1,11 +1,12 @@
 ---
 import '@common/globals.css';
+import Analytics from '@components/Analytics.astro';
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
 import ThemeSwitch from '@components/ThemeSwitch.astro';
 import { checkImageUrl } from '@utils/all';
 import { SEO } from 'astro-seo';
-
+const PUBLIC_GOOGLE_ANALYTICS_ID = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
 interface Props {
   title?: string;
   desc?: string;
@@ -64,6 +65,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
       }}
     />
   </head>
+
   <body>
     <ThemeSwitch />
     <Header />
@@ -76,5 +78,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
         content-visibility: auto;
       }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <Analytics id={PUBLIC_GOOGLE_ANALYTICS_ID} />
   </body>
 </html>
