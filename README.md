@@ -66,21 +66,19 @@
 提供一个评论服务。
 
 - 1.状态
+  在 src/config 中配置 **giscus: true**
 
-在 src/config 中配置 **giscus: true**
-
-- 2.配置repo_id
-
-.env 中配置 **PUBLIC_GISCUS_REPO_ID、PUBLIC_GISCUS_REPO** 即可
-也可以在类似Vercel上配置相关的环境变量，[具体详情](https://vercel.com/docs/projects/environment-variables)
+- 2.配置环境变量
+  .env 中配置 **PUBLIC_GISCUS_REPO_ID、PUBLIC_GISCUS_REPO** 即可
+  也可以在类似Vercel上配置相关的环境变量，[具体详情](https://vercel.com/docs/projects/environment-variables)
 
 ### [DocSearch](https://docsearch.algolia.com/docs/what-is-docsearch)
 
 提供一个快捷的搜索服务。
 
 - 1.状态
+  在 src/config 中配置 **search: true**
 
-在 src/config 中配置 **search: true**
-
-.env 中配置 **PUBLIC_SEARCH_APP_ID、PUBLIC_SEARCH_API_KEY** 即可
-也可以在类似Vercel上配置相关的环境变量，[具体详情](https://vercel.com/docs/projects/environment-variables)
+- 2.配置环境变量
+  .env 中配置 **PUBLIC_SEARCH_APP_ID、PUBLIC_SEARCH_API_KEY** 即可
+  也可以在类似Vercel上配置相关的环境变量，[具体详情](https://vercel.com/docs/projects/environment-variables)

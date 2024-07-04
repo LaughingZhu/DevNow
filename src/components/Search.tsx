@@ -4,7 +4,6 @@ import { DocSearch } from '@docsearch/react';
 const apiKey = import.meta.env.PUBLIC_SEARCH_API_KEY;
 const apiId = import.meta.env.PUBLIC_SEARCH_APP_ID;
 function Search() {
-  console.log(import.meta.env, '---------env');
   return (
     <div className='mr-4 hidden lg:block'>
       {config.search && (
