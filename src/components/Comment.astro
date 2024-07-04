@@ -1,6 +1,7 @@
 ---
 import config from '@config/index';
 const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
+const repo = import.meta.env.PUBLIC_GISCUS_REPO;
 /**
  * doc: https://giscus.app/zh-CN
  * repo、repo-id 一定要替换
@@ -14,7 +15,7 @@ const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
       <script
         is:inline
         src='https://giscus.app/client.js'
-        data-repo='LaughingZhu/DevNow'
+        data-repo={repo}
         data-repo-id={repoId}
         data-category='Announcements'
         data-category-id='DIC_kwDOMOzD3M4Cgh6T'
