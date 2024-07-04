@@ -1,5 +1,4 @@
 import { defineCollection, z } from 'astro:content';
-
 const SCHEMA = z.object({
   title: z.string(),
   desc: z.string(),

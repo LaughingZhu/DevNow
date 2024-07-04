@@ -1,0 +1,72 @@
+---
+title: 给我的Blog加上灵魂：Comments
+desc: 最近基于Nextjs开发的blog框架基本成型了，但是缺少了一个灵魂：没有评论。这篇文章就是给我的blog加上灵魂Comment。
+publishDate: '2023-12-24'
+category: blog
+author: LaughingZhu
+image: https://cdn.laughingzhu.cn/538fb88d-3a5a-457a-bf14-1d00e039b19b.png
+tags: [Blog, Giscus]
+---
+
+## 前言
+
+Blog在经历了断断续续一月左右的时间后，终于有了一个比较完整的框架，但是还是缺少了一个灵魂：没有评论。作为一个blog平台，除了记录自己的学习笔记外，还有一个重要的功能就是让读者可以评论，这样可以让读者和作者进行交流，也可以让作者知道自己的文章有没有问题，有没有不足的地方，这样可以让作者更好的去改进自己的文章。
+
+考虑到不想搞服务端的评论系统，所以就选择了第三方的评论系统，这样可以省去很多的麻烦，而且也可以让评论系统更加专注于评论，而不是去搞一些其他的东西，比如数据库，用户系统等等。然后就看到了基于 [giscus](https://giscus.app/zh-CN) GitHub Discussions 的评论系统，这个评论系统的好处就是可以让用户直接使用GitHub账号进行评论，这样就不需要用户去注册一个新的账号，而且GitHub账号的评论也可以让作者更加方便的去回复，这样就可以让评论更加的活跃。
+
+## 如何使用giscus？
+
+### 仓库
+
+选择 giscus 连接到的仓库。请确保：
+
+1. 该仓库是[公开的](https://docs.github.com/en/github/administering-a-repository/managing-repository-settings/setting-repository-visibility#making-a-repository-public)，否则访客将无法查看 discussion
+2. [giscus app](https://github.com/apps/giscus) 已安装，否则访客将无法评论和回应
+3. Discussions 功能已在[你的仓库中启用](https://docs.github.com/en/github/administering-a-repository/managing-repository-settings/enabling-or-disabling-github-discussions-for-a-repository)。
+
+> 请注意，如果你的仓库是私有的，你需要将 giscus app 添加为仓库的协作者。如果你的仓库是公开的，你可以跳过这一步。
+
+### 页面 ↔️ discussion 映射关系
+
+![abea5b27-8482-407c-bc0b-9f5fe379a058](https://cdn.laughingzhu.cn/abea5b27-8482-407c-bc0b-9f5fe379a058.png)
+
+giscus 评论系统将根据页面的 URL 映射到仓库中的 discussion。
+
+> 如果你的页面是 https://blog.laughingzhu.cn/detail/1 的加。那么对应的discussion就是 detail/1。
+
+### Discussion 分类
+
+> 选择新 discussions 所在的分类。 推荐使用公告（announcements）类型的分类，以确保新 discussion 只能由仓库维护者和 giscus 创建。
+
+![dddf3900-3e73-4be5-af10-b2dcbabd3628](https://cdn.laughingzhu.cn/dddf3900-3e73-4be5-af10-b2dcbabd3628.png)
+
+### 主题
+
+> 根据喜好选择对应的评论主题。
+> ![7a1ec6a6-c9b3-44ca-a44f-ad2e86861657](https://cdn.laughingzhu.cn/7a1ec6a6-c9b3-44ca-a44f-ad2e86861657.png)
+
+### 启用 giscus
+
+> 在你想让评论出现的位置添加以下标签。但如果已经存在带有 giscus 类的元素，则评论会被放在那里。
+
+```html
+<script
+  src="https://giscus.app/client.js"
+  data-repo="LaughingZhu/blog"
+  data-repo-id="MDEwOlJlcG9zaXRvcnkzNzkzMDMxMTg="
+  data-category="[在此输入分类名]"
+  data-category-id="[在此输入分类 ID]"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async
+></script>
+```
+
+接下来运行一下，就可以看到评论系统已经出现了。下边是我的评论系统的样子。这样一个简单的偏静态的评论系统就完成了。收工😄！
+![b9e90e10-1919-4604-9024-d78951f67c7e](https://cdn.laughingzhu.cn/b9e90e10-1919-4604-9024-d78951f67c7e.png)

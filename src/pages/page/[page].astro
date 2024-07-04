@@ -1,0 +1,31 @@
+---
+import Container from '@components/Container.astro';
+import Pagntion from '@components/Pagntion.astro';
+import Postlist from '@components/Postlist.astro';
+import TitlePage from '@components/TitlePage.astro';
+import config from '@config/index';
+import Layout from '@layouts/Layout.astro';
+
+import { latestPosts } from '@utils/content';
+import { type Page } from 'astro';
+const { page } = Astro.props as { page: Page };
+// 在 server 模式中选择加入预渲染
+export const prerender = true;
+// 将与上一个示例相同的 { astronaut } 对象进行分页
+export async function getStaticPaths({ paginate }: any) {
+  const docs = latestPosts;
+  return paginate(docs, { pageSize: config.pageSize });
+}
+---
+
+<Layout>
+  <Container>
+    <TitlePage title={`第 ${page.currentPage} 页`} />
+    <main>
+      <div class='grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3'>
+        {page.data.map((post) => <Postlist post={post} />)}
+      </div>
+    </main>
+    <Pagntion page={page} />
+  </Container>
+</Layout>

@@ -14,7 +14,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        body: ['Manrope', ...defaultTheme.fontFamily.sans]
+        sans: ['lxgw-wenkai', ...defaultTheme.fontFamily.sans]
       },
       gridTemplateColumns: {
         list: 'repeat(auto-fill, minmax(400px, max-content))'
@@ -58,6 +58,9 @@ module.exports = {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
+      },
+      aspectRatio: {
+        '3/2': '3 / 2'
       },
       keyframes: {
         'accordion-down': {

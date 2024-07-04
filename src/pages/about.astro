@@ -1,0 +1,57 @@
+---
+import Container from '../components/Container.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title='关于'>
+  <Container>
+    <main
+      class='flex flex-col justify-start items-start px-8 py-5 lg:py-8 mx-auto xl:px-20 max-w-screen-lg'
+    >
+      <h1 class='text-3xl md:text-4xl py-5'>🚀Hello World!</h1>
+      <div class='flex-auto leading-normal'>
+        DevNow
+        是一个致力于为开发者和科技爱好者提供高质量内容的周刊网站。我们深知你的时间宝贵，因此每周都会精心筛选并汇总近期最值得关注的科技新闻、开发趋势、实用工具和技术深度解析，将它们浓缩成一篇内容丰富、易于消化的周刊，助你轻松掌握行业动态。
+        我们致力于打造一个 轻量级、高效率
+        的内容平台，让科技与开发领域的动态快速、准确地呈现在你的面前。
+      </div>
+      <a href='https://github.com/LaughingZhu/DevNow' target='_blank' rel='noopener noreferrer'>
+        <picture>
+          <source
+            media='(prefers-color-scheme: light)'
+            srcset='
+              https://api.star-history.com/svg?repos=laughingzhu/devnow&type=Date
+            '
+          />
+          <img
+            alt='repo-devnow'
+            src='https://api.star-history.com/svg?repos=laughingzhu/devnow&type=Date'
+          />
+        </picture>
+      </a>
+
+      <h1 class='text-3xl md:text-4xl py-5'>支持的功能</h1>
+      <ul class='leading-normal'>
+        <li>✅ Minimal styling</li>
+        <li>✅ Mobile responsive</li>
+        <li>✅ SEO-friendly with canonical URLs and OpenGraph data</li>
+        <li>✅ Markdown & MDX support</li>
+        <li>✅ Syntax highlighting</li>
+        <li>✅ Image optimization</li>
+        <li>✅ Dark mode</li>
+        <li>✅ Copy code block</li>
+        <li>✅ Sitemap support</li>
+        <li>✅ RSS Feed support</li>
+        <li>✅ Draft mode</li>
+        <li>✅ Comments(Giscus)</li>
+        <li>✅ Search Post</li>
+        <li>✅ Pagination</li>
+      </ul>
+      <h1 class='text-3xl md:text-4xl py-5'>迭代计划</h1>
+      <ul class='leading-normal'>
+        <li>🆙 等待 Issue、Pr 中</li>
+      </ul>
+      <div class='pt-[20px] text-xl'>支持 DevNow 就给俺来个Star吧！</div>
+    </main>
+  </Container>
+</Layout>

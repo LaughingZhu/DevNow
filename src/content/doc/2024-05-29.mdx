@@ -1,0 +1,24 @@
+---
+title: Iconfont 颜色之迷
+desc: 为什么别人都可以改icon的颜色，你不行。我：？。
+publishDate: '2024-05-29 21:39:36'
+image: 'https://cdn.laughingzhu.cn/ItP2R3DtEuVyl4h0gTywn.jpg'
+category: 'blog'
+author: 'LaughingZhu'
+tags: [Blog, AIGC]
+---
+
+项目开发中一直用的是阿里的Iconfont图标，公司的设计给的icon个格式就是正常的，可以正常自定义颜色；在开发我自己的博客中，发现我自己添加的icon是不可以改颜色。
+
+![PMhZTASidehIPAoUetQva](https://cdn.laughingzhu.cn/PMhZTASidehIPAoUetQva.png)
+
+这里需要主要的是如果 svg path 中 已经有fill = '' 填充颜色就不可以自己通过指定color来修改了
+
+如设计给的不同的是，设计给的是单色图标
+
+# 解决方案：
+
+我们可以在Iconfont中统一抹掉icon的颜色，变成可以自定义的icon。
+这里需要注意的如果项目中icon数量比较多的话，需要谨慎操作，可以慢慢修改，从新添加的icon来修改迭代，不然容易出现线上问题。
+
+![u30QTg8PZqXus1KbogY7g](https://cdn.laughingzhu.cn/u30QTg8PZqXus1KbogY7g.png)

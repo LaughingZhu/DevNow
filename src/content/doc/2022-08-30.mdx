@@ -1,0 +1,159 @@
+---
+title: 浏览器的缓存机制
+desc: 深度分析浏览器缓存机制，了解其核心的方式和使用规则
+publishDate: '2022-08-30'
+image: https://cdn.laughingzhu.cn/3dd7f7c9-15e5-4cf3-85fa-eec8b0b1cbac.png
+category: blog
+author: LaughingZhu
+tags: [Blog, Browser]
+---
+
+浏览器的缓存机制也就是我们说的HTTP缓存机制，其机制是根据HTTP报文的缓存标识进行的，而HTTP报文分为两种：
+
+1. **HTTP请求报文（Request**）：
+
+1. 格式：请求行-HTTP头（通用信息头、通用信息头、实体头）-请求报文主体（只有POST才有报文主体），图入下：![image.png](https://cdn.laughingzhu.cn/1585307370708-e8d70f78-bde1-4660-84e2-baaf2dc56563.png)
+
+1. **HTTP响应报文（Response**）：
+
+1. 格式：状态行-HTTP头（通用信息头、响应头、实体头）-响应报文主体，图如下：![image.png](https://cdn.laughingzhu.cn/1585307548800-ac30c245-c29b-425e-a0ca-878d459d48dd.png)![image.png](https://cdn.laughingzhu.cn/1585307594264-88408b71-42fa-4484-b18d-85bf479a016f.png)
+
+🐷：
+通用信息头指的是请求和响应报文都支持的头域，分别为Cache-Control、Connection、Date、Pragma、Transfer-Encoding、Upgrade、Via；
+实体头则是实体信息的实体头域，分别为Allow、Content-Base、Content-Encoding、Content-Language、Content-Length、Content-Location、Content-MD5、Content-Range、Content-Type、Etag、Expires、Last-Modified、extension-header。这里只是为了方便理解，将通用信息头，响应头/请求头，实体头都归为了HTTP头。
+
+## 缓存过程分析
+
+浏览器与服务器通信的方式为应答模式，即使：**浏览器发起HTTP请求-服务器响应该请求**。那么浏览器第一次向服务器发起该请求后拿到请求结果，会根据响应报文中HTTP头的缓存标识决定是否缓存结果，如果是则将请求结果和缓存标识存入浏览器缓存中，简单的过程入下图：
+![image.png](https://cdn.laughingzhu.cn/1585319552781-fd04308a-9620-4a56-bf07-8ff5466933e0.png)
+
+由上图我们可以知道：
+
+- 浏览器每次发起请求，都会在浏览器缓存中查找该请求的结果以及缓存标识
+- 浏览器每次拿到返回的请求结果都会将该结果和缓存标识存入浏览器缓存中
+
+以上两点结论就是浏览器缓存机制的关键，它确保了每个请求的缓存存入和读取，只要我们再理解浏览器缓存的使用规则，那么浏览器缓存也就没什么难度了。为了方便大家理解，这里根据是否需要向服务器重新发起HTTP请求将缓存过程分为了两个部分：**\*强制缓\*\***存\*\*\*和**_协商缓存。_**
+\_
+
+### 强制缓存
+
+强制缓存就是向浏览器缓存查找该请求结果，并根据该结果的缓存规则决定是否使用该缓存结果的过程，强制缓存的请过主要有三种（暂不分析协商缓存），分析如下：
+
+1. **不存在该缓存结果和缓存标识，强制缓存失效，则直接向服务器发起请求（跟第一次发起请求一致）**，如下图：![image.png](https://cdn.laughingzhu.cn/1585321335597-6881ff9c-bddf-45ce-8146-73c30e2c26c5.png)
+
+2. **存在该缓存的结果和缓存标识，但是该结果已经失效，则使用协商缓存（暂不分析），**如下图：![image.png](https://cdn.laughingzhu.cn/1585321508537-3d67b7ec-3e83-4089-b49b-c3ff1a7b8a4d.png)
+
+3. **存在该缓存结果，且该结果尚未失效，强制缓存生效，直接返回该结果（这时不会发起HTTP请求）**，如下图：![image.png](https://cdn.laughingzhu.cn/1585321587820-c3637aa1-b46a-47ad-bab5-e27130968ba8.png)
+
+> 那么强制缓存的缓存规则是什么？
+
+当浏览器想服务器发起请求时，服务器会将缓存规则放入HTTP响应报文的HTTP头中和请求结果一起返回给浏览器，控制强制缓存的字段分别是Expires和Cache-Control,其中**_优先级 _**Cache-Control **>>** Expires
+
+**Expires**
+**
+Expires是HTTP/1.0控制网页缓存的字段，其值为服务器返回**该请求结果缓存的到期时间，\*\*即再次发送该请求时，如果客户端的时间小于Expires的值时，直接使用缓存结果。
+
+> Expires是HTTP/1.0的字段，但是现在浏览器默认使用的是HTTP/1.1，那么在HTTP/1.1中网页缓存还是否由Expires控制？
+
+到了HTTP/1.1，Expires已经被Cache-Control替代，原因在于Expires控制缓存的原理是使用客户端的时间与服务端返回的时间做对比，那么如果客户端与服务端的时间因为某些**原因**（例如时区不同、客户端和服务端有一段的时间不准确）发生误差，那么强制缓存则会直接失效，这样的话强制缓存的存在则毫无意义，那么Cache-Control又是怎么控制的呢？
+
+**Cache-Control**
+\*\*
+在HTTP/1.0中，Cache-Control是最重要的规则，主要用于控制网页缓存，主要取值为：
+
+- public：所有内容都将被缓存（客户端和代理服务器都可缓存）
+
+- private：所有内容只有客户端可以缓存，Cache-Control的默认值
+
+- no-cache：客户端缓存内容，但是是否使用缓存则需要经过协商缓存来验证决定
+
+- no-store：所有内容都不被缓存，即不使用强制缓存，也不使用协商缓存
+
+- max-age=xxx（xxx is number）：缓存内容将在xxx秒后失效
+
+看个栗子，如下：
+![image.png](https://cdn.laughingzhu.cn/1585323159249-cae6c796-0d8f-4736-9417-910d8a33a2c6.png)
+
+由上面的例子我们知道：
+
+- HTTP响应中Expires的时间值，是一个绝对值
+- HTTP响应报文中Cache-Control为max-age=600，是相对值
+
+由于Cache-Control的优先级比expires高，那么直接根据Cache-Control的值进行缓存，意思就是说在600s内再次发起该请求，则会直接使用缓存结果，强制缓存生效。
+
+🐷：在无法确定客户端的时间是否与服务端的时间同步的情况下，Cache-Control相比于Expires是更好的选择，所以同时存在是，只有Cache-Control生效。
+
+了解强制缓存的过程后，我们拓展性的思考一下：
+
+> 浏览器的缓存存放在哪里，如何在浏览器中判断强制缓存是否生效？
+
+![image.png](https://cdn.laughingzhu.cn/1585323556988-730be6b4-9e94-4001-8ce3-8ef9b11a34bb.png)
+
+代码为灰色的请求代表使用了强制缓存，请求对应的Size值则代表改缓存存放的位置，分别为from memory cache 和from disk cache
+
+> 那么from memory cache 和 from disk cache又分别代表的是什么呢？什么时候会使用from disk cache，什么时候会使用from memory cache呢？
+
+from memory chace 代表使用内存中的缓存，from disk cache 代表使用硬盘中的缓存，**浏览器读取缓存的顺序**为 memory > disk。
+
+虽然我已经直接把结论说出来了，但是相信有不少人对此不能理解，那么接下来我们一起详细分析一下缓存读取问题，这里仍让以我的博客为例进行分析：
+
+访问https://heyingye.github.io/ –> 200 –> 关闭博客的标签页 –> 重新打开https://heyingye.github.io/ –> 200(from disk cache) –> 刷新 –> 200(from memory cache)
+
+过程如下：
+
+- 访问https://heyingye.github.io/
+  ![image.png](https://cdn.laughingzhu.cn/1585324002636-99f1b33f-0c91-4f24-bb92-7ba280435dff.png)
+
+- 关闭博客的标签页
+- 重新打开https://heyingye.github.io/
+
+![image.png](https://cdn.laughingzhu.cn/1585324033373-617c1b89-74a4-4326-83c8-cd29ff7f1a59.png)
+
+- 刷新
+  ![image.png](https://cdn.laughingzhu.cn/1585324085411-a1143a13-20d1-4c1d-b35d-197dc8bae22d.png)
+
+> 看到这里可能有人小伙伴问了，最后一个步骤刷新的时候，不是同时存在着from disk cache和from memory cache吗？
+
+对于这个问题，我们需要了解内存缓存（from memory cache）和硬盘缓存（from disk cache），如下：
+
+- **内存缓存**（
+  from memory cache）具有两个特点，分别是快速读取和实效性。
+  1.  _快速读取_：内存缓存会将编译解析后的文件，直接存入该进程的内存中，占据改进程一定的内存资源，以方便下次运行使用时的快速读取。
+  2.  _实效性_：一旦该进程关闭，该进程的内存则会清空（例如浏览器标签的关闭，一个标签即可以视为一个进程）。
+- **硬盘缓存**（from disk cache）：硬盘缓存则是直接将缓存写入硬盘文件中，读取缓存需要对该缓存存放的硬盘文件进行I/O操作，然后重新解析该缓存内容，读取复杂，速度比内存缓存慢。
+
+在浏览器中，浏览器会在**js和图片等文件**解析执行后直接存入内存缓存中，那么当刷新页面时只需直接从内存缓存中读取(from memory cache)；**而css文**件则会存入硬盘文件中，所以每次渲染页面都需要从硬盘读取缓存(from disk cache)
+
+### 协商缓存
+
+协商缓存就是强制缓存失效后，浏览器携带缓存标识向服务器发起请求，由服务器根据缓存标识决定是否使用缓存的过程，主要有以下两种情况：
+
+1. 协商缓存生效，返回304，如下：![image.png](https://cdn.laughingzhu.cn/1585324671645-dc083416-674f-4f31-a5c1-7fed415451b4.png)
+
+2. 协商缓存失效，返回200和请求结果结果，如下：![image.png](https://cdn.laughingzhu.cn/1585324701352-95b2f9c7-cb64-4752-b295-3d2bef5b310c.png)
+
+同样，协商缓存的标识也是在响应报文的HTTP头中和请求结果一起返回给浏览器的，**_控制协商缓存的字段_**分别有：Last-Modified / If-Modified-Since  和   Etag / If-None-Match，其中Etag / If-None-Match的 **优先级 **比Last-Modified / If-Modified-Since高。
+
+#### Last-Modified / If-Modified-Since
+
+Last-Modified是服务器响应请求时，返回该资源文件在服务器最后被修改的时间，如下：
+
+![image.png](https://cdn.laughingzhu.cn/1585324788792-8063f2fb-35b5-4f16-afe8-14a69e36200f.png)
+
+If-Modified-Since则是客户端再次发起该请求时，携带上次请求返回的Last-Modified值，通过此字段值告诉服务器该资源上次请求返回的最后被修改时间。服务器收到该请求，发现请求头含有If-Modified-Since字段，则会根据If-Modified-Since的字段值与该资源在服务器的最后被修改时间做对比，若服务器的资源最后被修改时间大于If-Modified-Since的字段值，则重新返回资源，状态码为200；否则则返回304，代表资源无更新，可继续使用缓存文件，如下：![image.png](https://cdn.laughingzhu.cn/1585324839383-de2598ab-9689-4aa0-ab66-02fa40c7407a.png)
+
+#### Etag / If-None-Match
+
+Etag是服务器响应请求时，返回当前资源文件的一个唯一标识(由服务器生成)，如下：![image.png](https://cdn.laughingzhu.cn/1585324876020-ad7d080c-7863-4921-b998-8b27c9f5c8d1.png)
+
+If-None-Match是客户端再次发起该请求时，携带上次请求返回的唯一标识Etag值，通过此字段值告诉服务器该资源上次请求返回的唯一标识值。服务器收到该请求后，发现该请求头中含有If-None-Match，则会根据If-None-Match的字段值与该资源在服务器的Etag值做对比，一致则返回304，代表资源无更新，继续使用缓存文件；不一致则重新返回资源文件，状态码为200，如下：![image.png](https://cdn.laughingzhu.cn/1585325045558-8356b67d-8a1d-4dce-b847-4fed7cf48aa8.png)
+
+🐷：**Etag / If-None-Match优先级高于Last-Modified / If-Modified-Since**，同时存在则只有Etag / If-None-Match生效。
+
+**总结：**
+
+强制缓存优先于协商缓存，若强制缓存（Expires和Cache-Control）生效则直接使用缓存，若不生效则进行协商缓存（Last-Modified / if-Modified-Since 和 Etag / if-None-Match），协商缓存由服务器决定是否使用缓存，若协商缓存失效，即代表该请求的缓存失效，重新获取请求结果，再次存入浏览器中；生效则返回304，继续使用缓存，主要过程如下：
+![image.png](https://cdn.laughingzhu.cn/1585325318983-034cd990-a455-498a-9e5a-a31287d0e8dd.png)
+
+本文作者：@叶河英原文：
+https://heyingye.github.io/2018/04/16/彻底理解浏览器的缓存机制/

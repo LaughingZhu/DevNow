@@ -1,8 +1,10 @@
-## 🚀Hello World!
+## 🚀Hello there
 
 **DevNow** 是一个能够精准捕捉科技与开发领域精华内容的平台。
 
 我们致力于打造一个 **轻量级、高效率** 的内容平台，让科技与开发领域的动态快速、准确地呈现在你的面前。
+
+官网直达： <https://devnow.laughingzhu.cn/>
 
 ## Who am i?
 
@@ -19,8 +21,6 @@
 
 - Astro
 - TypeScript
-- React
-- Shadcn/ui
 - Tailwind CSS
 - Mdx (大家在投稿时，可以有优先使用.mdx)
 - Vercel 部署
@@ -33,24 +33,50 @@
 - ✅ Markdown & MDX support
 - ✅ Syntax highlighting
 - ✅ Image optimization
-- ✅ Table of contents
 - ✅ Dark mode
-- ✅ Related posts
 - ✅ Copy code block
+- ✅ Sitemap support
+- ✅ RSS Feed support
+- ✅ Draft mode
+- ✅ Search Post
+- ✅ Comments (Giscus)
+- ✅ Pagination
 
 ## 迭代计划
 
-- 🆙 Sitemap support
-- 🆙 RSS Feed support
 - 🆙 Share posts (Linkedin, twitter)
-- 🆙 Draft mode
-- 🆙 Comments (Giscus)
-- 🆙 Pagination
 - 🆙 等待 Issue、Pr 中
-- 🆙 Search Post
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=laughingzhu/devnow&type=Date)](https://star-history.com/#laughingzhu/devnow&Date)
 
 **做大做强，再创辉煌！**
 
 **欢迎投稿、加入 DevNow 社区，与我们一起探讨科技的未来！**
 
 **支持 DevNow 就给俺来个Star吧！**
+
+## 相关配置
+
+### [Giscus](https://giscus.app/zh-CN)
+
+提供一个评论服务。
+
+- 1.状态
+  在 src/config 中配置 **giscus: true**
+
+- 2.配置环境变量
+  .env 中配置 **PUBLIC_GISCUS_REPO_ID、PUBLIC_GISCUS_REPO** 即可
+  也可以在类似Vercel上配置相关的环境变量，[具体详情](https://vercel.com/docs/projects/environment-variables)
+
+### [DocSearch](https://docsearch.algolia.com/docs/what-is-docsearch)
+
+提供一个快捷的搜索服务。
+
+- 1.状态
+  在 src/config 中配置 **search: true**
+
+- 2.配置环境变量
+  .env 中配置 **PUBLIC_SEARCH_APP_ID、PUBLIC_SEARCH_API_KEY** 即可
+  也可以在类似Vercel上配置相关的环境变量，[具体详情](https://vercel.com/docs/projects/environment-variables)
