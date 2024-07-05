@@ -1,0 +1,141 @@
+---
+title: 'React 为什么将 Effects list 重构为 SubtreeFlags 的原因'
+desc: 'DevNow：React 为什么将 Effects list 重构为 SubtreeFlags 的原因'
+publishDate: '2024-07-04 21:39:36'
+image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=3570&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+category: 'blog'
+author: 'LaughingZhu'
+tags: [Blog, React]
+---
+
+## 1.前言
+
+在 React 的 completeWork 流程中大体包含两个流程步骤：
+
+1. 创建或者标记元素更新。
+2. flags冒泡
+
+## 2.什么是副作用
+
+简易的`React`工作原理可以概括为：
+
+1. 触发`更新`
+2. render阶段：计算`更新`会造成的`副作用`
+3. commit阶段：执行`副作用`
+
+`副作用`包含很多类型，比如：
+
+- `Placement`指`DOM节点的插入与移动`
+- `Passive`指`useEffect`回调执行
+- `ChildDeletion`指移除子`DOM节点`
+- 等等
+
+更新造成 `DOM` 变化主要就是`Placement`、`ChildDeletion`在起作用。
+
+那么`render阶段`如何保存`副作用`，`commit阶段`又是如何使用`副作用`的呢？
+
+## 3.Flags 冒泡
+
+当更新流程进过 Reconciler 后，会得到一棵 `WipFIberTree`，其中部分 `fiberNode` 被标记 flags。`Renderer` 需要对 ”被标记的 fiberNode 对应的DOM 元素“ 执行 ”flags 对应的 DOM 操作“。那么如何高效的找到这些散落在 `WipFiberTree` 各处的”被标记的 `fiberNode` “呢？这就是 flags 冒泡作用。
+
+### v16 Effects List
+
+在 React v.16 中使用一种被称为 `Effects list` 的链表结构存储”被标记副作用的 `fiberNode` “。在 completeWork 中， 如果 fiberNode 存在副作用，就会被插入`Effects list` 中，commit 阶段的三个子阶段只需要遍历 `Effects list` 并对 `fiberNode` 执行 "flags 对应的操作"。
+
+比如下图，B、C、E存在`副作用`，连接形成`Effects List`：
+
+![Effects List](https://cdn.laughingzhu.cn/DevNow/lPVgDyHrYrOgK2c5QtZbs.png)
+
+`commit阶段`不需要从A向下遍历整棵树，只需要遍历`Effects List`就能找到所有有`副作用`的节点并执行对应操作。
+
+### v18 SubtreeFlags
+
+在React v18中则是在 `completeWork` 的 ”归“阶段，从叶子元素开始，由下而上开始递归，`fiberNode.subtreeFlags` 记录了该 `fiberNode` 的 ”所有子孙 `fiberNode` 上被标记的 flags“。
+每个 `fiberNode` 经由此操作，可以将子孙 `fiberNode` 中 ”标记的 flags “ 像上冒泡一层，直到RootFiber。
+
+比如B、C、E包含的`副作用`如下图：
+
+![SubtreeFlags](https://cdn.laughingzhu.cn/DevNow/CxFLM2MgHo2il_GJPyoqh.png)
+
+冒泡流程如下：
+
+1. B的`副作用`为`Passive`，冒泡到A，`A.SubtreeFlags`包含`Passive`
+2. E的`副作用`为`Placement`，冒泡到D，`D.SubtreeFlags`包含`Placement`
+3. D冒泡到C，`C.SubtreeFlags`包含`Placement`
+4. C的`副作用`为`Update`，`C.SubtreeFlags`包含`Placement`，C冒泡到A
+5. 最终`A.SubtreeFlags`包含`Passive`、`Placement`、`Update`
+
+这就代表A的子树中包含这三种副作用。
+
+在`commit阶段`，再根据`SubtreeFlags`一层层查找有`副作用`的节点并执行对应操作。
+
+> 可见，`SubtreeFlags`需要遍历树，而`Effects List`只需要遍历链表，效率更高。那么`React`为什么要重构呢？
+
+## 4.Suspense
+
+答案是：`SubtreeFlags` 遍历子树的操作虽然比 `Effects List` 需要遍历更多节点，但是`React18`中一种新特性恰恰需要 **「遍历子树」**。
+
+这个特性就是`Suspense`。
+
+`Suspense`是`v16`就提供的功能，但`v18`之后，当开启并发功能，`Suspense`与之前版本的行为是有区别的。
+
+考虑如下组件：
+
+```js
+<Suspense fallback={<h3>loading...</h3>}>
+    
+  <LazyCpn />
+    
+  <Sibling />
+</Suspense>
+```
+
+其中`LazyCpn`是使用`React.lazy`包裹的`异步加载组件`。
+
+`Sibling`代码如下：
+
+```js
+function Sibling() {
+  useEffect(() => {
+    console.log('Sibling effect');
+  }, []);
+
+  return <h1>Sibling</h1>;
+}
+```
+
+由于`Suspense`会等待子孙组件中的异步请求完毕后再渲染，所以当代码运行时页面首先会渲染`fallback`：
+
+```js
+<h3>loading...</h3>
+```
+
+但是`Sibling`并不是异步的！这里就体现了新旧版本`React`的差异。
+
+## 5.新旧版React的差异
+
+在开启并发之前，`React`保证一次`render阶段`对应一次`commit阶段`。
+
+所以在上例中，虽然由于`LazyCpn`在请求导致`Suspense`渲染`fallback`，但是并不会阻止`Sibling`渲染，也不会阻止`Sibling`中`useEffect`的执行。
+
+控制台还是会打印 **「Sibling effect」**。
+
+同时，为了在视觉上显得`Sibling`没有渲染，`Sibling`渲染的`DOM节点`会被设置`display: none`：
+
+![disply_none](https://cdn.laughingzhu.cn/DevNow/VXAIMhZC7WV0XSguDESzp.png)
+
+但这其实挺`hack`的。毕竟根据`Suspense`的理念，如果子孙组件有异步加载的内容，那应该只渲染`fallback`（而不是同时渲染`display: none`的内容）
+
+所以在新版中，针对`Suspense`内 **「不显示的子树」** 做了单独的处理，既不会渲染`display: none`的内容，也不会执行`useEffect`回调：
+
+![loading](https://cdn.laughingzhu.cn/DevNow/zRjCiyo881qxW38fXJvlw.png)
+
+要实现这部分处理的基础，就是改变`commit阶段`遍历的方式，也就回到开篇提到的`Effects List`重构为`subtreeFlags`。
+
+## 总结
+
+React 从 `effectList` 替换为 `subtreeFlags` 的主要原因是为了优化性能和提高灵活性，特别是在实现 `Suspense` 特性方面。
+
+## 参考资料
+
+- [React Effects List大重构，是为了他？](https://mp.weixin.qq.com/s/-UNN45YttXJPA2TlrnSy3Q)
