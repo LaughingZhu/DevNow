@@ -25,36 +25,6 @@
 - Mdx (大家在投稿时，可以有优先使用.mdx)
 - Vercel 部署
 
-## Vercel 一键部署
-
-### 1、Vercel部署
-
-[![用Vercel部署](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LaughingZhu/DevNow)
-
-### [2.添加环境变量](https://vercel.com/docs/projects/environment-variables)
-
-```js
-// doc seach 相关
-
-PUBLIC_SEARCH_APP_ID;
-PUBLIC_SEARCH_API_KEY;
-
-// Giscus 评论相关
-
-PUBLIC_GISCUS_REPO_ID;
-PUBLIC_GISCUS_REPO;
-
-// Google analytics 相关
-
-PUBLIC_GOOGLE_ANALYTICS_ID;
-
-// Sentry 相关
-PUBLIC_SENTRY_DNS;
-PUBLIC_SENTRY_TOKEN;
-```
-
-> **Giscus 评论功能** 和 **DocSearch 需** 需要在 config/index 中开启相关的功能，默认打开。
-
 ## 支持的功能
 
 - ✅ Minimal styling
@@ -86,6 +56,36 @@ PUBLIC_SENTRY_TOKEN;
 **欢迎投稿、加入 DevNow 社区，与我们一起探讨科技的未来！**
 
 **支持 DevNow 就给俺来个Star吧！**
+
+## Vercel 一键部署
+
+### 1、Vercel部署
+
+[![用Vercel部署](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LaughingZhu/DevNow)
+
+### [2.添加环境变量](https://vercel.com/docs/projects/environment-variables)
+
+```js
+// doc seach 相关
+
+PUBLIC_SEARCH_APP_ID;
+PUBLIC_SEARCH_API_KEY;
+
+// Giscus 评论相关
+
+PUBLIC_GISCUS_REPO_ID;
+PUBLIC_GISCUS_REPO;
+
+// Google analytics 相关
+
+PUBLIC_GOOGLE_ANALYTICS_ID;
+
+// Sentry 相关
+PUBLIC_SENTRY_DNS;
+PUBLIC_SENTRY_TOKEN;
+```
+
+> **Giscus 评论功能** 和 **DocSearch 需** 需要在 config/index 中开启相关的功能，默认打开。
 
 ## 相关配置
 
