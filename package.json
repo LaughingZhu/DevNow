@@ -60,8 +60,5 @@
     "prettier-plugin-astro": "^0.14.0",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "tailwindcss": "^3.4.4"
-  },
-  "engines": {
-    "node": "18.x"
   }
 }

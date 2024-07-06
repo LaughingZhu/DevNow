@@ -3,7 +3,6 @@ import react from "@astrojs/react";
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel/serverless';
-import sentry from "@sentry/astro";
 import { defineConfig, squooshImageService } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
 import { remarkReadingTime } from './src/utils/all';
@@ -38,7 +37,8 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['@astrojs/react-client']
   },
-  integrations: [mdx({
+  integrations: [
+    mdx({
     syntaxHighlight: 'shiki',
     shikiConfig: {
       experimentalThemes: {
@@ -53,13 +53,14 @@ export default defineConfig({
   }),
   tailwind(),
   react(),
-  sentry({
-    dsn: PUBLIC_SENTRY_DNS,
-    sourceMapsUploadOptions: {
-      project: "javascript-astro",
-      authToken: PUBLIC_SENTRY_TOKEN,
-    },
-  })],
+  // sentry({
+  //   dsn: PUBLIC_SENTRY_DNS,
+  //   sourceMapsUploadOptions: {
+  //     project: "javascript-astro",
+  //     authToken: PUBLIC_SENTRY_TOKEN,
+  //   },
+  // })
+  ],
   output: 'server',
   adapter: vercel({
     webAnalytics: {
