@@ -25,16 +25,16 @@ tags: [Blog, React]
 
 ## 什么是Error Boundaries
 
-`React`提供了两个与**「错误处理」**相关的`API`：
+`React`提供了两个与 **「错误处理」** 相关的`API`：
 
 - `getDerivedStateFromError`：静态方法，当错误发生后提供一个机会渲染`fallback UI`
 - `componentDidCatch`：组件实例方法，当错误发生后提供一个机会记录错误信息
 
 使用了这两个`API`的`ClassComponent`通常被称为`Error Boundaries`（错误边界）。
 
-在`Error Boundaries`的**「子孙组件」**中发生的所有**「React工作流程内」**的错误都会被`Error Boundaries`捕获。
+在`Error Boundaries`的 **「子孙组件」** 中发生的所有 **「React工作流程内」** 的错误都会被`Error Boundaries`捕获。
 
-通过开篇的介绍可以知道，**「React工作流程」**指：
+通过开篇的介绍可以知道，**「React工作流程」** 指：
 
 - render阶段
 - commit阶段

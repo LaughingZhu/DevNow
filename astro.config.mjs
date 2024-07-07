@@ -6,6 +6,7 @@ import vercel from '@astrojs/vercel/serverless';
 import { defineConfig, squooshImageService } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
 import { remarkReadingTime } from './src/utils/all';
+
 const PUBLIC_SENTRY_DNS = process.env.PUBLIC_SENTRY_DNS
 const PUBLIC_SENTRY_TOKEN = process.env.PUBLIC_SENTRY_TOKEN
 
@@ -26,9 +27,9 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkReadingTime],
     rehypePlugins: [rehypePluginImageNativeLazyLoading],
-    // extendDefaultPlugins: true,
     drafts: true,
     // 语法高亮
+    syntaxHighlight: 'shiki',
     shikiConfig: {
       theme: 'material-theme-darker',
       wrap: true
@@ -39,20 +40,23 @@ export default defineConfig({
   },
   integrations: [
     mdx({
-    syntaxHighlight: 'shiki',
-    shikiConfig: {
-      experimentalThemes: {
-        dark: 'material-theme-darker'
+
+      // Markdown 配置现在被忽略
+      // extendMarkdownConfig: false,
+      shikiConfig: {
+        experimentalThemes: {
+          dark: 'material-theme-darker'
+        },
+        wrap: true
       },
-      wrap: true
-    },
-    drafts: true
-  }),
-  sitemap({
-    entryLimit: 10000
-  }),
-  tailwind(),
-  react(),
+      drafts: true,
+      gfm: false
+    }),
+    sitemap({
+      entryLimit: 10000
+    }),
+    tailwind(),
+    react(),
   // sentry({
   //   dsn: PUBLIC_SENTRY_DNS,
   //   sourceMapsUploadOptions: {
