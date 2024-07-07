@@ -1,0 +1,216 @@
+---
+title: 'Error Boundaries 实现原理'
+desc: 'DevNow：React Error Boundaries 实现原理'
+publishDate: '2024-07-04 22:39:36'
+image: 'https://cdn.laughingzhu.cn/DevNow/fgzlA_DtG6lmWNriYQhrM.png'
+category: 'blog'
+author: 'LaughingZhu'
+tags: [Blog, React]
+---
+
+这里简单讲解下`React`工作流程，后文有用。分为三步：
+
+1. 触发`更新`
+2. render阶段：计算`更新`会造成的`副作用`
+3. commit阶段：在宿主环境执行`副作用`
+
+`副作用`有很多，比如：
+
+- 插入`DOM`节点
+- 执行`useEffect`回调
+
+好了，让我们进入主题。
+
+![react 工作原理](https://cdn.laughingzhu.cn/DevNow/QZXKjyiagnJ9fBhcZuzLX.png)
+
+## 什么是Error Boundaries
+
+`React`提供了两个与 **「错误处理」** 相关的`API`：
+
+- `getDerivedStateFromError`：静态方法，当错误发生后提供一个机会渲染`fallback UI`
+- `componentDidCatch`：组件实例方法，当错误发生后提供一个机会记录错误信息
+
+使用了这两个`API`的`ClassComponent`通常被称为`Error Boundaries`（错误边界）。
+
+在`Error Boundaries`的 **「子孙组件」** 中发生的所有 **「React工作流程内」** 的错误都会被`Error Boundaries`捕获。
+
+通过开篇的介绍可以知道，**「React工作流程」** 指：
+
+- render阶段
+- commit阶段
+
+考虑如下代码：
+
+```js
+class ErrorBoundary extends Component {
+	componentDidCatch(e) {
+		console.warn(“发生错误”, e);
+	}
+	render() {
+		return <div>{this.props.children}</div>;
+	}
+}
+const App = () => (
+	<ErrorBoundary>
+		<A> <B/></A>
+		<C/>
+	<ErrorBoundary>
+)
+```
+
+`A`、`B`、`C` 作为 `ErrorBoundary` 的子孙组件，当发生 **「React工作流程内」** 的错误，都会被`ErrorBoundary` 中的 `componentDidCatch` 方法捕获。
+
+## 步骤1:捕获错误
+
+首先来看 **「工作流程中的错误都是何时被捕获的」**。
+
+`render` 阶段的核心代码如下，发生的错误会被 `handleError` 处理：
+
+```js
+do {
+  try {
+    // 对于并发更新则是workLoopConcurrent
+    workLoopSync();
+    break;
+  } catch (thrownValue) {
+    handleError(root, thrownValue);
+  }
+} while (true);
+```
+
+`commit` 阶段包含很多工作，比如：
+
+- `componentDidMount/Update` 执行
+- 绑定/解绑 `ref`
+- `useEffect/useLayoutEffect` `callback`与`destroy`执行
+
+这些工作会以如下形式执行，发生的错误被 `captureCommitPhaseError` 处理：
+
+```js
+try {
+  // …执行某项工作
+} catch (error) {
+  captureCommitPhaseError(fiber, fiber.return, error);
+}
+```
+
+## 步骤2:构造callback
+
+可以发现，即使没有 `Error Boundaries`，**「工作流程」** 中的错误已经被`React`捕获了。而正确的逻辑应该是：
+
+- 如果存在 `Error Boundaries`，执行对应 `API`
+- 抛出 `React` 的提示信息
+- 如果不存在 `Error Boundaries`，抛出 **「未捕获的错误」**
+
+所以，不管是 `handleError` 还是 `captureCommitPhaseError`，都会从发生错误的节点的父节点开始，逐层向上遍历，寻找最近的 `Error Boundaries`。
+
+一旦找到，就会构造：
+
+- 用于 **「执行Error Boundaries API」** 的 `callback`
+- 用于 **「抛出React提示信息」** 的 `callback`
+
+![错误信息堆栈](https://cdn.laughingzhu.cn/DevNow/ghC-ujUg4rB37TufzplBF.png)
+
+React错误提示信息，包括提示语和错误堆栈
+
+```js
+// ...为了可读性，逻辑有删减
+function createClassErrorUpdate() {
+  if (typeof getDerivedStateFromError === 'function') {
+    // 用于执行getDerivedStateFromError的callback
+    update.payload = () => {
+      return getDerivedStateFromError(error);
+    };
+    // 用于抛出React提示信息的callback
+    update.callback = () => {
+      logCapturedError(fiber, errorInfo);
+    };
+  }
+  if (inst !== null && typeof inst.componentDidCatch === 'function') {
+    // 用于执行componentDidCatch的callback
+    update.callback = function callback() {
+      this.componentDidCatch(error);
+    };
+  }
+  return update;
+}
+```
+
+如果没有找到 `Error Boundaries`，继续向上遍历直到根节点。
+
+此时会构造：
+
+- 用于 **「抛出未捕获错误」** 的`callback`
+- 用于 **「抛出React提示信息」** 的`callback`
+
+```js
+// ...为了可读性，逻辑有删减
+funffction createRootErrorUpdate() {
+	// 用于抛出“未捕获的错误”及“React的提示信息”的callback
+	update.callback = () => {
+		onUncaughtError(error);
+		logCapturedError(fiber, errorInfo);
+	};
+	return update;
+}
+```
+
+## 执行callback
+
+构造好的`callback`在什么时候执行呢？
+
+在`React`中有两个 **「执行用户自定义callback」** 的`API`：
+
+- 对于`ClassComponent`， `this.setState(newState, callback)`中`newState`和`callback`参数都能传递`Function`作为`callback`
+
+所以，对于 `Error Boundaries`，相当于主动触发了一次更新：
+
+```js
+this.setState(
+  () => {
+    // 用于执行getDerivedStateFromError的callback
+  },
+  () => {
+    // 用于执行componentDidCatch的callback
+    //  以及 用于抛出React提示信息的callback
+  }
+);
+```
+
+- 对于根节点，执行 `ReactDOM.render(element, container, callback)` 中`callback`参数能传递`Function`作为`callback`
+
+所以，对于 **「没有Error Boundaries」** 的情况，相当于主动执行了如下函数：
+
+```js
+ReactDOM.render(element, container, () => {
+  // 用于抛出“未捕获的错误”及“React的提示信息”的callback
+});
+```
+
+所以，`Error Boundaries` 的实现可以看作是：`React`利用已有`API`实现的新功能。
+
+## 特殊情况
+
+在 [官方文档中](https://legacy.reactjs.org/docs/error-boundaries.html#introducing-error-boundaries) 提示了错误边界不会捕获以下错误：
+
+- 事件处理程序（了解更多）
+- 异步代码（例如setTimeout回调requestAnimationFrame）
+- 服务器端渲染
+- 错误边界本身（而不是其子边界）中抛出的错误
+
+具体是为什么呢？
+
+1. **事件处理程序**：React 中的事件处理程序（如onClick等）是同步执行的，尽管错误可能发生在事件处理程序中，但事件处理程序中抛出的错误并不在错误边界的生命周期方法或构造函数的上下文中，因此不能被错误边界拦截。在事件处理程序中遇到错误时，应当手动捕获该错误并处理。
+
+2. **异步代码**：像 Promise 或者 setTimeout 之类的异步代码中的错误也无法被错误边界捕获，这是因为它们执行在另外的上下文中，跳出了 React 的生命周期，因此错误边界无法拦截。对于这些情况，你需要在你的异步代码中明确地处理错误。
+
+3. **服务器端渲染**：至 `React@16`，错误边界在服务端渲染中不起作用。执行服务端渲染的代码会立即抛出错误，而不会去执行更多渲染。
+
+4. **错误边界本身抛出的错误**：若在错误边界组件自身的生命周期方法或构造函数中抛出错误，这些错误不会被错误边界捕获。换句话说，错误边界无法捕获其自身产生的错误，只能捕获其子组件中的错误。
+
+因此，即使你在应用程序中设置了错误边界，可能仍然需要使用 try-catch 以及售后服务工具（如错误跟踪软件）来捕获无法被错误边界拦截的错误。
+
+### 参考资料
+
+- [官方文档](https://reactjs.org/docs/error-boundaries.html#introducing-error-boundaries)
+- [Error Boundaries是这么实现的，还挺巧妙](https://mp.weixin.qq.com/s/pEBQdvZIP8I__CyloD9v6w)

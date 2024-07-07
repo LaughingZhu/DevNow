@@ -48,9 +48,23 @@
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
   }
+  code {
+    color: #d8ba7d !important;
+    background-color: #3e404b;
+    border-radius: 4px;
+    padding: 2px 4px;
+  }
+  code::before,
+  code::after {
+    content: ' ' !important;
+  }
 
   .prose code {
     @apply text-base;
+  }
+  .prose code::before,
+  .prose code::after {
+    content: none !important;
   }
   * {
     @apply border-border;
