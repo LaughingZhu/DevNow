@@ -20,6 +20,8 @@ const category = categories.find((item) => item.slug === post.data.category) as 
         post.data.image ? (
           <Picture
             src={post.data.image}
+            widths={[800]}
+            sizes='(max-width: 640px) 90vw, 480px'
             alt='Thumbnail'
             inferSize
             decoding={'async'}
