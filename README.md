@@ -1,10 +1,43 @@
-## 🚀Hello there
+## 🚀Hello Here
 
-**DevNow** 是一个能够精准捕捉科技与开发领域精华内容的平台。
+DevNow 是一个精简的开源技术博客项目，支持 Vercel 一键部署，支持评论、搜索等功能，欢迎大家fork使用。
+
+**DevNow** 目前承载着一个能够精准捕捉科技与开发领域精华内容的平台。
 
 我们致力于打造一个 **轻量级、高效率** 的内容平台，让科技与开发领域的动态快速、准确地呈现在你的面前。
 
 官网直达： <https://devnow.laughingzhu.cn/>
+
+![展示](https://cdn.laughingzhu.cn/DevNow/hJB0pNu4AeZKlnEhgAnyn.png-thumb)
+
+## 支持的功能
+
+- ✅ 适配移动端
+- ✅ SEO & OpenGraph
+- ✅ 支持 Markdown & MDX
+- ✅ 语法高亮
+- ✅ 图片压缩
+- ✅ 主题色
+- ✅ 代码复制
+- ✅ 支持 Sitemap
+- ✅ 支持 RSS Feed 订阅
+- ✅ 草稿模式
+- ✅ 🔍文章搜索
+- ✅ 支持 Comments (Giscus)
+- ✅ 支持分页
+
+## 迭代计划
+
+- 🆙 分享模块
+- 🆙 等待 Issue、Pr 中
+
+## 技术栈
+
+- Astro
+- TypeScript
+- Tailwind CSS
+- Mdx (大家在投稿时，可以有优先使用.mdx)
+- Vercel 部署
 
 ## Who am i?
 
@@ -16,36 +49,6 @@
 - **内容优质**： 我们注重内容的深度和广度，涵盖了从人工智能、云计算到前端开发、后端架构等多个热门领域。
 - **专业视角**： 由经验丰富的开发者和技术编辑团队精心筛选和撰写，保证内容的专业性和深度。
 - **持续更新**： 每周定期更新，确保你始终走在科技前沿。
-
-## 技术栈
-
-- Astro
-- TypeScript
-- Tailwind CSS
-- Mdx (大家在投稿时，可以有优先使用.mdx)
-- Vercel 部署
-
-## 支持的功能
-
-- ✅ Minimal styling
-- ✅ Mobile responsive
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Markdown & MDX support
-- ✅ Syntax highlighting
-- ✅ Image optimization
-- ✅ Dark mode
-- ✅ Copy code block
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Draft mode
-- ✅ Search Post
-- ✅ Comments (Giscus)
-- ✅ Pagination
-
-## 迭代计划
-
-- 🆙 Share posts (Linkedin, twitter)
-- 🆙 等待 Issue、Pr 中
 
 ## Star History
 
