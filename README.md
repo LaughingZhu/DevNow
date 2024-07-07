@@ -8,7 +8,7 @@ DevNow 是一个精简的开源技术博客项目，支持 Vercel 一键部署�
 
 官网直达： <https://devnow.laughingzhu.cn/>
 
-![展示](https://cdn.laughingzhu.cn/DevNow/hJB0pNu4AeZKlnEhgAnyn.png)
+![展示](https://cdn.laughingzhu.cn/DevNow/hJB0pNu4AeZKlnEhgAnyn.png-thumb)
 
 ## 支持的功能
 
