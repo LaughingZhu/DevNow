@@ -15,11 +15,10 @@ import cx from 'clsx';
     <Picture
       {...props}
       src={props.src}
-      widths={[800]}
       sizes='(max-width: 640px) 90vw, 480px'
       inferSize
       decoding={'async'}
-      class={cx('w-full h-full rounded-md')}
+      class={cx('rounded-md mx-auto')}
     />
   ) : null
 }

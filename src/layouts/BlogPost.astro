@@ -49,9 +49,9 @@ const formatDesc = desc + ' | ' + headings?.map((item) => item?.text);
           data.image && (
             <Picture
               src={data.image}
+              width={1024}
               widths={[800]}
               sizes='(max-width: 640px) 90vw, 480px'
-              width={1024}
               inferSize
               decoding={'async'}
               alt='Thumbnail'
