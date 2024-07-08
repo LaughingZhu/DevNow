@@ -9,3 +9,9 @@ export default {
   // pagntion 配置
   pageSize: 18
 };
+
+/** 首页默认列数 */
+export const DEFAULT_COLUMN = 3;
+
+/** 是否显示浏览数 */
+export const IS_SHOW_VIEW_COUNT = true;
