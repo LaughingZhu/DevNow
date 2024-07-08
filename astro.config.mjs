@@ -1,3 +1,4 @@
+import db from "@astrojs/db";
 import mdx from '@astrojs/mdx';
 import react from "@astrojs/react";
 import sitemap from '@astrojs/sitemap';
@@ -6,25 +7,21 @@ import vercel from '@astrojs/vercel/serverless';
 import { defineConfig } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
 import { remarkReadingTime } from './src/utils/all';
-
-const PUBLIC_SENTRY_DNS = process.env.PUBLIC_SENTRY_DNS
-const PUBLIC_SENTRY_TOKEN = process.env.PUBLIC_SENTRY_TOKEN
+const PUBLIC_SENTRY_DNS = process.env.PUBLIC_SENTRY_DNS;
+const PUBLIC_SENTRY_TOKEN = process.env.PUBLIC_SENTRY_TOKEN;
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://devnow.laughingzhu.cn',
   experimental: {
     // 在静态模式下构建时，启用内容集合的持久性缓存。
-    contentCollectionCache: true,
+    contentCollectionCache: true
   },
   image: {
     domains: ['astro.build'],
     remotePatterns: [{
       protocol: 'https'
-    }],
-    // service: squooshImageService({
-      
-    // })
+    }]
   },
   markdown: {
     remarkPlugins: [remarkReadingTime],
@@ -42,9 +39,6 @@ export default defineConfig({
   },
   integrations: [
     mdx({
-
-      // Markdown 配置现在被忽略
-      // extendMarkdownConfig: false,
       shikiConfig: {
         experimentalThemes: {
           dark: 'material-theme-darker'
@@ -58,7 +52,7 @@ export default defineConfig({
       entryLimit: 10000
     }),
     tailwind(),
-    react(),
+    react()
   // sentry({
   //   dsn: PUBLIC_SENTRY_DNS,
   //   sourceMapsUploadOptions: {
@@ -66,6 +60,8 @@ export default defineConfig({
   //     authToken: PUBLIC_SENTRY_TOKEN,
   //   },
   // })
+    ,
+    db()
   ],
   output: 'server',
   adapter: vercel({

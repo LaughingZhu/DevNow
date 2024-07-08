@@ -2,11 +2,14 @@
 import type { Category } from '@data/category';
 import { categories } from '@data/category';
 import { getFormattedDate } from '@utils/all';
+import { getViewById } from '@utils/db';
 import { Picture } from 'astro:assets';
 import cx from 'clsx';
 import Label from './ui/label.astro';
 const { post, preloadImage } = Astro.props;
+
 const category = categories.find((item) => item.slug === post.data.category) as Category;
+const view = await getViewById(post.slug);
 ---
 
 <div class='cursor-pointer group'>
@@ -57,7 +60,7 @@ const category = categories.find((item) => item.slug === post.data.category) as 
     </div>
     <span class='text-xl text-gray-300 dark:text-gray-600'> &bull;</span>
     <time class='text-sm' datetime={post.data.publishDate}>
-      {getFormattedDate(post.data.publishDate)}
+      {getFormattedDate(post.data.publishDate)} ------ {view} views
     </time>
   </div>
 </div>
