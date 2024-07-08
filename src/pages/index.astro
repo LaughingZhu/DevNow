@@ -5,7 +5,11 @@ import ArrowUp from '@components/icons/ArrowUp.astro';
 import Button from '@components/ui/button.astro';
 import config from '@config/index';
 import { latestPosts } from '@utils/content';
+import { db, Post } from 'astro:db';
 import Layout from '../layouts/Layout.astro';
+const info = await db.select().from(Post);
+
+console.log(info, '-----db- info');
 ---
 
 <Layout>
@@ -18,7 +22,7 @@ import Layout from '../layouts/Layout.astro';
             .map((post) => <Postlist post={post} preloadImage={true} />)
         }
       </div>
-      <div class='grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3'>
+      <div class={`grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3`}>
         {
           latestPosts
             .filter((item) => !item.data?.pin)

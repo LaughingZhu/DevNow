@@ -5,13 +5,12 @@ import Code from '@components/mdx/Code.astro';
 import SButton from '@components/mdx/MDButton.astro';
 import MImage from '@components/mdx/MImage.astro';
 import BlogPost from '@layouts/BlogPost.astro';
+import { addViewCount } from '@utils/db';
 import { getCollection, type CollectionEntry } from 'astro:content';
-import clsx from 'clsx';
 type Props = { doc: CollectionEntry<'doc'> };
 
 // 在 server 模式中选择加入预渲染
 export const prerender = true;
-
 export async function getStaticPaths() {
   const docs = await getCollection('doc');
 
@@ -24,6 +23,7 @@ export async function getStaticPaths() {
 const { doc: post } = Astro.props;
 const { Content, remarkPluginFrontmatter, headings } = await post.render();
 const hasHeadering = headings && !!headings.length;
+await addViewCount(post.slug);
 ---
 
 <BlogPost
@@ -44,7 +44,7 @@ const hasHeadering = headings && !!headings.length;
       )
     }
 
-    <div class={clsx('flex-auto overflow-hidden')}>
+    <div class={'flex-auto overflow-hidden'}>
       <article class='max-w-screen-2xl'>
         <div class='my-3 prose-base dark:prose-invert prose-a:text-blue-600'>
           <div class='prose prose-lg md:prose-xl dark:prose-invert mb-12 min-w-full'>
