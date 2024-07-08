@@ -1,10 +1,10 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
+import { latestPosts } from '@utils/content';
 import MarkdownIt from 'markdown-it';
 import sanitizeHtml from 'sanitize-html';
 const parser = new MarkdownIt();
 export async function GET(context: any) {
-  const doc = await getCollection('doc');
+  const doc = latestPosts.slice(0, 10);
   return rss({
     // 输出的 xml 中的`<title>`字段
     title: 'DevNow — 开发技术周刊',
