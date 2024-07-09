@@ -19,6 +19,7 @@ import Layout from '../layouts/Layout.astro';
         {
           latestPosts
             .filter((item) => !!item.data.pin)
+            .slice(0, 2)
             .map((post) => <Postlist post={post} preloadImage={true} />)
         }
       </div>

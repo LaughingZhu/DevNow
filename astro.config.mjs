@@ -1,29 +1,32 @@
 import mdx from '@astrojs/mdx';
-import react from "@astrojs/react";
+import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel/serverless';
-import { defineConfig } from 'astro/config';
+import { defineConfig, passthroughImageService } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
 import { remarkReadingTime } from './src/utils/all';
 
-const PUBLIC_SENTRY_DNS = process.env.PUBLIC_SENTRY_DNS
-const PUBLIC_SENTRY_TOKEN = process.env.PUBLIC_SENTRY_TOKEN
+const PUBLIC_SENTRY_DNS = process.env.PUBLIC_SENTRY_DNS;
+const PUBLIC_SENTRY_TOKEN = process.env.PUBLIC_SENTRY_TOKEN;
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://devnow.laughingzhu.cn',
   experimental: {
     // 在静态模式下构建时，启用内容集合的持久性缓存。
-    contentCollectionCache: true,
+    contentCollectionCache: true
   },
   image: {
     domains: ['astro.build'],
-    remotePatterns: [{
-      protocol: 'https'
-    }],
+    remotePatterns: [
+      {
+        protocol: 'https'
+      }
+    ],
+    service: passthroughImageService()
     // service: squooshImageService({
-      
+
     // })
   },
   markdown: {
@@ -42,7 +45,6 @@ export default defineConfig({
   },
   integrations: [
     mdx({
-
       // Markdown 配置现在被忽略
       // extendMarkdownConfig: false,
       shikiConfig: {
@@ -58,14 +60,14 @@ export default defineConfig({
       entryLimit: 10000
     }),
     tailwind(),
-    react(),
-  // sentry({
-  //   dsn: PUBLIC_SENTRY_DNS,
-  //   sourceMapsUploadOptions: {
-  //     project: "javascript-astro",
-  //     authToken: PUBLIC_SENTRY_TOKEN,
-  //   },
-  // })
+    react()
+    // sentry({
+    //   dsn: PUBLIC_SENTRY_DNS,
+    //   sourceMapsUploadOptions: {
+    //     project: "javascript-astro",
+    //     authToken: PUBLIC_SENTRY_TOKEN,
+    //   },
+    // })
   ],
   output: 'server',
   adapter: vercel({
