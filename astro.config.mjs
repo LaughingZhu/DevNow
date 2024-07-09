@@ -18,12 +18,9 @@ export default defineConfig({
     contentCollectionCache: true
   },
   image: {
-    domains: ['astro.build'],
-    remotePatterns: [
-      {
-        protocol: 'https'
-      }
-    ],
+    // 配置 ' ' 为不对任务图片进行优化，建议对未走cdn的图片进行优化开启
+    // 参考： https://docs.astro.build/zh-cn/guides/images/#%E6%8E%88%E6%9D%83%E8%BF%9C%E7%A8%8B%E5%9B%BE%E5%83%8F
+    domains: ['images.unsplash.com'],
     service: passthroughImageService()
     // service: squooshImageService({
 
