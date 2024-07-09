@@ -100,7 +100,7 @@ PUBLIC_SENTRY_TOKEN;
   在 src/config 中配置 **giscus: true**
 
 - 2.配置环境变量
-  .env 中配置 **PUBLIC_GISCUS_REPO_ID、PUBLIC_GISCUS_REPO** 即可
+  .env 中配置 **PUBLIC_GISCUS_REPO_ID、PUBLIC_GISCUS_REPO、和 PUBLIC_GISCUS_CATEGORY_ID** 即可
   也可以在类似Vercel上配置相关的环境变量，[具体详情](https://vercel.com/docs/projects/environment-variables)
 
 ### [DocSearch](https://docsearch.algolia.com/docs/what-is-docsearch)
