@@ -37,6 +37,10 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['@astrojs/react-client']
   },
+  // 预获取策略： https://docs.astro.build/zh-cn/guides/prefetch/#%E9%BB%98%E8%AE%A4%E9%A2%84%E8%8E%B7%E5%8F%96%E7%AD%96%E7%95%A5
+  prefetch: {
+    prefetchAll: true
+  },
   integrations: [
     mdx({
       // Markdown 配置现在被忽略
@@ -51,7 +55,14 @@ export default defineConfig({
       gfm: false
     }),
     sitemap({
-      entryLimit: 10000
+      serialize(item) {
+        if (/posts/.test(item.url)) {
+          item.changefreq = 'daily';
+          item.lastmod = new Date();
+          item.priority = 0.9;
+        }
+        return item;
+      }
     }),
     tailwind(),
     react()
