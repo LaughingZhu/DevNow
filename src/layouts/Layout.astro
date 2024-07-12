@@ -46,6 +46,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     <link rel='sitemap' href='/sitemap-index.xml' />
     <link rel='alternate' type='application/rss+xml' title='DevNow' href={'/rss.xml'} />
     <!-- faster docsearch https://docsearch.algolia.com/docs/DocSearch-v3#preconnect  -->
+    <!-- 需要替换成自己的APP_Id -->
     <link rel='preconnect' href='https://YOUR_APP_ID-dsn.algolia.net' crossorigin />
     <meta name='generator' content={Astro.generator} />
     <SEO
@@ -64,10 +65,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
         }
       }}
     />
+    <ThemeSwitch />
   </head>
 
   <body>
-    <ThemeSwitch />
     <Header />
     <slot />
     <Footer />
@@ -80,5 +81,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     </style>
     <!-- Google tag (gtag.js) -->
     <Analytics id={PUBLIC_GOOGLE_ANALYTICS_ID} />
+    <script src='https://platform.twitter.com/widgets.js'></script>
   </body>
 </html>
