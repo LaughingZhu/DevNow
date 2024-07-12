@@ -65,10 +65,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
         }
       }}
     />
+    <ThemeSwitch />
   </head>
 
   <body>
-    <ThemeSwitch />
     <Header />
     <slot />
     <Footer />
@@ -81,5 +81,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     </style>
     <!-- Google tag (gtag.js) -->
     <Analytics id={PUBLIC_GOOGLE_ANALYTICS_ID} />
+    <script src='https://platform.twitter.com/widgets.js'></script>
   </body>
 </html>

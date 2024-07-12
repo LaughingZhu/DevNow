@@ -3,6 +3,7 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel/serverless';
+import embeds from 'astro-embed/integration';
 import { defineConfig } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
 import { remarkReadingTime } from './src/utils/all';
@@ -42,6 +43,7 @@ export default defineConfig({
     prefetchAll: true
   },
   integrations: [
+    embeds(),
     mdx({
       // Markdown 配置现在被忽略
       // extendMarkdownConfig: false,
@@ -52,7 +54,7 @@ export default defineConfig({
         wrap: true
       },
       drafts: true,
-      gfm: false
+      // gfm: false
     }),
     sitemap({
       serialize(item) {
@@ -65,7 +67,7 @@ export default defineConfig({
       }
     }),
     tailwind(),
-    react()
+    react(),
     // sentry({
     //   dsn: PUBLIC_SENTRY_DNS,
     //   sourceMapsUploadOptions: {
@@ -73,6 +75,7 @@ export default defineConfig({
     //     authToken: PUBLIC_SENTRY_TOKEN,
     //   },
     // })
+
   ],
   output: 'server',
   adapter: vercel({

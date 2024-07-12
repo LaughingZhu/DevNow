@@ -110,3 +110,16 @@
     background-color: transparent;
   }
 }
+
+.twitter-tweet {
+  background: floralwhite;
+  color: darkblue;
+  font-family: cursive;
+  font-size: 1.25rem;
+  border: 0;
+}
+
+.twitter-tweet a {
+  color: purple;
+  font-weight: bold;
+}

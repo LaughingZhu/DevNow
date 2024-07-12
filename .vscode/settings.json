@@ -23,5 +23,5 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["astrojs"]
+  "cSpell.words": ["astrojs", "commitlint", "tailwindcss"]
 }
