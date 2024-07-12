@@ -111,6 +111,8 @@
   }
 }
 
+
+/* -------- astro embed start-------- */
 .twitter-tweet {
   background: floralwhite;
   color: darkblue;
@@ -123,3 +125,29 @@
   color: purple;
   font-weight: bold;
 }
+
+.link-preview {
+  --link-preview-corners: 0.5em;
+  --link-preview-padding-inline: 0.75rem;
+  background-color: floralwhite;
+  color: darkblue;
+  font-family: sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.link-preview a {
+  color: purple;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.link-preview,
+lite-youtube,
+lite-vimeo {
+  width: 100% !important;
+  max-width: none !important;
+}
+.twitter-tweet {
+  margin: 0 auto;
+}
+
+/* -------- astro embed end-------- */
