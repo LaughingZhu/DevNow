@@ -134,6 +134,7 @@ PUBLIC_SENTRY_TOKEN;
 
 ## 可以通过这里来赞助我
 
+<div align='center'>
 <img src="https://cdn.laughingzhu.cn/DevNow/8df0d597-93dc-44a4-9e93-ebd02f74e695.JPG" alt="Buy Me A Coffee" width="174" />
 
-<img src="https://cdn.laughingzhu.cn/DevNow/c88193fc-14ea-4236-a3f8-13b6ef736182.JPG" alt="Buy Me A Coffee" width="174" />
+<img src="https://cdn.laughingzhu.cn/DevNow/c88193fc-14ea-4236-a3f8-13b6ef736182.JPG" alt="Buy Me A Coffee" width="174" /></div>
