@@ -130,7 +130,7 @@ PUBLIC_SENTRY_TOKEN;
 
 ## Sponsors：（感谢大家的支持，排名不分先后）
 
-<img src='https://avatars.githubusercontent.com/u/28301482?v=4>' alt='huibo-200' width='40'  />
+<img  src='https://avatars.githubusercontent.com/u/28301482?v=4>' alt='huibo-200' width='40'  />
 
 ## 可以通过这里来赞助我
 
