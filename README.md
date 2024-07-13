@@ -60,6 +60,18 @@ DevNow 是一个精简的开源技术博客项目，支持 Vercel 一键部署�
 
 **支持 DevNow 就给俺来个Star吧！**
 
+## 部署
+
+```bash
+pnpm install
+
+本地运行
+pnpm dev
+
+构建生成环境
+pnpm build
+```
+
 ## Vercel 一键部署
 
 ### 1、Vercel部署
@@ -89,10 +101,12 @@ PUBLIC_SENTRY_TOKEN;
 ```
 
 > **Giscus 评论功能** 和 **DocSearch 需** 需要在 config/index 中开启相关的功能，默认打开。
+>
+> 如果是自己私有部署的话，需要把这些环境变量在 .env 中更新
 
-## 相关配置
+### 相关配置
 
-### [Giscus](https://giscus.app/zh-CN)
+#### [Giscus](https://giscus.app/zh-CN)
 
 提供一个评论服务。
 
@@ -103,7 +117,7 @@ PUBLIC_SENTRY_TOKEN;
   .env 中配置 **PUBLIC_GISCUS_REPO_ID、PUBLIC_GISCUS_REPO、和 PUBLIC_GISCUS_CATEGORY_ID** 即可
   也可以在类似Vercel上配置相关的环境变量，[具体详情](https://vercel.com/docs/projects/environment-variables)
 
-### [DocSearch](https://docsearch.algolia.com/docs/what-is-docsearch)
+#### [DocSearch](https://docsearch.algolia.com/docs/what-is-docsearch)
 
 提供一个快捷的搜索服务。
 
@@ -113,3 +127,13 @@ PUBLIC_SENTRY_TOKEN;
 - 2.配置环境变量
   .env 中配置 **PUBLIC_SEARCH_APP_ID、PUBLIC_SEARCH_API_KEY** 即可
   也可以在类似Vercel上配置相关的环境变量，[具体详情](https://vercel.com/docs/projects/environment-variables)
+
+## Sponsors：（感谢大家的支持，排名不分先后）
+
+<img src='https://avatars.githubusercontent.com/u/28301482?v=4>' alt='huibo-200' width='40'  />
+
+## 可以通过这里来赞助我
+
+<img src="https://cdn.laughingzhu.cn/DevNow/8df0d597-93dc-44a4-9e93-ebd02f74e695.JPG" alt="Buy Me A Coffee" width="174" />
+
+<img src="https://cdn.laughingzhu.cn/DevNow/c88193fc-14ea-4236-a3f8-13b6ef736182.JPG" alt="Buy Me A Coffee" width="174" />
