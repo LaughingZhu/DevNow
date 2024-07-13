@@ -130,11 +130,11 @@ PUBLIC_SENTRY_TOKEN;
 
 ## Sponsors：（感谢大家的支持，排名不分先后）
 
-<img src='https://avatars.githubusercontent.com/u/28301482?v=4>' alt='huibo-200' width='40'  />
+<img style="border-radius: 50%" src='https://avatars.githubusercontent.com/u/28301482?v=4>' alt='huibo-200' width='40'  />
 
 ## 可以通过这里来赞助我
 
-<div align='center'>
+<div  style="display: flex; justify-content: space-between">
 <img src="https://cdn.laughingzhu.cn/DevNow/8df0d597-93dc-44a4-9e93-ebd02f74e695.JPG" alt="Buy Me A Coffee" width="174" />
 
 <img src="https://cdn.laughingzhu.cn/DevNow/c88193fc-14ea-4236-a3f8-13b6ef736182.JPG" alt="Buy Me A Coffee" width="174" /></div>
