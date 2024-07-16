@@ -84,7 +84,9 @@
     @apply text-base;
   }
   .prose code::before,
-  .prose code::after {
+  .prose code::after,
+  .prose blockquote p::before,
+  .prose blockquote p::after {
     content: none !important;
   }
   * {
