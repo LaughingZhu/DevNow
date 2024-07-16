@@ -25,6 +25,26 @@
     --ring: 240 5.9% 10%;
     --radius: 0.5rem;
     scroll-behavior: smooth;
+    --color-base-purple: 269, 79%;
+    --color-purple: var(--color-base-purple), 54%;
+    --color-base-teal: 180, 80%;
+    --color-base-yellow: 41, 100%;
+    --color-base-red: 351, 100%;
+    --color-base-gray: 250, 14%;
+    --color-gray-10: var(--color-base-gray), 10%;
+    --color-gray-90: var(--color-base-gray), 90%;
+
+    --color-fill: 246, 247, 248;
+    --color-text-base: 40, 39, 40;
+    --color-accent: 255, 107, 3;
+    --color-card: 230, 230, 230;
+    --color-card-muted: 205, 205, 205;
+    --color-border: 236, 233, 233;
+    --theme-accent-opacity: 0.3;
+    /* --theme-code-tabs: #22272f;
+    --theme-code-bg: #282c34; */
+    /* --theme-text: hsla(var(--color-gray-10), 1);
+    --theme-code-text: hsla(var(--color-gray-95), 1); */
   }
 
   .dark {
@@ -47,6 +67,7 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
+    --theme-accent-opacity: 0.4;
   }
   code {
     color: #d8ba7d !important;
@@ -63,7 +84,9 @@
     @apply text-base;
   }
   .prose code::before,
-  .prose code::after {
+  .prose code::after,
+  .prose blockquote p::before,
+  .prose blockquote p::after {
     content: none !important;
   }
   * {
@@ -110,7 +133,6 @@
     background-color: transparent;
   }
 }
-
 
 /* -------- astro embed start-------- */
 .twitter-tweet {
