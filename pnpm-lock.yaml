@@ -35,6 +35,9 @@ dependencies:
   '@sentry/astro':
     specifier: ^8.13.0
     version: 8.17.0(astro@4.11.5)
+  '@types/mdast':
+    specifier: ^4.0.4
+    version: 4.0.4
   '@types/node':
     specifier: ^20.14.10
     version: 20.14.10

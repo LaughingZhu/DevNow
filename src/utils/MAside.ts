@@ -1,6 +1,5 @@
 import type { AstroIntegration } from 'astro';
-import type * as mdast from 'mdast';
-import type { BlockContent } from 'mdast';
+import type { BlockContent, Root } from 'mdast';
 import type { MdxJsxAttribute } from 'mdast-util-mdx-jsx';
 import remarkDirective from 'remark-directive';
 import type * as unified from 'unified';
@@ -36,10 +35,10 @@ export function makeComponentNode(
   };
 }
 
-function remarkAsides(): unified.Plugin<[], mdast.Root> {
+function remarkAsides(): unified.Plugin<[], Root> {
   const variants = new Set(['note', 'tip', 'caution', 'danger']);
 
-  const transformer: unified.Transformer<mdast.Root> = (tree) => {
+  const transformer: unified.Transformer<Root> = (tree) => {
     visit(tree, (node: any, index, parent) => {
       if (!parent || index === null || node.type !== 'containerDirective') return;
       const type = node.name;
@@ -54,12 +53,14 @@ function remarkAsides(): unified.Plugin<[], mdast.Root> {
         }
       });
 
-      // Replace this node with the aside component it represents.
-      parent.children[index] = makeComponentNode(
-        AsideTagname,
-        { attributes: { type, title } },
-        ...node.children
-      );
+      if (index !== undefined) {
+        // Replace this node with the aside component it represents.
+        parent.children[index] = makeComponentNode(
+          AsideTagname,
+          { attributes: { type, title } },
+          ...node.children
+        );
+      }
     });
   };
 
