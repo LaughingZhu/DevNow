@@ -1,0 +1,73 @@
+mdx-aside {
+  --aside-color-base: var(--color-base-purple);
+  --aside-color-lightness: 54%;
+  --aside-accent-color: hsl(var(--aside-color-base), var(--aside-color-lightness));
+  --aside-text-lightness: 20%;
+  --aside-text-accent-color: hsl(var(--aside-color-base), var(--aside-text-lightness));
+
+  border-inline-start: 4px solid var(--aside-accent-color);
+  padding: 1rem;
+  background-color: hsla(
+    var(--aside-color-base),
+    var(--aside-color-lightness),
+    var(--theme-accent-opacity)
+  );
+  outline: 1px solid transparent;
+  margin: 1rem 0;
+  display: block;
+}
+.dark mdx-aside {
+  --aside-text-lightness: 85%;
+}
+mdx-aside .title {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0 0 0.5rem 0 !important;
+  font-size: 0.9rem;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--aside-text-accent-color);
+}
+mdx-aside .icon svg {
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  fill: currentcolor;
+  margin-right: 0.5rem;
+}
+mdx-aside a,
+mdx-aside a > code:not([class*='language']) {
+  color: var(--aside-text-accent-color);
+}
+mdx-aside section {
+  padding-left: 0;
+}
+mdx-aside section p {
+  margin: 0 !important;
+}
+mdx-aside p,
+mdx-aside.content ul {
+  color: var(--theme-text);
+}
+.dark mdx-aside code:not([class*='language']) {
+  color: var(--theme-code-text);
+}
+mdx-aside pre {
+  margin-left: 0;
+  margin-right: 0;
+}
+.tip {
+  --aside-color-lightness: 42%;
+  --aside-color-base: var(--color-base-teal);
+}
+.caution {
+  --aside-color-lightness: 59%;
+  --aside-color-base: var(--color-base-yellow);
+}
+.danger {
+  --aside-color-lightness: 54%;
+  --aside-color-base: var(--color-base-red);
+}

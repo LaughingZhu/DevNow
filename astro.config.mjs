@@ -3,10 +3,12 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel/serverless';
+import AutoImport from 'astro-auto-import';
 import embeds from 'astro-embed/integration';
 import { defineConfig } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
 import { remarkReadingTime } from './src/utils/all';
+import { asideAutoImport, astroAsides } from './src/utils/MAside';
 
 const PUBLIC_SENTRY_DNS = process.env.PUBLIC_SENTRY_DNS;
 const PUBLIC_SENTRY_TOKEN = process.env.PUBLIC_SENTRY_TOKEN;
@@ -43,6 +45,10 @@ export default defineConfig({
     prefetchAll: true
   },
   integrations: [
+    AutoImport({
+      imports: [asideAutoImport]
+    }),
+    astroAsides(),
     embeds(),
     mdx({
       // Markdown 配置现在被忽略
@@ -53,7 +59,7 @@ export default defineConfig({
         },
         wrap: true
       },
-      drafts: true,
+      drafts: true
       // gfm: false
     }),
     sitemap({
@@ -67,7 +73,7 @@ export default defineConfig({
       }
     }),
     tailwind(),
-    react(),
+    react()
     // sentry({
     //   dsn: PUBLIC_SENTRY_DNS,
     //   sourceMapsUploadOptions: {
@@ -75,7 +81,6 @@ export default defineConfig({
     //     authToken: PUBLIC_SENTRY_TOKEN,
     //   },
     // })
-
   ],
   output: 'server',
   adapter: vercel({
