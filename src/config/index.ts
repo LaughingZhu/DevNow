@@ -16,9 +16,8 @@ export default {
   author: 'LaughingZhu',
   description: 'DevNow — 开发技术周刊',
   keywords: 'DevNow 开源技术博客项目。目前承载着一个技术新闻、开发weekly，每周一上午发布~',
-  icon: 'https://gw.alicdn.com/imgextra/i2/O1CN01m9YYjS1QBeW5DOm3I_!!6000000001938-2-tps-400-400.png',
+  logo: 'https://cdn.laughingzhu.cn/DevNow/40850814d71699ef09fda435802bfe02-58f0d8.png',
   homePage: 'https://devnow.laughingzhu.cn',
-  blogPage: 'https://devnow.laughingzhu.cn',
   githubId: 'LaughingZhu',
   repo: 'LaughingZhu/DevNow',
   /** 网站配置信息  end */

@@ -13,8 +13,8 @@ interface Props {
   desc?: string;
   image?: string;
 }
-const { title: DEFAULT_TITLE, description } = config;
-const { title, desc = description, image = '/logo.png' } = Astro.props;
+const { title: DEFAULT_TITLE, description, logo } = config;
+const { title, desc = description, image = logo } = Astro.props;
 const resolvedOGImage = checkImageUrl(image, Astro.site);
 const makeTitle = title ? title + ' | ' + DEFAULT_TITLE : description;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
@@ -62,7 +62,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
           image: resolvedOGImage
         },
         image: {
-          alt: 'DevNow Screenshot'
+          alt: makeTitle
         }
       }}
     />

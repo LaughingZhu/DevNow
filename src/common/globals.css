@@ -41,6 +41,7 @@
     --color-card-muted: 205, 205, 205;
     --color-border: 236, 233, 233;
     --theme-accent-opacity: 0.3;
+
     /* --theme-code-tabs: #22272f;
     --theme-code-bg: #282c34; */
     /* --theme-text: hsla(var(--color-gray-10), 1);
@@ -102,6 +103,15 @@
     background-color: rgb(33, 33, 33) !important;
     box-shadow: -5px 3px 8px 1px rgba(0, 0, 0, 0.12) !important;
   }
+}
+
+.giscus {
+  padding: 10px;
+  background-color: #9ea0ab;
+  border-radius: 12px;
+}
+.dark .giscus {
+  background-color: var(--theme-accent-opacity);
 }
 
 .glass {
