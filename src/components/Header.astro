@@ -1,10 +1,8 @@
 ---
-import logoLight from '@assets/text-logo.svg';
-import logoDark from '@assets/text-logo-dark.svg';
-import { Image } from 'astro:assets';
 import ToggleTheme from './ToggleTheme.astro';
 import Search from './Search.tsx';
 import { LEFT_MENU, MOBILE_MENU, RIGHT_MENU } from '@data/nav';
+import config from '@config/index';
 ---
 
 <div class={'px-8 py-5 lg:py-8 w-full xl:px-5 sticky top-[0] z-10 backdrop-blur-md shadow-sm'}>
@@ -26,13 +24,7 @@ import { LEFT_MENU, MOBILE_MENU, RIGHT_MENU } from '@data/nav';
       </div>
 
       <div class='flex items-center justify-between w-full md:w-auto'>
-        <a class='w-20 dark:hidden' href='/'>
-          <Image src={logoLight} alt='Logo' loading={'eager'} />
-        </a>
-
-        <a class='hidden w-20 dark:block' href='/'>
-          <Image src={logoDark} alt='Logo' loading={'eager'} />
-        </a>
+        <a href='/' class='font-bold'> {config.title} </a>
 
         <button
           id='menu'

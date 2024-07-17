@@ -3,12 +3,12 @@ import Container from '@components/Container.astro';
 import Postlist from '@components/Postlist.astro';
 import ArrowUp from '@components/icons/ArrowUp.astro';
 import Button from '@components/ui/button.astro';
-import config, { DEFAULT_COLUMN } from '@config/index';
-import { DEFAULT_GRID_COLUMNS } from '@utils/utils';
+import config, { DEFAULT_GRID_COLUMNS } from '@config/index';
 
 import { latestPosts } from '@utils/content';
 import clsx from 'clsx';
 import Layout from '../layouts/Layout.astro';
+const { pageSize, default_column } = config;
 /** 首页默认列数 */
 ---
 
@@ -23,11 +23,11 @@ import Layout from '../layouts/Layout.astro';
             .map((post) => <Postlist post={post} preloadImage={true} />)
         }
       </div>
-      <div class={clsx(`grid gap-10 mt-10 lg:gap-10`, DEFAULT_GRID_COLUMNS[DEFAULT_COLUMN])}>
+      <div class={clsx(`grid gap-10 mt-10 lg:gap-10`, DEFAULT_GRID_COLUMNS[default_column])}>
         {
           latestPosts
             .filter((item) => !item.data?.pin)
-            .slice(0, config.pageSize)
+            .slice(0, pageSize)
             .map((post) => <Postlist post={post} />)
         }
       </div>

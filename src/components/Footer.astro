@@ -1,4 +1,5 @@
 ---
+import config from '@config/index';
 import Container from './Container.astro';
 ---
 
@@ -6,7 +7,8 @@ import Container from './Container.astro';
   <footer class='flex flex-col items-center'>
     <div></div>
     <div class='text-sm text-center'>
-      Copyright © {new Date().getFullYear()} DevNow. All rights reserved.
+      Copyright © {new Date().getFullYear()}
+      {config.title}. All rights reserved.
     </div>
     <div
       class='flex justify-center gap-1 mt-1 text-sm text-center text-gray-500 dark:text-gray-600'

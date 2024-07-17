@@ -1,4 +1,5 @@
 import rss from '@astrojs/rss';
+import config from '@config/index';
 import { latestPosts } from '@utils/content';
 import MarkdownIt from 'markdown-it';
 import sanitizeHtml from 'sanitize-html';
@@ -7,9 +8,9 @@ export async function GET(context: any) {
   const doc = latestPosts.slice(0, 10);
   return rss({
     // 输出的 xml 中的`<title>`字段
-    title: 'DevNow — 开发技术周刊',
+    title: config.description,
     // 输出的 xml 中的`<description>`字段
-    description: 'DevNow — 开发技术周刊',
+    description: config.description,
     site: context.site,
     // remove Astro 的 RSS 摘要默认生成带尾部斜杠的链接
     trailingSlash: false,
