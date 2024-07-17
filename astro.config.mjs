@@ -7,6 +7,7 @@ import AutoImport from 'astro-auto-import';
 import embeds from 'astro-embed/integration';
 import { defineConfig } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
+import config from './src/config/index';
 import { remarkReadingTime } from './src/utils/all';
 import { asideAutoImport, astroAsides } from './src/utils/MAside';
 
@@ -15,7 +16,7 @@ const PUBLIC_SENTRY_TOKEN = process.env.PUBLIC_SENTRY_TOKEN;
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://devnow.laughingzhu.cn',
+  site: config.homePage,
   experimental: {
     // 在静态模式下构建时，启用内容集合的持久性缓存。
     contentCollectionCache: true
