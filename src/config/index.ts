@@ -31,5 +31,9 @@ export default {
   // pagntion 配置
   pageSize: 18,
   /** 首页默认列数 */
-  default_column: 3
+  default_column: 3,
+  /** 是否显示版权声明，默认不显示 */
+  show_copyright_info: false,
+  /** 域名备案信息开关, 为 '' 空则不显示 */
+  foot_site_info: ''
 };

@@ -1,20 +1,25 @@
 ---
 import config from '@config/index';
 import Container from './Container.astro';
+const { show_copyright_info, title, foot_site_info } = config;
 ---
 
 <Container class='mt-10 border-t border-gray-100 dark:border-gray-800'>
   <footer class='flex flex-col items-center'>
-    <div></div>
-    <div class='text-sm text-center'>
-      Copyright © {new Date().getFullYear()}
-      {config.title}. All rights reserved.
-    </div>
-    <div
-      class='flex justify-center gap-1 mt-1 text-sm text-center text-gray-500 dark:text-gray-600'
-    >
-      本站部分资源收集整理于网络,本站不参与制作,用于互联网爱好者学习和研究,如不慎侵犯了您的权利,请及时联系站长处理删除。敬请谅解！
-      侵权删帖/违法举报/投稿等联系邮箱：devnow.laughingzhu@gmail.com
-    </div>
+    {
+      show_copyright_info && (
+        <div class='text-sm text-center'>
+          Copyright © {new Date().getFullYear()}
+          {title}. All rights reserved.
+        </div>
+      )
+    }
+    {
+      !!foot_site_info && (
+        <div class='flex justify-center gap-1 mt-1 text-sm text-center text-gray-500 dark:text-gray-600'>
+          {foot_site_info}
+        </div>
+      )
+    }
   </footer>
 </Container>
