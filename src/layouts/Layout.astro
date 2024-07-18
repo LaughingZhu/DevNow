@@ -13,7 +13,14 @@ interface Props {
   desc?: string;
   image?: string;
 }
-const { title: DEFAULT_TITLE, description, logo, show_copyright_info, foot_site_info } = config;
+const {
+  title: DEFAULT_TITLE,
+  description,
+  logo,
+  ico,
+  show_copyright_info,
+  foot_site_info
+} = config;
 const { title, desc = description, image = logo } = Astro.props;
 const resolvedOGImage = checkImageUrl(image, Astro.site);
 const makeTitle = title ? title + ' | ' + DEFAULT_TITLE : description;
@@ -43,7 +50,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
   <head>
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width' />
-    <link rel='icon' type='image/svg+xml' href='/favicon.ico' />
+    <link rel='icon' type='image/svg+xml' href={ico} />
     <link rel='sitemap' href='/sitemap-index.xml' />
     <link rel='alternate' type='application/rss+xml' title={makeTitle} href={'/rss.xml'} />
     <!-- faster docsearch https://docsearch.algolia.com/docs/DocSearch-v3#preconnect  -->

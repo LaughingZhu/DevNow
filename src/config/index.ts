@@ -20,6 +20,7 @@ export default {
   homePage: 'https://devnow.laughingzhu.cn',
   githubId: 'LaughingZhu',
   repo: 'LaughingZhu/DevNow',
+  ico: 'https://cdn.laughingzhu.cn/DevNow/2191381389b808c9183a74c11f1280d6-c01e93.ico',
   /** 网站配置信息  end */
 
   cdn: 'https://cdn.laughingzhu.cn/',
