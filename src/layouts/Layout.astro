@@ -13,7 +13,7 @@ interface Props {
   desc?: string;
   image?: string;
 }
-const { title: DEFAULT_TITLE, description, logo } = config;
+const { title: DEFAULT_TITLE, description, logo, show_copyright_info, foot_site_info } = config;
 const { title, desc = description, image = logo } = Astro.props;
 const resolvedOGImage = checkImageUrl(image, Astro.site);
 const makeTitle = title ? title + ' | ' + DEFAULT_TITLE : description;
@@ -72,7 +72,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
   <body>
     <Header />
     <slot />
-    <Footer />
+    {(show_copyright_info || !!foot_site_info) && <Footer />}
     <style is:global>
       /* Improve Page speed */
       /* https://css-tricks.com/almanac/properties/c/content-visibility/ */
