@@ -33,11 +33,17 @@ export const getAllCategories = async (): Promise<
     id: string;
   }[]
 > => {
-  return latestPosts.map((post) => {
+  const map = new Map<string, { label: string; id: string }>();
+  latestPosts.forEach((post) => {
     const category = categories.find((item) => item.slug === post.data.category);
-    return {
-      label: category?.title || 'DevNow',
-      id: category?.slug || 'DevNow'
-    };
+
+    if (!!category && !map.has(category.slug)) {
+      map.set(category.slug, {
+        label: category.title || 'DevNow',
+        id: category.slug || 'DevNow'
+      });
+    }
   });
+
+  return [...map.values()];
 };
