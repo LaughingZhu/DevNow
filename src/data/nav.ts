@@ -1,27 +1,25 @@
-interface Menu {
-  label: string;
-  href: string;
-  /** 移动端隐藏 */
-  isMobileHide?: boolean;
-  /** 新开窗口打开 */
-  external?: boolean;
-}
+import type { Menu } from '@type/menu';
+import { getAllCategories } from '@utils/content';
+const category = await getAllCategories();
 
 export const LEFT_MENU: Menu[] = [
-  {
-    label: 'Home',
-    href: '/'
-  },
+  // {
+  //   label: 'Home',
+  //   href: '/'
+  // },
+
   {
     label: 'About',
     href: '/about'
+  },
+  {
+    label: 'Category',
+    href: '/category',
+    isMobileHide: true,
+    children: category
   }
 ];
 export const RIGHT_MENU: Menu[] = [
-  // {
-  //   label: 'Category',
-  //   href: '/category'
-  // },
   {
     label: 'Sponsor',
     href: '/sponsor'

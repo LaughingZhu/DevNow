@@ -183,3 +183,9 @@ lite-vimeo {
 }
 
 /* -------- astro embed end-------- */
+
+.textOVerFlow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

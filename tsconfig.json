@@ -13,7 +13,8 @@
       "@assets/*": ["assets/*"],
       "@pages/*": ["pages/*"],
       "@common/*": ["common/*"],
-      "@config/*": ["config/*"]
+      "@config/*": ["config/*"],
+      "@type/*": ["type/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"
