@@ -18,7 +18,7 @@ export async function getStaticPaths({ paginate }: any) {
 }
 ---
 
-<Layout title='页面'>
+<Layout title={`分页-第 ${page.currentPage} 页`}>
   <Container>
     <TitlePage title={`第 ${page.currentPage} 页`} />
     <main>

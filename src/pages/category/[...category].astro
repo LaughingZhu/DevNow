@@ -9,7 +9,7 @@ const { category = '' } = Astro.params;
 const posts = await filterPostsByCategory(category);
 ---
 
-<Layout title='类别'>
+<Layout title=`类别-${category}`>
   <Container>
     <TitlePage title={category} />
     <div class='grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3'>
