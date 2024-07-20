@@ -1,3 +1,4 @@
+import { categories } from '@data/category';
 import { getCollection } from 'astro:content';
 
 // Only return posts without `draft: true` in the frontmatter
@@ -21,4 +22,22 @@ export const filterPostsByTag = async (tag = '') => {
   return latestPosts.filter((post) =>
     post.data.tags.map((item) => item.toLowerCase()).includes(tag)
   );
+};
+
+/**
+ * @desc { 获取所有的分类 }
+ */
+export const getAllCategories = async (): Promise<
+  {
+    label: string;
+    id: string;
+  }[]
+> => {
+  return latestPosts.map((post) => {
+    const category = categories.find((item) => item.slug === post.data.category);
+    return {
+      label: category?.title || 'DevNow',
+      id: category?.slug || 'DevNow'
+    };
+  });
 };

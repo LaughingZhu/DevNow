@@ -9,7 +9,7 @@ const { tag = '' } = Astro.params;
 const posts = await filterPostsByTag(tag);
 ---
 
-<Layout title='标签'>
+<Layout title=`标签-${tag}`>
   <Container>
     <TitlePage title={tag} />
     <div class='grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3'>
