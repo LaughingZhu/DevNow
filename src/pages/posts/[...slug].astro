@@ -7,6 +7,7 @@ import MImage from '@components/mdx/MImage.astro';
 import BlogPost from '@layouts/BlogPost.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import clsx from 'clsx';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 type Props = { doc: CollectionEntry<'doc'> };
 
 // 在 server 模式中选择加入预渲染
@@ -55,4 +56,77 @@ const hasHeadering = headings && !!headings.length;
       </article>
     </div>
   </div>
+  <div id='postModal' class='modal'>
+    <span class='close'>
+      <AiOutlineCloseCircle />
+    </span>
+    <img class='modal-content' id='modal-img' />
+    <div id='caption'></div>
+  </div>
 </BlogPost>
+
+<style>
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    margin: auto;
+    padding: 50px;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+  }
+
+  .close {
+    position: fixed;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  const modal = document.getElementById('postModal');
+  const modalImg = document.getElementById('modal-img') as HTMLImageElement;
+  const imgs = document.querySelectorAll('article img') as NodeListOf<HTMLImageElement>;
+
+  imgs.forEach(function (img) {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => {
+      if (modal && modalImg) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+
+        modalImg.src = img.src;
+      }
+    });
+  });
+
+  const span = document.getElementsByClassName('close')[0];
+  span?.addEventListener('click', () => {
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  });
+</script>
