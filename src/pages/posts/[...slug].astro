@@ -56,47 +56,25 @@ const hasHeadering = headings && !!headings.length;
       </article>
     </div>
   </div>
-  <div id='postModal' class='modal'>
-    <span class='close'>
+  <div
+    id='postModal'
+    class='hidden fixed z-[100] m-auto p-[50px] inset-0 w-full h-full overflow-hidden bg-[rgba(0,0,0,0.9)] items-center justify-center'
+  >
+    <span
+      id='close'
+      class='fixed top-[15px] right-[35px] text-[40px] text-[#f1f1f1] font-bold transition hover:text-[#bbb] hover:decoration-[none] hover:cursor-pointer foces:text-[#bbb] foces:decoration-[none] foces:cursor-pointer'
+    >
       <AiOutlineCloseCircle />
     </span>
-    <img class='modal-content' id='modal-img' />
+    <img
+      class='m-auto w-full h-full object-scale-down block max-w-[80%] max-sm:max-w-full'
+      id='modal-img'
+    />
     <div id='caption'></div>
   </div>
 </BlogPost>
 
 <style>
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 100;
-    margin: auto;
-    padding: 50px;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.9);
-    align-items: center;
-    justify-content: center;
-  }
-
-  .modal-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-  }
-
-  .close {
-    position: fixed;
-    top: 15px;
-    right: 35px;
-    color: #f1f1f1;
-    font-size: 40px;
-    font-weight: bold;
-    transition: 0.3s;
-  }
-
   .close:hover,
   .close:focus {
     color: #bbb;
@@ -122,7 +100,7 @@ const hasHeadering = headings && !!headings.length;
     });
   });
 
-  const span = document.getElementsByClassName('close')[0];
+  const span = document.getElementById('close');
   span?.addEventListener('click', () => {
     if (modal) {
       modal.style.display = 'none';
