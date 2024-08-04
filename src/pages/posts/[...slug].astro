@@ -60,7 +60,7 @@ const hasHeadering = headings && !!headings.length;
     <span class='close'>
       <AiOutlineCloseCircle />
     </span>
-    <img class='modal-content' id='modal-img' />
+    <img class='m-auto block max-w-[80%] max-sm:max-w-full' id='modal-img' />
     <div id='caption'></div>
   </div>
 </BlogPost>
@@ -79,12 +79,6 @@ const hasHeadering = headings && !!headings.length;
     background-color: rgba(0, 0, 0, 0.9);
     align-items: center;
     justify-content: center;
-  }
-
-  .modal-content {
-    margin: auto;
-    display: block;
-    width: 80%;
   }
 
   .close {
