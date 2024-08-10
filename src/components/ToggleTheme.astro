@@ -3,11 +3,11 @@
     constructor() {
       super();
 
-      const button = document.getElementById('toggle-theme') as HTMLDivElement;
+      const button = document.getElementById('toggle-theme') as HTMLButtonElement;
 
       if (button) {
         button.addEventListener('click', (e) => {
-          if (e.currentTarget instanceof HTMLDivElement) {
+          if (e.currentTarget instanceof HTMLButtonElement) {
             let isPressed = e.currentTarget.getAttribute('aria-pressed') === 'true';
             let themeChangeEvent = new CustomEvent('theme-change', {
               detail: {
@@ -29,10 +29,10 @@
 </script>
 
 <theme-toggle class='flex items-center'>
-  <div id='toggle-theme' class='theme' aria-label='Toggle Theme'>
+  <button id='toggle-theme' class='theme' aria-label='Toggle Theme'>
     <!-- <input type='checkbox' /> -->
     <span class='slider'></span>
-  </div>
+  </button>
 </theme-toggle>
 
 <script is:inline>
