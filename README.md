@@ -25,6 +25,7 @@ DevNow 是一个精简的开源技术博客项目，支持 Vercel 一键部署�
 - ✅ 🔍文章搜索
 - ✅ 支持 Comments (Giscus)
 - ✅ 支持分页
+- ✅ 支持 Tina CMS
 
 ## 迭代计划
 
@@ -127,6 +128,10 @@ PUBLIC_SENTRY_TOKEN;
 - 2.配置环境变量
   .env 中配置 **PUBLIC_SEARCH_APP_ID、PUBLIC_SEARCH_API_KEY** 即可
   也可以在类似Vercel上配置相关的环境变量，[具体详情](https://vercel.com/docs/projects/environment-variables)
+
+#### [Tina CMS 配置](https://www.laughingzhu.cn/posts/tina-cms)
+
+具体可参考：[Tina CMS 配置](https://www.laughingzhu.cn/posts/tina-cms)
 
 ## Sponsors：（感谢大家的支持，排名不分先后）
 
