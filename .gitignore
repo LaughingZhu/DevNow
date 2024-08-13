@@ -25,3 +25,5 @@ pnpm-debug.log*
 
 # vercel folder
 .vercel/**
+
+node_modules
