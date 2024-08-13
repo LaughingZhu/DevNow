@@ -1,0 +1,1366 @@
+{
+  "schema": {
+    "version": { "fullVersion": "1.4.39", "major": "1", "minor": "4", "patch": "39" },
+    "meta": { "flags": ["experimentalData"] },
+    "collections": [
+      {
+        "name": "doc",
+        "label": "Posts",
+        "path": "src/content/doc",
+        "format": "mdx",
+        "fields": [
+          {
+            "type": "string",
+            "name": "title",
+            "label": "Title",
+            "isTitle": true,
+            "required": true,
+            "namespace": ["doc", "title"],
+            "searchable": true,
+            "uid": false
+          },
+          {
+            "type": "string",
+            "name": "desc",
+            "label": "Desc",
+            "required": true,
+            "description": "The image used for the cover of the post",
+            "namespace": ["doc", "desc"],
+            "searchable": true,
+            "uid": false
+          },
+          {
+            "type": "string",
+            "name": "publishDate",
+            "label": "PublishDate",
+            "required": true,
+            "namespace": ["doc", "publishDate"],
+            "searchable": true,
+            "uid": false
+          },
+          {
+            "type": "string",
+            "name": "image",
+            "label": "Image",
+            "required": true,
+            "namespace": ["doc", "image"],
+            "searchable": true,
+            "uid": false
+          },
+          {
+            "type": "string",
+            "required": true,
+            "name": "category",
+            "label": "Category",
+            "description": "Select an category for this post",
+            "options": [
+              { "label": "Technology", "value": "technology" },
+              { "label": "Book", "value": "book" },
+              { "label": "Blog", "value": "blog" },
+              { "label": "DevNow", "value": "devnow" }
+            ],
+            "namespace": ["doc", "category"],
+            "searchable": true,
+            "uid": false
+          },
+          {
+            "type": "string",
+            "name": "author",
+            "label": "Author",
+            "required": true,
+            "namespace": ["doc", "author"],
+            "searchable": true,
+            "uid": false
+          },
+          {
+            "type": "string",
+            "name": "tags",
+            "label": "Tags",
+            "required": true,
+            "list": true,
+            "ui": { "component": "tags" },
+            "namespace": ["doc", "tags"],
+            "searchable": true,
+            "uid": false
+          },
+          {
+            "type": "boolean",
+            "name": "draft",
+            "label": "Draft",
+            "description": "If this is checked the post will not be published",
+            "namespace": ["doc", "draft"],
+            "searchable": true,
+            "uid": false
+          },
+          {
+            "type": "boolean",
+            "name": "pin",
+            "label": "Pin",
+            "required": false,
+            "namespace": ["doc", "pin"],
+            "searchable": true,
+            "uid": false
+          },
+          {
+            "type": "rich-text",
+            "name": "body",
+            "label": "Body",
+            "isBody": true,
+            "namespace": ["doc", "body"],
+            "searchable": true,
+            "parser": { "type": "mdx" },
+            "uid": false
+          }
+        ],
+        "namespace": ["doc"]
+      }
+    ],
+    "config": { "media": { "tina": { "publicFolder": "public", "mediaRoot": "" } } }
+  },
+  "lookup": {
+    "DocumentConnection": {
+      "type": "DocumentConnection",
+      "resolveType": "multiCollectionDocumentList",
+      "collections": ["doc"]
+    },
+    "Node": { "type": "Node", "resolveType": "nodeDocument" },
+    "DocumentNode": {
+      "type": "DocumentNode",
+      "resolveType": "multiCollectionDocument",
+      "createDocument": "create",
+      "updateDocument": "update"
+    },
+    "Doc": {
+      "type": "Doc",
+      "resolveType": "collectionDocument",
+      "collection": "doc",
+      "createDoc": "create",
+      "updateDoc": "update"
+    },
+    "DocConnection": {
+      "type": "DocConnection",
+      "resolveType": "collectionDocumentList",
+      "collection": "doc"
+    }
+  },
+  "graphql": {
+    "kind": "Document",
+    "definitions": [
+      {
+        "kind": "ScalarTypeDefinition",
+        "name": { "kind": "Name", "value": "Reference" },
+        "description": {
+          "kind": "StringValue",
+          "value": "References another document, used as a foreign key"
+        },
+        "directives": []
+      },
+      {
+        "kind": "ScalarTypeDefinition",
+        "name": { "kind": "Name", "value": "JSON" },
+        "description": { "kind": "StringValue", "value": "" },
+        "directives": []
+      },
+      {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [],
+        "directives": [],
+        "name": { "kind": "Name", "value": "SystemInfo" },
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "filename" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "title" },
+            "arguments": [],
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "basename" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "breadcrumbs" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "excludeExtension" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Boolean" } }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": {
+                "kind": "ListType",
+                "type": {
+                  "kind": "NonNullType",
+                  "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+                }
+              }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "path" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "relativePath" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "extension" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "template" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "collection" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Collection" } }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [],
+        "directives": [],
+        "name": { "kind": "Name", "value": "Folder" },
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "name" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "path" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [],
+        "directives": [],
+        "name": { "kind": "Name", "value": "PageInfo" },
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "hasPreviousPage" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Boolean" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "hasNextPage" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Boolean" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "startCursor" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "endCursor" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "InterfaceTypeDefinition",
+        "description": { "kind": "StringValue", "value": "" },
+        "name": { "kind": "Name", "value": "Node" },
+        "interfaces": [],
+        "directives": [],
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "id" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "ID" } }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "InterfaceTypeDefinition",
+        "description": { "kind": "StringValue", "value": "" },
+        "name": { "kind": "Name", "value": "Document" },
+        "interfaces": [],
+        "directives": [],
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "id" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "ID" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "_sys" },
+            "arguments": [],
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "SystemInfo" } }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "_values" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "JSON" } }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "InterfaceTypeDefinition",
+        "description": {
+          "kind": "StringValue",
+          "value": "A relay-compliant pagination connection"
+        },
+        "name": { "kind": "Name", "value": "Connection" },
+        "interfaces": [],
+        "directives": [],
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "totalCount" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Float" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "pageInfo" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "PageInfo" } }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [],
+        "directives": [],
+        "name": { "kind": "Name", "value": "Query" },
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "getOptimizedQuery" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "queryString" },
+                "type": {
+                  "kind": "NonNullType",
+                  "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+                }
+              }
+            ],
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "collection" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "collection" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Collection" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "collections" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": {
+                "kind": "ListType",
+                "type": {
+                  "kind": "NonNullType",
+                  "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Collection" } }
+                }
+              }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "node" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "id" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Node" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "document" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "collection" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "relativePath" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "DocumentNode" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "doc" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "relativePath" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Doc" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "docConnection" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "before" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "after" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "first" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Float" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "last" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Float" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "sort" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "filter" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "DocFilter" } }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "DocConnection" } }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "DocumentFilter" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "doc" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "DocFilter" } }
+          }
+        ]
+      },
+      {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [],
+        "directives": [],
+        "name": { "kind": "Name", "value": "DocumentConnectionEdges" },
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "cursor" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "node" },
+            "arguments": [],
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "DocumentNode" } }
+          }
+        ]
+      },
+      {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [{ "kind": "NamedType", "name": { "kind": "Name", "value": "Connection" } }],
+        "directives": [],
+        "name": { "kind": "Name", "value": "DocumentConnection" },
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "pageInfo" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "PageInfo" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "totalCount" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Float" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "edges" },
+            "arguments": [],
+            "type": {
+              "kind": "ListType",
+              "type": {
+                "kind": "NamedType",
+                "name": { "kind": "Name", "value": "DocumentConnectionEdges" }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [],
+        "directives": [],
+        "name": { "kind": "Name", "value": "Collection" },
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "name" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "slug" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "label" },
+            "arguments": [],
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "path" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "format" },
+            "arguments": [],
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "matches" },
+            "arguments": [],
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "templates" },
+            "arguments": [],
+            "type": {
+              "kind": "ListType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "JSON" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "fields" },
+            "arguments": [],
+            "type": {
+              "kind": "ListType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "JSON" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "documents" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "before" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "after" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "first" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Float" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "last" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Float" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "sort" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "filter" },
+                "type": {
+                  "kind": "NamedType",
+                  "name": { "kind": "Name", "value": "DocumentFilter" }
+                }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "folder" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": {
+                "kind": "NamedType",
+                "name": { "kind": "Name", "value": "DocumentConnection" }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "UnionTypeDefinition",
+        "name": { "kind": "Name", "value": "DocumentNode" },
+        "directives": [],
+        "types": [
+          { "kind": "NamedType", "name": { "kind": "Name", "value": "Doc" } },
+          { "kind": "NamedType", "name": { "kind": "Name", "value": "Folder" } }
+        ]
+      },
+      {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [
+          { "kind": "NamedType", "name": { "kind": "Name", "value": "Node" } },
+          { "kind": "NamedType", "name": { "kind": "Name", "value": "Document" } }
+        ],
+        "directives": [],
+        "name": { "kind": "Name", "value": "Doc" },
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "title" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "desc" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "publishDate" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "image" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "category" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "author" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "tags" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": {
+                "kind": "ListType",
+                "type": {
+                  "kind": "NonNullType",
+                  "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+                }
+              }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "draft" },
+            "arguments": [],
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Boolean" } }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "pin" },
+            "arguments": [],
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Boolean" } }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "body" },
+            "arguments": [],
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "JSON" } }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "id" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "ID" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "_sys" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "SystemInfo" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "_values" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "JSON" } }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "StringFilter" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "startsWith" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "eq" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "exists" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Boolean" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "in" },
+            "type": {
+              "kind": "ListType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "BooleanFilter" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "eq" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Boolean" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "exists" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Boolean" } }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "RichTextFilter" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "startsWith" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "eq" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "exists" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Boolean" } }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "DocFilter" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "title" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "StringFilter" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "desc" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "StringFilter" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "publishDate" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "StringFilter" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "image" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "StringFilter" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "category" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "StringFilter" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "author" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "StringFilter" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "tags" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "StringFilter" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "draft" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "BooleanFilter" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "pin" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "BooleanFilter" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "body" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "RichTextFilter" } }
+          }
+        ]
+      },
+      {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [],
+        "directives": [],
+        "name": { "kind": "Name", "value": "DocConnectionEdges" },
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "cursor" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "node" },
+            "arguments": [],
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Doc" } }
+          }
+        ]
+      },
+      {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [{ "kind": "NamedType", "name": { "kind": "Name", "value": "Connection" } }],
+        "directives": [],
+        "name": { "kind": "Name", "value": "DocConnection" },
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "pageInfo" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "PageInfo" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "totalCount" },
+            "arguments": [],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Float" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "edges" },
+            "arguments": [],
+            "type": {
+              "kind": "ListType",
+              "type": {
+                "kind": "NamedType",
+                "name": { "kind": "Name", "value": "DocConnectionEdges" }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [],
+        "directives": [],
+        "name": { "kind": "Name", "value": "Mutation" },
+        "fields": [
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "addPendingDocument" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "collection" },
+                "type": {
+                  "kind": "NonNullType",
+                  "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+                }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "relativePath" },
+                "type": {
+                  "kind": "NonNullType",
+                  "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+                }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "template" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "DocumentNode" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "updateDocument" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "collection" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "relativePath" },
+                "type": {
+                  "kind": "NonNullType",
+                  "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+                }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "params" },
+                "type": {
+                  "kind": "NonNullType",
+                  "type": {
+                    "kind": "NamedType",
+                    "name": { "kind": "Name", "value": "DocumentUpdateMutation" }
+                  }
+                }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "DocumentNode" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "deleteDocument" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "collection" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "relativePath" },
+                "type": {
+                  "kind": "NonNullType",
+                  "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+                }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "DocumentNode" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "createDocument" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "collection" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "relativePath" },
+                "type": {
+                  "kind": "NonNullType",
+                  "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+                }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "params" },
+                "type": {
+                  "kind": "NonNullType",
+                  "type": {
+                    "kind": "NamedType",
+                    "name": { "kind": "Name", "value": "DocumentMutation" }
+                  }
+                }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "DocumentNode" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "createFolder" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "collection" },
+                "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "relativePath" },
+                "type": {
+                  "kind": "NonNullType",
+                  "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+                }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "DocumentNode" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "updateDoc" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "relativePath" },
+                "type": {
+                  "kind": "NonNullType",
+                  "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+                }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "params" },
+                "type": {
+                  "kind": "NonNullType",
+                  "type": {
+                    "kind": "NamedType",
+                    "name": { "kind": "Name", "value": "DocMutation" }
+                  }
+                }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Doc" } }
+            }
+          },
+          {
+            "kind": "FieldDefinition",
+            "name": { "kind": "Name", "value": "createDoc" },
+            "arguments": [
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "relativePath" },
+                "type": {
+                  "kind": "NonNullType",
+                  "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+                }
+              },
+              {
+                "kind": "InputValueDefinition",
+                "name": { "kind": "Name", "value": "params" },
+                "type": {
+                  "kind": "NonNullType",
+                  "type": {
+                    "kind": "NamedType",
+                    "name": { "kind": "Name", "value": "DocMutation" }
+                  }
+                }
+              }
+            ],
+            "type": {
+              "kind": "NonNullType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Doc" } }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "DocumentUpdateMutation" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "doc" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "DocMutation" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "relativePath" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "DocumentMutation" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "doc" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "DocMutation" } }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "DocMutation" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "title" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "desc" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "publishDate" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "image" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "category" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "author" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "tags" },
+            "type": {
+              "kind": "ListType",
+              "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "String" } }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "draft" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Boolean" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "pin" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "Boolean" } }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "body" },
+            "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "JSON" } }
+          }
+        ]
+      }
+    ]
+  }
+}
