@@ -70,7 +70,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
         },
         image: {
           alt: makeTitle
+        },
+        optional: {
+          description: desc.slice(0, 160)
         }
+      }}
+      ,
+      extend={{
+        meta: [
+          {
+            name: 'keywords',
+            content: desc.slice(0, 100) || 'LaughingZhu Blog, blog, DevNow, 前端博客, 技术, 开源'
+          }
+        ]
       }}
     />
     <ThemeSwitch />
