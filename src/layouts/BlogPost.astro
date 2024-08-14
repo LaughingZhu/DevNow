@@ -17,7 +17,7 @@ type Props = {
 
 const { data, readTime, headings } = Astro.props;
 const { title, desc, publishDate, image, tags } = data;
-const formatDesc = desc + ' | ' + headings?.map((item) => item?.text);
+const formatDesc = desc + ' | ' + headings?.map((item) => item?.text).join(',');
 ---
 
 <BaseLayout title={title} desc={formatDesc} image={image}>
