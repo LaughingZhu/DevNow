@@ -1,6 +1,6 @@
 ## 🚀Hello There
 
-<hr />
+---
 
 [简体中文](/doc/zh.md)
 
@@ -24,7 +24,7 @@ DevNow is a minimal open source tech blog project template, support Vercel one-c
 
 ## 📌 Features
 
-<hr />
+---
 
 - ✅ Mobile responsive
 - ✅ SEO & OpenGraph
@@ -44,7 +44,7 @@ DevNow is a minimal open source tech blog project template, support Vercel one-c
 
 ## ⚙️ Stack
 
-<hr />
+---
 
 - [**ASTRO** + **Typescript**](https://astro.build/) - Astro is the all-in-one web framework designed for speed.
 - [**Tailwind CSS** + **Tailwind-Merge** + **clsx**](https://tailwindcss.com/) - Tailwind CSS is a utility-first CSS framework.
@@ -53,7 +53,7 @@ DevNow is a minimal open source tech blog project template, support Vercel one-c
 
 ## 👨🏻‍💻 Running Locally
 
-<hr />
+---
 
 1. Clone or [fork](https://github.com/danielcgilibert/blog-template/fork) the repository:
 
@@ -81,7 +81,7 @@ pnpm build
 
 ## 📐 Vercel env config
 
-<hr />
+---
 
 [Here](https://vercel.com/docs/projects/environment-variables) env config
 
@@ -110,7 +110,7 @@ PUBLIC_SENTRY_TOKEN;
 
 ## Comment config : [Giscus](https://giscus.app/zh-CN)
 
-<hr />
+---
 
 1. Status
    src/config --> giscus: true
@@ -124,7 +124,7 @@ PUBLIC_SENTRY_TOKEN;
 
 ## Search config: [DocSearch](https://docsearch.algolia.com/docs/what-is-docsearch)
 
-<hr />
+---
 
 1. Status
    src/config --> search: true
@@ -136,13 +136,13 @@ PUBLIC_SENTRY_TOKEN;
 
 ## Headless CMS by Tina CMS
 
-<hr />
+---
 
 [Tina CMS](https://www.laughingzhu.cn/posts/tina-cms)
 
 ## 🗂️ Adding a catefory
 
-<hr />
+---
 
 To add a new category to your blog, simply go to the src/data/categories.ts file and add it to the array.
 
@@ -163,12 +163,13 @@ export const categories: Category[] = [
 
 ## Sponsors
 
-<hr />
+---
+
 <img src='https://r2.laughingzhu.cn/11a4546cbebfb285c418aa0a60080434-2c9ce1.webp' alt='Sponsors' />
 
 ## sponsor me by wechat or alipay
 
-<hr />
+---
 
 <div align="center">
 <img src="https://r2.laughingzhu.cn/8df0d597-93dc-44a4-9e93-ebd02f74e695.JPG" alt="Buy Me A Coffee" width="174" />
@@ -178,6 +179,6 @@ export const categories: Category[] = [
 
 ## Star History
 
-<hr />
+---
 
 [![Star History Chart](https://api.star-history.com/svg?repos=laughingzhu/devnow&type=Date)](https://star-history.com/#laughingzhu/devnow&Date)
