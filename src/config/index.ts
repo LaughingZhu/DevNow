@@ -12,15 +12,15 @@ export const DEFAULT_GRID_COLUMNS: { [key: number]: string } = {
 
 export default {
   /** 网站配置信息 start */
-  title: 'DebNow',
+  title: 'DevNow',
   author: 'LaughingZhu',
   description: 'DevNow — 开发技术周刊',
   keywords: 'DevNow 开源技术博客项目。目前承载着一个技术新闻、开发weekly，每周一上午发布~',
-  logo: 'https://cdn.laughingzhu.cn/DevNow/40850814d71699ef09fda435802bfe02-58f0d8.png',
+  logo: 'https://r2.laughingzhu.cn/40850814d71699ef09fda435802bfe02-58f0d8.png',
   homePage: 'https://devnow.laughingzhu.cn',
   githubId: 'LaughingZhu',
   repo: 'LaughingZhu/DevNow',
-  ico: 'https://cdn.laughingzhu.cn/DevNow/2191381389b808c9183a74c11f1280d6-c01e93.ico',
+  ico: 'https://r2.laughingzhu.cn/2191381389b808c9183a74c11f1280d6-c01e93.ico',
   /** 网站配置信息  end */
 
   cdn: 'https://cdn.laughingzhu.cn/',
