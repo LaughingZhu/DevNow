@@ -1,7 +1,5 @@
 ## 🚀Hello There
 
-<hr />
-
 [English](/README.md)
 
 DevNow 是一个精简的开源技术博客项目模版，支持 Vercel 一键部署，支持评论、搜索等功能，欢迎大家体验。
@@ -24,8 +22,6 @@ DevNow 是一个精简的开源技术博客项目模版，支持 Vercel 一键�
 
 ## 📌 Features
 
-<hr />
-
 - ✅ 适配移动端
 - ✅ SEO & OpenGraph
 - ✅ 支持 Markdown & MDX
@@ -43,8 +39,6 @@ DevNow 是一个精简的开源技术博客项目模版，支持 Vercel 一键�
 
 ## ⚙️ 技术栈
 
-<hr />
-
 - Astro
 - TypeScript
 - Tailwind CSS
@@ -52,8 +46,6 @@ DevNow 是一个精简的开源技术博客项目模版，支持 Vercel 一键�
 - Vercel 部署
 
 ## 👨🏻‍💻 部署
-
-<hr />
 
 1. Clone or [fork](https://github.com/danielcgilibert/blog-template/fork) the repository:
 
@@ -80,8 +72,6 @@ pnpm build
 ```
 
 ## 📐 Vercel 环境变量配置
-
-<hr />
 
 [在这里](https://vercel.com/docs/projects/environment-variables) 配置相关环境变量
 
@@ -110,7 +100,6 @@ PUBLIC_SENTRY_TOKEN;
 
 ## 评论配置 [Giscus](https://giscus.app/zh-CN)
 
-<hr />
 提供一个评论服务。
 
 - 1.状态
@@ -122,7 +111,6 @@ PUBLIC_SENTRY_TOKEN;
 
 ## 搜索配置 [DocSearch](https://docsearch.algolia.com/docs/what-is-docsearch)
 
-<hr />
 提供一个快捷的搜索服务。
 
 - 1.状态
@@ -134,12 +122,10 @@ PUBLIC_SENTRY_TOKEN;
 
 ## 无头CMS（Tina CMS）
 
-<hr />
 具体可参考：[Tina CMS 配置](https://www.laughingzhu.cn/posts/tina-cms)
 
 ## 🗂️ 添加分类
 
-<hr />
 如果想要添加新的分类,可以在 src/data/categories.ts 数组中添加对应的即可，如下：
 
 ```ts
@@ -157,13 +143,9 @@ export const categories: Category[] = [
 
 ## Sponsors：（感谢大家的支持，排名不分先后）
 
-<hr />
-
 <img src='https://r2.laughingzhu.cn/11a4546cbebfb285c418aa0a60080434-2c9ce1.webp' alt='Sponsors' />
 
 ## 可以通过这里来赞助我
-
-<hr />
 
 <div align="center">
 <img src="https://r2.laughingzhu.cn/8df0d597-93dc-44a4-9e93-ebd02f74e695.JPG" alt="Buy Me A Coffee" width="174" />
@@ -172,7 +154,5 @@ export const categories: Category[] = [
 </div>
 
 ## Star History
-
-<hr />
 
 [![Star History Chart](https://api.star-history.com/svg?repos=laughingzhu/devnow&type=Date)](https://star-history.com/#laughingzhu/devnow&Date)
