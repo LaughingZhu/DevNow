@@ -7,6 +7,13 @@ import cx from 'clsx';
 import Label from './ui/label.astro';
 const { post, preloadImage } = Astro.props;
 const category = categories.find((item) => item.slug === post.data.category) as Category;
+const color = {
+  green: 'dark:from-emerald-800 dark:to-emerald-900',
+  blue: 'dark:from-blue-800 dark:to-blue-900',
+  orange: 'dark:from-orange-800 dark:to-orange-900',
+  purple: 'dark:from-purple-800 dark:to-purple-900',
+  pink: 'dark:from-pink-800 dark:to-pink-900'
+};
 ---
 
 <div class='cursor-pointer group'>
@@ -44,7 +51,10 @@ const category = categories.find((item) => item.slug === post.data.category) as 
   >
     <a href={'/posts/' + post.slug}>
       <span
-        class='bg-gradient-to-r from-green-200 to-green-100 dark:from-purple-800 dark:to-purple-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]'
+        class={cx(
+          `bg-gradient-to-r from-green-200 to-green-100 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]`,
+          color[category.color]
+        )}
       >
         {post.data.title}
       </span>
