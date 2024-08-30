@@ -2,7 +2,7 @@
 
 <hr />
 
-[English](/Readme.md)
+[English](/README.md)
 
 DevNow 是一个精简的开源技术博客项目模版，支持 Vercel 一键部署，支持评论、搜索等功能，欢迎大家体验。
 
