@@ -8,7 +8,7 @@ DevNow is a minimal open source tech blog project template, support Vercel one-c
 
 <div align="center">
 
-<img src="https://r2.laughingzhu.cn/72853b50f2bfc17fbf7d3341d79b7e4f-df75d4.webp" alt="Screenshot" />
+<img src="https://r2.laughingzhu.cn/3bcbae51ddcea2cdf738a11c2556a5cd-48f5c9.webp" alt="Screenshot" />
 
 <hr/>
 
