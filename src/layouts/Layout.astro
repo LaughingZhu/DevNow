@@ -53,9 +53,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     <link rel='icon' type='image/svg+xml' href={ico} />
     <link rel='sitemap' href='/sitemap-index.xml' />
     <link rel='alternate' type='application/rss+xml' title={makeTitle} href={'/rss.xml'} />
-    <!-- faster docsearch https://docsearch.algolia.com/docs/DocSearch-v3#preconnect  -->
-    <!-- 需要替换成自己的APP_Id -->
-    <link rel='preconnect' href='https://YOUR_APP_ID-dsn.algolia.net' crossorigin />
     <meta name='generator' content={Astro.generator} />
     <SEO
       title={makeTitle}

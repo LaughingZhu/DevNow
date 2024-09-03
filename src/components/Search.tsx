@@ -1,5 +1,4 @@
 import config from '@/config';
-import '@common/docsearch.css';
 import { getAllCategories } from '@utils/content';
 import { Fragment, useEffect, useState } from 'react';
 import { Button } from './shadcn/button';

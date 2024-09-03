@@ -76,10 +76,6 @@ pnpm build
 [在这里](https://vercel.com/docs/projects/environment-variables) 配置相关环境变量
 
 ```js
-// doc seach 相关
-PUBLIC_SEARCH_APP_ID;
-PUBLIC_SEARCH_API_KEY;
-
 // Giscus 评论相关
 PUBLIC_GISCUS_REPO_ID;
 PUBLIC_GISCUS_REPO;
@@ -94,7 +90,7 @@ PUBLIC_SENTRY_TOKEN;
 
 > 📢 注意：
 >
-> **Giscus 评论功能** 和 **DocSearch 需** 需要在 config/index 中开启相关的功能，默认打开。
+> **Giscus 评论功能** 需要在 config/index 中开启相关的功能，默认打开。
 >
 > 如果是自己私有部署的话，需要把这些环境变量在 .env 中更新
 
@@ -107,17 +103,6 @@ PUBLIC_SENTRY_TOKEN;
 
 - 2.配置环境变量
   .env 中配置 **PUBLIC_GISCUS_REPO_ID、PUBLIC_GISCUS_REPO、和 PUBLIC_GISCUS_CATEGORY_ID** 即可
-  也可以在类似Vercel上配置相关的环境变量，[具体详情](https://vercel.com/docs/projects/environment-variables)
-
-## 搜索配置 [DocSearch](https://docsearch.algolia.com/docs/what-is-docsearch)
-
-提供一个快捷的搜索服务。
-
-- 1.状态
-  在 src/config 中配置 **search: true**
-
-- 2.配置环境变量
-  .env 中配置 **PUBLIC_SEARCH_APP_ID、PUBLIC_SEARCH_API_KEY** 即可
   也可以在类似Vercel上配置相关的环境变量，[具体详情](https://vercel.com/docs/projects/environment-variables)
 
 ## 无头CMS（Tina CMS）
