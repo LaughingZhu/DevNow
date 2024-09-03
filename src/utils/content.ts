@@ -24,16 +24,15 @@ export const filterPostsByTag = async (tag = '') => {
   );
 };
 
+export interface ALL_CATEGORY_TYPE {
+  label: string;
+  id: string;
+  children: { label: string; id: string }[];
+}
 /**
  * @desc { 获取所有的分类 }
  */
-export const getAllCategories = async (): Promise<
-  {
-    label: string;
-    id: string;
-    children: { label: string; id: string }[];
-  }[]
-> => {
+export const getAllCategories = async (): Promise<ALL_CATEGORY_TYPE[]> => {
   const map = new Map<
     string,
     { label: string; id: string; children: { label: string; id: string }[] }

@@ -4,6 +4,8 @@ import Search from './Search.tsx';
 import { LEFT_MENU, MOBILE_MENU, RIGHT_MENU } from '@data/nav';
 import config from '@config/index';
 import MenuItem from './MenuItem.astro';
+import { getAllCategories } from '@/utils/content';
+const category = await getAllCategories();
 ---
 
 <div class={'px-8 py-5 lg:py-8 w-full xl:px-5 sticky top-[0] z-10 backdrop-blur-md shadow-sm'}>
@@ -45,7 +47,7 @@ import MenuItem from './MenuItem.astro';
         {RIGHT_MENU.map((item) => <MenuItem menu={item} />)}
       </div>
       <div class='absolute md:flex md:right-8 right-1/2 hidden'>
-        <Search client:only='react' />
+        <Search category={category} client:only='react' />
         <ToggleTheme />
       </div>
     </div>
