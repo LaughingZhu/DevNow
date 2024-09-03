@@ -31,19 +31,34 @@ export const getAllCategories = async (): Promise<
   {
     label: string;
     id: string;
+    children: { label: string; id: string }[];
   }[]
 > => {
-  const map = new Map<string, { label: string; id: string }>();
+  const map = new Map<
+    string,
+    { label: string; id: string; children: { label: string; id: string }[] }
+  >();
+
   latestPosts.forEach((post) => {
     const category = categories.find((item) => item.slug === post.data.category);
-
-    if (!!category && !map.has(category.slug)) {
+    if (!category) {
+      return;
+    } else if (!map.has(category.slug)) {
       map.set(category.slug, {
         label: category.title || 'DevNow',
-        id: category.slug || 'DevNow'
+        id: category.slug || 'DevNow',
+        children: []
       });
     }
+
+    const target = map.get(category.slug);
+    if (!target) return;
+    target.children.push({
+      label: post.data.title,
+      id: post.slug
+    });
+    map.set(category.slug, target);
   });
 
-  return [...map.values()];
+  return [...map.values()].sort((a, b) => a.label.localeCompare(b.label));
 };

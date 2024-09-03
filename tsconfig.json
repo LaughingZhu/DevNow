@@ -5,6 +5,7 @@
     "baseUrl": "src",
     "types": ["astro/client"],
     "paths": {
+      "@/*": ["./*"],
       "@lib/*": ["lib/*"],
       "@utils/*": ["utils/*"],
       "@data/*": ["data/*"],
