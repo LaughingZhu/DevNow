@@ -33,7 +33,7 @@ DevNow is a minimal open source tech blog project template, support Vercel one-c
 - ✅ RSS Feed support
 - ✅ Reading Time
 - ✅ 📝 Draft mode
-- ✅ 🔍 Seach by Algolia
+- ✅ 🔍 Seach
 - ✅ Comments by Giscus
 - ✅ Pagination
 - ✅ Headless CMS by 🦙 Tina CMS
@@ -76,10 +76,6 @@ pnpm build
 [Here](https://vercel.com/docs/projects/environment-variables) env config
 
 ```js
-// doc seach config
-PUBLIC_SEARCH_APP_ID;
-PUBLIC_SEARCH_API_KEY;
-
 // Giscus comment config
 PUBLIC_GISCUS_REPO_ID;
 PUBLIC_GISCUS_REPO;
@@ -94,7 +90,7 @@ PUBLIC_SENTRY_TOKEN;
 
 > 📢 Notice：
 >
-> **Giscus** 和 **DocSearch** feature need open status in config/index
+> **Giscus** feature need open status in config/index
 >
 > if you are private deployment, you need to update these environment variables in.env; if you are public deployment, you need to update these environment variables in Vercel config env，[vercel env address](<[URL_ADDRESS](https://vercel.com/docs/projects/environment-variables)>)
 
@@ -108,16 +104,6 @@ PUBLIC_SENTRY_TOKEN;
 - Private project:
   .env --> **PUBLIC_GISCUS_REPO_ID、PUBLIC_GISCUS_REPO、和 PUBLIC_GISCUS_CATEGORY_ID**
 
-- Public project: Vercel config env，[vercel env address](https://vercel.com/docs/projects/environment-variables)
-
-## Search config: [DocSearch](https://docsearch.algolia.com/docs/what-is-docsearch)
-
-1. Status
-   src/config --> search: true
-
-2. Env config
-
-- Private project: .env --> **PUBLIC_SEARCH_APP_ID、PUBLIC_SEARCH_API_KEY**
 - Public project: Vercel config env，[vercel env address](https://vercel.com/docs/projects/environment-variables)
 
 ## Headless CMS by Tina CMS
