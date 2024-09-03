@@ -1,6 +1,6 @@
 import config from '@/config';
-import { getAllCategories } from '@utils/content';
-import { Fragment, useEffect, useState } from 'react';
+import type { ALL_CATEGORY_TYPE } from '@/utils/content';
+import { Fragment, useEffect, useState, type FC } from 'react';
 import { Button } from './shadcn/button';
 import {
   CommandDialog,
@@ -11,9 +11,12 @@ import {
   CommandList,
   CommandSeparator
 } from './shadcn/command';
-const category = await getAllCategories();
 
-function Search() {
+interface Props {
+  category: ALL_CATEGORY_TYPE[];
+}
+
+const Search: FC<Props> = ({ category }) => {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -68,6 +71,6 @@ function Search() {
       )}
     </div>
   );
-}
+};
 
 export default Search;
