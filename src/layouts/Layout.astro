@@ -85,7 +85,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     <ThemeSwitch />
   </head>
 
-  <body>
+  <body class='scrollbar'>
     <Header />
     <slot />
     {(show_copyright_info || !!foot_site_info) && <Footer />}

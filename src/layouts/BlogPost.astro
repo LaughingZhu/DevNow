@@ -21,8 +21,8 @@ const formatDesc = desc + ' | ' + headings?.map((item) => item?.text).join(',');
 ---
 
 <BaseLayout title={title} desc={formatDesc} image={image}>
-  <Container>
-    <article class='min-w-full max-[500px]:px-0 px-8 md:py-4 sm:max-w-none md:max-w-none'>
+  <Container class:list={'pb-0'}>
+    <article class='min-w-full max-[500px]:px-0 px-8 md:pt-4 sm:max-w-none md:max-w-none'>
       <header class='mb-3 flex flex-col justify-center items-center gap-6'>
         <div class='flex flex-col gap-2'>
           <div class='flex items-center justify-center gap-x-1'>
