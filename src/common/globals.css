@@ -182,12 +182,12 @@
   text-decoration: none;
 }
 
-.link-preview,
 lite-youtube,
 lite-vimeo {
   width: 100% !important;
-  max-width: none !important;
+  margin: 0 auto;
 }
+.link-preview,
 .twitter-tweet {
   margin: 0 auto;
 }

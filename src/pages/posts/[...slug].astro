@@ -37,8 +37,11 @@ const hasHeadering = headings && !!headings.length;
     <!-- aside -->
     {
       hasHeadering && (
-        <aside class='md:flex flex-col w-[20%] hidden mr-10 flex-none'>
-          <div class='sticky top-24 self-start hidden md:block transition-all duration-200 w-full overflow-hidden'>
+        <aside
+          class='md:flex sticky top-[76px] flex-col overflow-hidden w-[20%] hidden mr-10 flex-none'
+          style={{ height: 'calc(100vh - 76px)' }}
+        >
+          <div class='self-start flex-auto border-emerald-100 overflow-hidden hidden md:block transition-all duration-200 w-full'>
             {<TableOfContents {headings} />}
           </div>
         </aside>
