@@ -5,10 +5,11 @@ import ArrowUp from '@components/icons/ArrowUp.astro';
 import Button from '@components/ui/button.astro';
 import config, { DEFAULT_GRID_COLUMNS } from '@config/index';
 
+import Footer from '@/components/Footer.astro';
 import { latestPosts } from '@utils/content';
 import clsx from 'clsx';
 import Layout from '../layouts/Layout.astro';
-const { pageSize, default_column } = config;
+const { pageSize, default_column, show_copyright_info, foot_site_info } = config;
 /** 首页默认列数 */
 ---
 
@@ -54,4 +55,5 @@ const { pageSize, default_column } = config;
       }
     </main>
   </Container>
+  {(show_copyright_info || !!foot_site_info) && <Footer />}
 </Layout>

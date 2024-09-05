@@ -88,7 +88,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
   <body class='scrollbar'>
     <Header />
     <slot />
-    {(show_copyright_info || !!foot_site_info) && <Footer />}
     <style is:global>
       /* Improve Page speed */
       /* https://css-tricks.com/almanac/properties/c/content-visibility/ */
