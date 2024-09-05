@@ -4,7 +4,7 @@
 
 DevNow is a minimal open source tech blog project template, support Vercel one-click deployment, support comments, search, etc., welcome everyone to experience.
 
-## [🔗 Demo](https://devnow.laughingzhu.cn/) ： <https://devnow.laughingzhu.cn/>
+## [🔗 Demo](https://www.laughingzhu.cn/) ： <https://www.laughingzhu.cn/>
 
 <div align="center">
 
