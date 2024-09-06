@@ -1,3 +1,11 @@
+/*
+ * @Author: LaughingZhu 474268433@qq.com
+ * @Date: 2024-09-05 23:18:36
+ * @LastEditors: LaughingZhu 474268433@qq.com
+ * @LastEditTime: 2024-09-06 10:11:14
+ * @FilePath: /DevNow/src/config/index.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 // 配置项
 export const DEFAULT_GRID_COLUMNS: { [key: number]: string } = {
   1: 'md:grid-cols-1 xl:grid-cols-1',
@@ -17,7 +25,7 @@ export default {
   description: 'DevNow — 开发技术周刊',
   keywords: 'DevNow 开源技术博客项目。目前承载着一个技术新闻、开发weekly，每周一上午发布~',
   logo: 'https://r2.laughingzhu.cn/40850814d71699ef09fda435802bfe02-58f0d8.png',
-  homePage: 'https://devnow.laughingzhu.cn',
+  homePage: 'https://www.laughingzhu.cn',
   githubId: 'LaughingZhu',
   repo: 'LaughingZhu/DevNow',
   ico: 'https://r2.laughingzhu.cn/2191381389b808c9183a74c11f1280d6-c01e93.ico',
