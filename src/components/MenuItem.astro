@@ -15,9 +15,10 @@ const {
       href={href}
       target={external ? '_blank' : ''}
       rel={external ? 'noopener' : ''}
-      class='px-5 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-500'
+      data-replace={label}
+      class='px-5 btn-replace py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-500'
     >
-      {label}
+      <span>{label}</span>
     </a>
   ) : (
     <div class='p-2 text-sm inline-flex font-medium text-gray-600 dark:text-gray-400 hover:text-blue-500 group dark:hover:text-blue-500 cursor-pointer relative'>
@@ -28,7 +29,7 @@ const {
       <div class='hidden animate-fade scrollbar overflow-auto top-8 left-4 max-h-[240px] group-hover:flex flex-col justify-start items-start absolute border-2 dark:border-none rounded-md p-2 w-[150px] shadow-md  bg-white'>
         {children.map((item) => (
           <a
-            class='text-gray-600 flex-none textOVerFlow w-full inline-block p-1  hover:bg-[#f4f4f5] hover:text-blue-500 group rounded-sm'
+            class='text-gray-600 hover:cursor-pointer flex-none textOVerFlow w-full inline-block p-1  hover:bg-[#f4f4f5] hover:text-blue-500 group rounded-sm'
             href={`/category/${item.id}`}
           >
             {item.label}
@@ -38,3 +39,56 @@ const {
     </div>
   )
 }
+
+<style is:inline>
+  .btn-replace {
+    overflow: hidden;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    span {
+      display: inline-block;
+      transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    &:after,
+    &:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+    }
+    &:before {
+      @apply bg-primary;
+      height: 2px;
+      bottom: 0;
+      width: 60%;
+      transform-origin: 100% 50%;
+      transform: scaleX(0);
+      transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+      background-color: rgba(59, 130, 246, 1);
+    }
+    &:after {
+      content: attr(data-replace);
+      height: 100%;
+      top: 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      transform-origin: 100% 50%;
+      transform: translate3d(0, 200%, 0);
+      transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+      /*  @apply text-primary; */
+    }
+    &:hover {
+      &:before {
+        transform-origin: 0% 50%;
+        transform: scaleX(1);
+      }
+      &:after {
+        transform: translate3d(0, 0, 0);
+      }
+      span {
+        transform: translate3d(0, -200%, 0);
+      }
+    }
+  }
+</style>
