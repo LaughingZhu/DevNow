@@ -1,10 +1,10 @@
 ---
-import ToggleTheme from './ToggleTheme.astro';
 import Search from './Search.tsx';
 import { LEFT_MENU, MOBILE_MENU, RIGHT_MENU } from '@data/nav';
 import config from '@config/index';
 import MenuItem from './MenuItem.astro';
 import { getAllCategories } from '@/utils/content';
+import ToggleTheme from './ToggleTheme';
 const category = await getAllCategories();
 ---
 
@@ -48,7 +48,7 @@ const category = await getAllCategories();
       </div>
       <div class='absolute md:flex md:right-8 right-1/2 hidden'>
         <Search category={category} client:only='react' />
-        <ToggleTheme />
+        <ToggleTheme client:load />
       </div>
     </div>
     <div class='navmenu-toggle hidden'>
