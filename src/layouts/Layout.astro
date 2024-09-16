@@ -13,14 +13,7 @@ interface Props {
   desc?: string;
   image?: string;
 }
-const {
-  title: DEFAULT_TITLE,
-  description,
-  logo,
-  ico,
-  show_copyright_info,
-  foot_site_info
-} = config;
+const { title: DEFAULT_TITLE, description, logo, ico } = config;
 const { title, desc = description, image = logo } = Astro.props;
 const resolvedOGImage = checkImageUrl(image, Astro.site);
 const makeTitle = title ? title + ' | ' + DEFAULT_TITLE : description;

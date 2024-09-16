@@ -69,10 +69,7 @@ const hasHeadering = headings && !!headings.length;
     >
       <AiOutlineCloseCircle />
     </span>
-    <img
-      class='m-auto w-full h-full object-scale-down block max-w-[80%] max-sm:max-w-full'
-      id='modal-img'
-    />
+    <img class='m-auto object-scale-down block max-w-[80%] max-sm:max-w-full' id='modal-img' />
     <div id='caption'></div>
   </div>
 </BlogPost>
@@ -109,5 +106,16 @@ const hasHeadering = headings && !!headings.length;
       modal.style.display = 'none';
       document.body.style.overflow = 'auto';
     }
+  });
+
+  modal?.addEventListener('click', () => {
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  });
+
+  modalImg?.addEventListener('click', (e) => {
+    e.stopPropagation();
   });
 </script>
