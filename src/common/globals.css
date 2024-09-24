@@ -80,39 +80,50 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-  code {
-    color: #d8ba7d !important;
-    background-color: #3e404b;
-    border-radius: 4px;
-    padding: 2px 4px;
-  }
-  code::before,
-  code::after {
-    content: ' ' !important;
-  }
+}
 
-  .prose code {
-    @apply text-base;
-  }
-  .prose code::before,
-  .prose code::after,
-  .prose blockquote p::before,
-  .prose blockquote p::after {
-    content: none !important;
-  }
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-    font-family: lxgw-wenkai;
-  }
+code {
+  color: #d8ba7d !important;
+  background-color: #3e404b;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+code::before,
+code::after {
+  content: ' ' !important;
+}
 
-  html .shiki {
-    color: var(--shiki-dark) !important;
-    background-color: rgb(33, 33, 33) !important;
-    box-shadow: -5px 3px 8px 1px rgba(0, 0, 0, 0.12) !important;
-  }
+.prose code {
+  @apply text-base;
+}
+.prose code::before,
+.prose code::after,
+.prose blockquote p::before,
+.prose blockquote p::after {
+  content: none !important;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  scroll-margin-top: 76px; /* 与header高度一致 */
+}
+
+* {
+  @apply border-border;
+}
+body {
+  @apply bg-background text-foreground;
+  font-family: lxgw-wenkai;
+}
+
+html .shiki {
+  color: var(--shiki-dark) !important;
+  background-color: rgb(33, 33, 33) !important;
+  box-shadow: -5px 3px 8px 1px rgba(0, 0, 0, 0.12) !important;
 }
 
 .giscus {

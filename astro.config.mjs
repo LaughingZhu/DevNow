@@ -1,3 +1,9 @@
+/*
+ * @Date: 2024-09-11 14:14:13
+ * @LastEditors: LaughingZhu 474268433@qq.com
+ * @LastEditTime: 2024-09-24 08:36:21
+ * @Description:
+ */
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
@@ -86,7 +92,7 @@ export default defineConfig({
   output: 'server',
   adapter: vercel({
     webAnalytics: {
-      enabled: true
+      enabled: false
     },
     isr: true
   })
