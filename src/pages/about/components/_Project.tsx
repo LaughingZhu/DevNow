@@ -64,23 +64,23 @@ const Projects = () => {
                   />
 
                   {project.link && (
-                    <div className='mt-2 flex text-base'>
+                    <div className='mt-2 flex flex-col text-base md:flex-row'>
                       <span className='w-16 shrink-0 font-semibold'>Link: </span>
                       <Link href={project.link} />
                     </div>
                   )}
                   {project.github && (
-                    <div className='mt-2 flex text-base'>
+                    <div className='mt-2 flex flex-col text-base md:flex-row'>
                       <span className='w-16 shrink-0 font-semibold'>Github: </span>
                       <Link href={project.github} />
                     </div>
                   )}
-                  <div className='mt-2 flex text-base'>
+                  <div className='mt-2 flex flex-col text-base md:flex-row'>
                     <span className='w-16 shrink-0 font-semibold'>Desc: </span>
                     <span>{project.desc}</span>
                   </div>
                   {project.feature && (
-                    <div className='mt-2 flex text-base'>
+                    <div className='mt-2 flex flex-col text-base md:flex-row'>
                       <span className='w-16 shrink-0 font-semibold'>Feature: </span>
                       <span className='whitespace-pre-line'>{project.feature}</span>
                     </div>
