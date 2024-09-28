@@ -41,14 +41,15 @@ const Projects = () => {
           <div className='relative z-[2]'>
             {projectList.map((project, index) => (
               <div
-                className='relative flex gap-x-4 px-10 py-12'
+                className={cn('relative flex flex-col gap-x-4 px-10 py-12 md:flex-row', {
+                  flexDirection: index % 2 === 0 ? 'row' : 'row-reverse'
+                })}
                 key={index}
                 style={{
-                  flexDirection: index % 2 === 0 ? 'row' : 'row-reverse',
                   wordSpacing: '0.2rem'
                 }}
               >
-                <div className={cn('w-1/2 flex-1 font-BreeSerif')}>
+                <div className={cn('w-full flex-1 font-BreeSerif md:w-1/2')}>
                   <div className='text-center text-4xl font-black'>{project.title}</div>
 
                   <img
@@ -86,7 +87,7 @@ const Projects = () => {
                   )}
                 </div>
 
-                <div className='max-600:hidden sticky top-20 flex h-fit w-1/2 shrink-0 justify-center'>
+                <div className='max-600:hidden sticky top-20 mt-8 flex h-fit w-full shrink-0 justify-center md:mt-0 md:w-1/2'>
                   <img
                     src={project.img}
                     width={200}
