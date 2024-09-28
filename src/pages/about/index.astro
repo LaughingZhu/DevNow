@@ -1,0 +1,11 @@
+---
+import Container from '@/components/Container.astro';
+import Layout from '@/layouts/Layout.astro';
+import IndexCom from './components/_Index';
+---
+
+<Layout title='关于' desc='DevNow - 关于,开发者,科技爱好者,高质量内容,周刊网站'>
+  <Container>
+    <IndexCom client:only='react' />
+  </Container>
+</Layout>

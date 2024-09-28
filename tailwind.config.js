@@ -1,3 +1,9 @@
+/*
+ * @Date: 2024-09-11 13:48:41
+ * @LastEditors: LaughingZhu 474268433@qq.com
+ * @LastEditTime: 2024-09-27 23:16:30
+ * @Description:
+ */
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme');
 
@@ -12,10 +18,11 @@ module.exports = {
         '2xl': '1400px'
       }
     },
+    fontFamily: {
+      BreeSerif: ['Bree Serif'],
+      Monoton: ['monoton']
+    },
     extend: {
-      fontFamily: {
-        sans: ['lxgw-wenkai', ...defaultTheme.fontFamily.sans]
-      },
       gridTemplateColumns: {
         list: 'repeat(auto-fill, minmax(400px, max-content))'
       },
