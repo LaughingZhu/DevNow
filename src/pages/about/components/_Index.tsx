@@ -1,7 +1,7 @@
 /*
  * @Date: 2024-09-28 08:52:05
  * @LastEditors: LaughingZhu 474268433@qq.com
- * @LastEditTime: 2024-09-28 09:25:05
+ * @LastEditTime: 2024-09-28 09:53:13
  * @Description:
  */
 
@@ -46,7 +46,7 @@ export default function Index() {
           <Footer />
         </Suspense>
       ) : (
-        <div className='flex h-screen w-screen items-center justify-center'>
+        <div className='flex h-screen w-full items-center justify-center'>
           <LoadingSVG />
         </div>
       )}
