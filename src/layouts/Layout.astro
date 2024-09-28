@@ -1,11 +1,13 @@
 ---
 import '@common/globals.css';
 import Analytics from '@components/Analytics.astro';
-import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
 import ThemeSwitch from '@components/ThemeSwitch.astro';
 import config from '@config/index';
 import { checkImageUrl } from '@utils/all';
+import '@fontsource/monoton';
+import '@fontsource/bree-serif';
+
 import { SEO } from 'astro-seo';
 const PUBLIC_GOOGLE_ANALYTICS_ID = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
 interface Props {
