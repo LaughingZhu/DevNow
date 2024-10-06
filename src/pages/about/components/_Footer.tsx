@@ -1,7 +1,7 @@
 /*
  * @Date: 2024-09-28 08:54:02
  * @LastEditors: LaughingZhu 474268433@qq.com
- * @LastEditTime: 2024-09-29 08:59:59
+ * @LastEditTime: 2024-09-28 09:14:40
  * @Description:
  */
 import FaceSVG from '@/components/icons/Face';
@@ -25,7 +25,7 @@ export default function Footer() {
       </span>
 
       <div className='mt-8 text-[12px] text-gray-500'>
-        this page created by <a href='https://github.com/LHRUN/one-space'>one-space</a>
+        this page created by <a href='http://https://github.com/LHRUN/one-space'>one-space</a>
       </div>
     </div>
   );
