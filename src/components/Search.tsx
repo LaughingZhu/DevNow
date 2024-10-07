@@ -1,7 +1,7 @@
 /*
  * @Date: 2024-09-11 13:48:41
  * @LastEditors: LaughingZhu 474268433@qq.com
- * @LastEditTime: 2024-10-06 15:56:30
+ * @LastEditTime: 2024-10-07 16:48:27
  * @Description:
  */
 import config from '@/config';
@@ -62,19 +62,25 @@ const Search: FC<Props> = () => {
   }, []);
 
   useEffect(() => {
-    const _init = async () => {
+    const _initLunrIndex = async () => {
       if (!LunrIdx) {
         const response = await fetch('/search-index.json');
         const serializedIndex = await response.json();
         setLunrIdx(lunr.Index.load(serializedIndex));
       }
+    };
+    _initLunrIndex();
+  }, [LunrIdx]);
+
+  useEffect(() => {
+    const _initLunrDocs = async () => {
       if (!LunrDocs.length) {
         const response = await fetch('/search-docs.json');
         setLunrDocs(await response.json());
       }
     };
-    _init();
-  }, [LunrIdx, LunrDocs.length]);
+    _initLunrDocs();
+  }, [LunrDocs.length]);
 
   const onInputChange = useCallback(
     debounce(async (search: string) => {
