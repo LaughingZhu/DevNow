@@ -4,7 +4,7 @@
     "prompts": "^2.4.2"
   },
   "name": "create-devnow-app",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "create devnow app",
   "main": "./index.js",
   "scripts": {
