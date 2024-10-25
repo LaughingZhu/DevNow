@@ -4,7 +4,7 @@
     "prompts": "^2.4.2"
   },
   "name": "create-devnow-app",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "create devnow app",
   "main": "./index.js",
   "scripts": {
@@ -13,6 +13,11 @@
   "author": "LaughingZhu",
   "license": "MIT",
   "bin": {
-    "create-devnow-init": "./index.js"
+    "create-devnow-app": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LaughingZhu/DevNow.git",
+    "directory": "cli"
   }
 }
