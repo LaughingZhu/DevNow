@@ -4,6 +4,7 @@ import TableOfContents from '@components/TableOfContents.astro';
 import Code from '@components/mdx/Code.astro';
 import SButton from '@components/mdx/MDButton.astro';
 import MImage from '@components/mdx/MImage.astro';
+import MLink from '@components/mdx/MLink.astro';
 import BlogPost from '@layouts/BlogPost.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import clsx from 'clsx';
@@ -52,7 +53,7 @@ const hasHeadering = headings && !!headings.length;
       <div class='max-w-screen-2xl'>
         <div class='my-3 prose-base dark:prose-invert prose-a:text-blue-600'>
           <div class='prose prose-lg md:prose-xl dark:prose-invert mb-12 min-w-full'>
-            <Content components={{ pre: Code, SButton, img: MImage }} />
+            <Content components={{ pre: Code, a: MLink, SButton, img: MImage }} />
           </div>
           <Comment />
         </div>
