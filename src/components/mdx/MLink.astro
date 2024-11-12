@@ -1,0 +1,16 @@
+---
+const props = Astro.props;
+const { href, rel = 'noopener noreferrer' } = props;
+const isAnchor = href.startsWith('#');
+---
+
+<>
+  <a
+    href={href}
+    target={isAnchor ? '_self' : '_blank'}
+    rel={rel}
+    class='no-underline bg-gradient-to-r from-green-200 to-green-100 dark:from-blue-800 dark:to-blue-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]'
+  >
+    <slot />
+  </a>
+</>
