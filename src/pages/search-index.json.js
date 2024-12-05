@@ -17,7 +17,7 @@ const md = new MarkdownIt();
 
 let documents = latestPosts.map((post) => {
   return {
-    slug: post.slug,
+    slug: post.id,
     title: post.data.title,
     description: post.data.desc,
     content: md.render(post.body)

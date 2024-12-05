@@ -1,3 +1,4 @@
+import { glob } from 'astro/loaders';
 import { defineCollection, z } from 'astro:content';
 const SCHEMA = z.object({
   title: z.string(),
@@ -19,6 +20,17 @@ const SCHEMA = z.object({
 });
 
 const Docs = defineCollection({
+  // add glob loader : https://github.com/withastro/astro/pull/11398
+  loader: glob({
+    pattern: ['**/[^_]*.md', '**/[^_]*.mdx'],
+    base: './src/content/doc',
+    generateId: ({ entry, data }) => {
+      if (data.slug) {
+        return data.slug as string;
+      }
+      return entry.replace(/\.[^/.]+$/, '');
+    }
+  }),
   schema: SCHEMA
 });
 

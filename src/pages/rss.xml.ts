@@ -3,7 +3,7 @@ import config from '@config/index';
 import { latestPosts } from '@utils/content';
 import MarkdownIt from 'markdown-it';
 import sanitizeHtml from 'sanitize-html';
-const parser = new MarkdownIt();
+const md = new MarkdownIt();
 export async function GET(context: any) {
   const doc = latestPosts.slice(0, 10);
   return rss({
@@ -16,11 +16,11 @@ export async function GET(context: any) {
     trailingSlash: false,
     items: doc.map((post) => ({
       ...post.data,
-      content: sanitizeHtml(parser.render(post.body), {
+      content: sanitizeHtml(md.render(post.body || ''), {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img'])
       }),
       pubDate: post.data.publishDate,
-      link: `/posts/${post.slug}/`
+      link: `/posts/${post.id}/`
     }))
   });
 }

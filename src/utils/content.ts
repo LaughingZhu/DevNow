@@ -54,7 +54,7 @@ export const getAllCategories = async (): Promise<ALL_CATEGORY_TYPE[]> => {
     if (!target) return;
     target.children.push({
       label: post.data.title,
-      id: post.slug
+      id: post.id
     });
     map.set(category.slug, target);
   });
