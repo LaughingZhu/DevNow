@@ -22,7 +22,7 @@ const color = {
       'relative overflow-hidden transition-all shadow-sm bg-gray-100 rounded-md dark:bg-gray-800 hover:scale-105 aspect-[3/2]'
     )}
   >
-    <a href={'/posts/' + post.slug}>
+    <a href={'/posts/' + post.id}>
       {
         post.data.image ? (
           <Picture
@@ -49,7 +49,7 @@ const color = {
   <h2
     class='mt-2 text-lg line-clamp-2 overflow-hidden font-blod tracking-normal text-brand-primary dark:text-white'
   >
-    <a href={'/posts/' + post.slug}>
+    <a href={'/posts/' + post.id}>
       <span
         class={cx(
           `bg-gradient-to-r from-green-200 to-green-100 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]`,

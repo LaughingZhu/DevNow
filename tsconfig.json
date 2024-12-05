@@ -21,6 +21,8 @@
     "jsxImportSource": "react"
   },
   "include": [
+    ".astro/types.d.ts",
     "src/**/*" // 此处示例表示包含src目录下的所有文件
-  ]
+  ],
+  "exclude": ["dist"]
 }

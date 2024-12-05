@@ -24,6 +24,6 @@ export const categories: Category[] = [
     title: 'DevNow',
     slug: 'devnow',
     color: 'orange',
-    description: 'Somthing about DevNow platform.'
+    description: 'Something about DevNow platform.'
   }
 ];

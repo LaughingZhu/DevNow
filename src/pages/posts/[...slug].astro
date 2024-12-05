@@ -6,7 +6,7 @@ import SButton from '@components/mdx/MDButton.astro';
 import MImage from '@components/mdx/MImage.astro';
 import MLink from '@components/mdx/MLink.astro';
 import BlogPost from '@layouts/BlogPost.astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import clsx from 'clsx';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 type Props = { doc: CollectionEntry<'doc'> };
@@ -18,22 +18,17 @@ export async function getStaticPaths() {
   const docs = await getCollection('doc');
 
   return docs.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
     props: { doc: post }
   }));
 }
 
 const { doc: post } = Astro.props;
-const { Content, remarkPluginFrontmatter, headings } = await post.render();
+const { Content, remarkPluginFrontmatter, headings } = await render(post);
 const hasHeadering = headings && !!headings.length;
 ---
 
-<BlogPost
-  id={post.id as any}
-  data={post.data}
-  headings={headings}
-  readTime={remarkPluginFrontmatter.minutesRead}
->
+<BlogPost data={post.data} headings={headings} readTime={remarkPluginFrontmatter.minutesRead}>
   <div class='flex mt-8 w-full'>
     <!-- aside -->
     {
