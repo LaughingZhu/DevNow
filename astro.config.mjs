@@ -11,11 +11,12 @@ import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel';
 import AutoImport from 'astro-auto-import';
 import embeds from 'astro-embed/integration';
+import expressiveCode from 'astro-expressive-code';
 import { defineConfig } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
 import config from './src/config/index';
+import { asideAutoImport, astroAsides } from './src/plugins/remarkAsidesPlugin';
 import { remarkReadingTime } from './src/utils/all';
-import { asideAutoImport, astroAsides } from './src/utils/MAside';
 
 const PUBLIC_SENTRY_DNS = process.env.PUBLIC_SENTRY_DNS;
 const PUBLIC_SENTRY_TOKEN = process.env.PUBLIC_SENTRY_TOKEN;
@@ -32,13 +33,7 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkReadingTime],
     rehypePlugins: [rehypePluginImageNativeLazyLoading],
-    drafts: true,
-    // 语法高亮
-    syntaxHighlight: 'shiki',
-    shikiConfig: {
-      theme: 'material-theme-darker',
-      wrap: true
-    }
+    drafts: true
   },
   optimizeDeps: {
     exclude: ['@astrojs/react-client']
@@ -53,18 +48,23 @@ export default defineConfig({
     }),
     astroAsides(),
     embeds(),
-    mdx({
-      // Markdown 配置现在被忽略
-      // extendMarkdownConfig: false,
-      shikiConfig: {
-        experimentalThemes: {
-          dark: 'material-theme-darker'
-        },
-        wrap: true
+    expressiveCode({
+      themes: ['material-theme-darker', 'solarized-light'],
+      frames: {
+        // Example: Hide the "Copy to clipboard" button
+        showCopyToClipboardButton: true
       },
-      drafts: true
-      // gfm: false
+      styleOverrides: {
+        // You can optionally override the plugin's default styles here
+        frames: {
+          shadowColor: '#124'
+        }
+      },
+      defaultProps: {
+        wrap: true
+      }
     }),
+    mdx({}),
     sitemap({
       serialize(item) {
         if (/posts/.test(item.url)) {
