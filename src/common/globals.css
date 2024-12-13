@@ -120,7 +120,8 @@ body {
   font-family: lxgw-wenkai;
 }
 
-html .shiki {
+.astro-code,
+.astro-code span {
   color: var(--shiki-dark) !important;
   background-color: rgb(33, 33, 33) !important;
   box-shadow: -5px 3px 8px 1px rgba(0, 0, 0, 0.12) !important;

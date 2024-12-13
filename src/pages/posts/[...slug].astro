@@ -1,14 +1,12 @@
 ---
 import Comment from '@components/Comment.astro';
 import TableOfContents from '@components/TableOfContents.astro';
-import Code from '@components/mdx/Code.astro';
 import SButton from '@components/mdx/MDButton.astro';
 import MImage from '@components/mdx/MImage.astro';
 import MLink from '@components/mdx/MLink.astro';
 import BlogPost from '@layouts/BlogPost.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import clsx from 'clsx';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
 type Props = { doc: CollectionEntry<'doc'> };
 
 // 在 server 模式中选择加入预渲染
@@ -48,73 +46,11 @@ const hasHeadering = headings && !!headings.length;
       <div class='max-w-screen-2xl'>
         <div class='my-3 prose-base dark:prose-invert prose-a:text-blue-600'>
           <div class='prose prose-lg md:prose-xl dark:prose-invert mb-12 min-w-full'>
-            <Content components={{ pre: Code, a: MLink, SButton, img: MImage }} />
+            <Content components={{ a: MLink, SButton, img: MImage }} />
           </div>
           <Comment />
         </div>
       </div>
     </div>
   </div>
-  <div
-    id='postModal'
-    class='hidden fixed z-[100] m-auto p-[50px] inset-0 w-full h-full overflow-hidden bg-[rgba(0,0,0,0.9)] items-center justify-center'
-  >
-    <span
-      id='close'
-      class='fixed top-[15px] right-[35px] text-[40px] text-[#f1f1f1] font-bold transition hover:text-[#bbb] hover:decoration-[none] hover:cursor-pointer foces:text-[#bbb] foces:decoration-[none] foces:cursor-pointer'
-    >
-      <AiOutlineCloseCircle />
-    </span>
-    <img
-      class='m-auto w-full h-full object-scale-down block max-w-[80%] max-sm:max-w-full'
-      id='modal-img'
-    />
-    <div id='caption'></div>
-  </div>
 </BlogPost>
-
-<style>
-  .close:hover,
-  .close:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
-  }
-</style>
-
-<script>
-  const modal = document.getElementById('postModal');
-  const modalImg = document.getElementById('modal-img') as HTMLImageElement;
-  const imgs = document.querySelectorAll('article img') as NodeListOf<HTMLImageElement>;
-
-  imgs.forEach(function (img) {
-    img.style.cursor = 'pointer';
-    img.addEventListener('click', () => {
-      if (modal && modalImg) {
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-
-        modalImg.src = img.src;
-      }
-    });
-  });
-
-  const span = document.getElementById('close');
-  span?.addEventListener('click', () => {
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-  });
-
-  modal?.addEventListener('click', () => {
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-  });
-
-  modalImg?.addEventListener('click', (e) => {
-    e.stopPropagation();
-  });
-</script>
