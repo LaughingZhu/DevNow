@@ -9,7 +9,7 @@ import Layout from '@layouts/Layout.astro';
 import { latestPosts } from '@utils/content';
 import { type Page } from 'astro';
 import clsx from 'clsx';
-const { pageSize, default_column } = config;
+const { default_column } = config;
 
 const { page } = Astro.props as { page: Page };
 // 在 server 模式中选择加入预渲染
@@ -17,7 +17,7 @@ export const prerender = true;
 // 将与上一个示例相同的 { astronaut } 对象进行分页
 export async function getStaticPaths({ paginate }: any) {
   const docs = latestPosts;
-  return paginate(docs, { pageSize });
+  return paginate(docs, { pageSize: config.pageSize });
 }
 ---
 
