@@ -1,0 +1,13 @@
+<script>
+  import 'medium-zoom/dist/style.css';
+</script>
+
+<script>
+  import('medium-zoom/dist/pure').then((module) => {
+    const mediumZoom = module.default;
+    mediumZoom('[data-img-embed]', {
+      margin: 48,
+      background: '#000000BF'
+    });
+  });
+</script>

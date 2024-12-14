@@ -6,6 +6,7 @@ import { Picture } from 'astro:assets';
 import FormattedDate from '@components/FormattedDate.astro';
 import Container from '@components/Container.astro';
 import type { DOC_TYPE } from '../content/config';
+import MediumZoomPlugin from '@/plugins/MediumPlugin.astro';
 import '@common/aside.css';
 type Props = {
   data: DOC_TYPE;
@@ -42,7 +43,7 @@ const formatDesc = desc + ' | ' + headings?.map((item) => item?.text).join(',');
       </header>
 
       <div
-        class='relative z-0 max-w-screen-2xl xs:px-0 px-8 mx-auto overflow-hidden lg:rounded-lg aspect-video'
+        class='relative z-0 max-w-screen-2xl md:px-8 px-0 mx-auto overflow-hidden lg:rounded-lg aspect-video'
       >
         {
           data.image && (
@@ -53,6 +54,7 @@ const formatDesc = desc + ' | ' + headings?.map((item) => item?.text).join(',');
               sizes='(max-width: 640px) 90vw, 480px'
               inferSize
               decoding={'async'}
+              data-img-embed
               alt='Thumbnail'
               loading='eager'
               class='rounded-md shadow w-full max-h-[300px] md:max-h-[500px] my-8 object-cover'
@@ -65,6 +67,7 @@ const formatDesc = desc + ' | ' + headings?.map((item) => item?.text).join(',');
       </div>
     </article>
   </Container>
+  <MediumZoomPlugin />
 </BaseLayout>
 
 <script>

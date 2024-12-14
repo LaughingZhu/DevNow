@@ -1,18 +1,21 @@
 ---
+import config, { DEFAULT_GRID_COLUMNS } from '@/config';
 import Postlist from '@components/Postlist.astro';
 import TitlePage from '@components/TitlePage.astro';
 import { filterPostsByTag } from '@utils/content';
+import clsx from 'clsx';
 import Container from '../../components/Container.astro';
 import Layout from '../../layouts/Layout.astro';
 
 const { tag = '' } = Astro.params;
 const posts = await filterPostsByTag(tag);
+const { default_column } = config;
 ---
 
 <Layout title=`标签-${tag}`>
   <Container>
     <TitlePage title={tag} />
-    <div class='grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3'>
+    <div class={clsx('grid gap-10 mt-10 lg:gap-10', DEFAULT_GRID_COLUMNS[default_column])}>
       {posts.map((post) => <Postlist post={post} aspect='square' />)}
     </div>
   </Container>
