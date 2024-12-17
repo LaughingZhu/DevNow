@@ -36,8 +36,8 @@ dependencies:
     specifier: ^1.2.1
     version: 1.2.1(react@18.3.1)
   '@laughingzhu/astro-link-preview':
-    specifier: ^0.0.16
-    version: 0.0.16(astro@5.0.5)
+    specifier: ^0.0.17
+    version: 0.0.17(astro@5.0.5)
   '@node-rs/jieba':
     specifier: ^1.10.4
     version: 1.10.4
@@ -2645,8 +2645,8 @@ packages:
   /@juggle/resize-observer@3.4.0:
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
 
-  /@laughingzhu/astro-link-preview@0.0.16(astro@5.0.5):
-    resolution: {integrity: sha512-KMFLy3+WCUXihkSiA+AkTSuMcDvgjfDgwM6oBtSBpyMJ64sZ2B/qRciHRTpkT2wbAiWKhPFtcv7gqSJZfjVnXg==}
+  /@laughingzhu/astro-link-preview@0.0.17(astro@5.0.5):
+    resolution: {integrity: sha512-c/lYZXlogrp7II6CVnr0GsdN5CUQqILKacBbwspptv7z7RjjGvh6ZYSP6O0DFYmQqLrtfCBRSdq1OI7ladrN2A==}
     engines: {node: '>=16.0.0'}
     requiresBuild: true
     peerDependencies:
