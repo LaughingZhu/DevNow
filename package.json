@@ -26,6 +26,7 @@
     "@fontsource/lxgw-wenkai": "^5.0.2",
     "@fontsource/monoton": "^5.1.0",
     "@frank-mayer/react-tag-cloud": "^1.2.1",
+    "@laughingzhu/astro-link-preview": "^0.0.16",
     "@node-rs/jieba": "^1.10.4",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.1",

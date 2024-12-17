@@ -43,5 +43,6 @@ export default {
   /** 是否显示版权声明，默认不显示 */
   show_copyright_info: false,
   /** 域名备案信息开关, 为 '' 空则不显示 */
-  foot_site_info: ''
+  foot_site_info: '',
+  link_preview: 'a-preview'
 };

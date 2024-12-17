@@ -14,13 +14,14 @@ import embeds from 'astro-embed/integration';
 import expressiveCode from 'astro-expressive-code';
 import { defineConfig } from 'astro/config';
 import rehypePluginImageNativeLazyLoading from 'rehype-plugin-image-native-lazy-loading';
+import LinkPreview from './astro-link-preview';
 import config from './src/config/index';
 import { asideAutoImport, astroAsides } from './src/plugins/remarkAsidesPlugin';
 import { remarkReadingTime } from './src/utils/all';
 
 const PUBLIC_SENTRY_DNS = process.env.PUBLIC_SENTRY_DNS;
 const PUBLIC_SENTRY_TOKEN = process.env.PUBLIC_SENTRY_TOKEN;
-
+console.log('config.link_preview--------',config.link_preview)
 // https://astro.build/config
 export default defineConfig({
   site: config.homePage,
@@ -46,6 +47,7 @@ export default defineConfig({
     AutoImport({
       imports: [asideAutoImport]
     }),
+    LinkPreview({linkPreviewClass: config.link_preview, logStats: true}),
     astroAsides(),
     embeds(),
     expressiveCode({

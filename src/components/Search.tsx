@@ -123,7 +123,6 @@ const Search: FC<Props> = () => {
 
   useEffect(() => {
     if (!content && !!LunrDocs.length && LunrIdx) {
-      console.log(11111);
       onInputChange('');
     }
   }, [onInputChange, content]);
