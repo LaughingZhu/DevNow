@@ -1,11 +1,13 @@
 ---
+import { latestPosts } from '@/utils/content';
+import { formatHeading } from '@/utils/utils';
 import Comment from '@components/Comment.astro';
 import TableOfContents from '@components/TableOfContents.astro';
 import SButton from '@components/mdx/MDButton.astro';
 import MImage from '@components/mdx/MImage.astro';
 import MLink from '@components/mdx/MLink.astro';
 import BlogPost from '@layouts/BlogPost.astro';
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { render, type CollectionEntry } from 'astro:content';
 import clsx from 'clsx';
 type Props = { doc: CollectionEntry<'doc'> };
 
@@ -13,9 +15,7 @@ type Props = { doc: CollectionEntry<'doc'> };
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const docs = await getCollection('doc');
-
-  return docs.map((post) => ({
+  return latestPosts.map((post) => ({
     params: { slug: post.id },
     props: { doc: post }
   }));
@@ -23,10 +23,11 @@ export async function getStaticPaths() {
 
 const { doc: post } = Astro.props;
 const { Content, remarkPluginFrontmatter, headings } = await render(post);
-const hasHeadering = headings && !!headings.length;
+const formatHeadings = formatHeading(headings);
+const hasHeadering = formatHeadings && !!formatHeadings.length;
 ---
 
-<BlogPost data={post.data} headings={headings} readTime={remarkPluginFrontmatter.minutesRead}>
+<BlogPost data={post.data} headings={formatHeadings} readTime={remarkPluginFrontmatter.minutesRead}>
   <div class='flex mt-8 w-full'>
     <!-- aside -->
     {
@@ -36,7 +37,7 @@ const hasHeadering = headings && !!headings.length;
           style={{ height: 'calc(100vh - 76px)' }}
         >
           <div class='self-start flex-auto border-emerald-100 overflow-hidden hidden md:block transition-all duration-200 w-full'>
-            {<TableOfContents {headings} />}
+            {<TableOfContents headings={formatHeadings} />}
           </div>
         </aside>
       )

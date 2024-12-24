@@ -19,7 +19,7 @@ export async function GET(context: any) {
       content: sanitizeHtml(md.render(post.body || ''), {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img'])
       }),
-      pubDate: post.data.publishDate,
+      pubDate: post.data.publishDate as Date,
       link: `/posts/${post.id}/`
     }))
   });

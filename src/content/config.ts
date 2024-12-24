@@ -1,5 +1,7 @@
 import { glob } from 'astro/loaders';
 import { defineCollection, z } from 'astro:content';
+// 接入 Notion 数据源，需要将下面的注释去掉
+// import { notionLoader } from 'notion-astro-loader';
 const SCHEMA = z.object({
   title: z.string(),
   desc: z.string(),
@@ -33,9 +35,18 @@ const Docs = defineCollection({
   }),
   schema: SCHEMA
 });
+// 接入 Notion 数据源，需要将下面的注释去掉
+// export const NotionDocs = defineCollection({
+//   loader: notionLoader({
+//     auth: import.meta.env.PUBLIC_NOTION_TOKEN,
+//     database_id: import.meta.env.PUBLIC_NOTION_DATABASE_ID
+//   })
+// });
 
 export const collections = {
   doc: Docs
+  // 如果需要接入 Notion 数据源，需要将下面的注释去掉
+  // notion: NotionDocs
 };
 
 /** 文档类型 */
