@@ -28,9 +28,11 @@ const formatDesc = desc + ' | ' + headings?.map((item) => item?.text).join(',');
             <p class='text-center text-sm text-opacity-50'>
               Published <FormattedDate date={publishDate} />
             </p>
-            <p class='text-center text-sm text-opacity-50 font-bold'>
-              - {readTime}
-            </p>
+            {
+              !!readTime && (
+                <p class='text-center text-sm text-opacity-50 font-bold'>- {readTime}</p>
+              )
+            }
           </div>
           <h1 class='text-center text-4xl md:text-6xl md:pb-2.5 font-bold'>
             {title}
