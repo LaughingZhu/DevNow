@@ -13,13 +13,12 @@ import { getCollection } from 'astro:content';
 //       author: richTextToPlainText(item.data.properties.author.rich_text),
 //       tags: item.data.properties.tags.rich_text[0].plain_text.split(','),
 //       image: item.data.properties.image.url,
-//       publishDate: formatDate(item.data.properties.publishDate.created_time),
+//       publishDate: item.data.properties.publishDate.created_time,
 //       pin: false
 //     },
 //     rendered: item.rendered,
 //     filePath: item.id,
-//     collection: item.collection,
-//     name: richTextToPlainText(item.data.properties.title.rich_text)
+//     collection: item.collection
 //   };
 // });
 
