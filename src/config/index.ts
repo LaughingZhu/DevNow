@@ -25,7 +25,7 @@ export default {
   description: 'SigaBlog——siga的个人博客',
   keywords: 'DevNow 开源技术博客项目。目前承载着一个技术新闻、开发weekly，每周一上午发布~',
   logo: 'https://i.111666.best/image/seFTOb45dQY9lbeCINA5Jq.png',
-  homePage: 'https://www.laughingzhu.cn',
+  homePage: 'https://www.siga-blog.me',
   githubId: 'sigazen',
   repo: 'LaughingZhu/DevNow',
   ico: 'https://r2.laughingzhu.cn/2191381389b808c9183a74c11f1280d6-c01e93.ico',
