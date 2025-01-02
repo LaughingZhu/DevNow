@@ -21,12 +21,8 @@ export const LEFT_MENU: Menu[] = [
 ];
 export const RIGHT_MENU: Menu[] = [
   {
-    label: 'Sponsor',
-    href: '/sponsor'
-  },
-  {
-    label: 'Github',
-    href: 'https://github.com/LaughingZhu/DevNow',
+    label: 'Bilibili',
+    href: 'https://space.bilibili.com/447386656',
     external: true
   }
 ];
