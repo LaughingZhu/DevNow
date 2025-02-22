@@ -86,7 +86,7 @@ export default defineConfig({
     // })
   ],
   output: 'server',
-  adapter: vercel({
+  adapter: cloudflare({
     webAnalytics: {
       enabled: false
     },
