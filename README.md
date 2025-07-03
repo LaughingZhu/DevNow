@@ -133,14 +133,6 @@ export const categories: Category[] = [
 
 <img src='https://r2.laughingzhu.cn/11a4546cbebfb285c418aa0a60080434-2c9ce1.webp' alt='Sponsors' />
 
-## sponsor me by wechat or alipay
-
-<div align="center">
-<img src="https://r2.laughingzhu.cn/8df0d597-93dc-44a4-9e93-ebd02f74e695.JPG" alt="Buy Me A Coffee" width="174" />
-
-<img src="https://r2.laughingzhu.cn/c88193fc-14ea-4236-a3f8-13b6ef736182.JPG" alt="Buy Me A Coffee" width="174" />
-</div>
-
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=laughingzhu/devnow&type=Date)](https://star-history.com/#laughingzhu/devnow&Date)
