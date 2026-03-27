@@ -1,5 +1,6 @@
 import { glob } from 'astro/loaders';
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 // 接入 Notion 数据源，需要将下面的注释去掉
 // import { notionLoader } from 'notion-astro-loader';
 const SCHEMA = z.object({

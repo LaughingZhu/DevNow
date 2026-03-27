@@ -7,8 +7,8 @@
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
-import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel';
+import tailwindcss from '@tailwindcss/vite';
 import AutoImport from 'astro-auto-import';
 import embeds from 'astro-embed/integration';
 import expressiveCode from 'astro-expressive-code';
@@ -27,16 +27,12 @@ export default defineConfig({
   image: {
     // 配置 ' ' 为不对任务图片进行优化，建议对未走cdn的图片进行优化开启
     // 参考： https://docs.astro.build/zh-cn/guides/images/#%E6%8E%88%E6%9D%83%E8%BF%9C%E7%A8%8B%E5%9B%BE%E5%83%8F
-    domains: ['images.unsplash.com', 'api.microlink.io']
+    domains: ['images.unsplash.com', 'api.microlink.io', 'r2.laughingzhu.cn']
     // service: passthroughImageService()
   },
   markdown: {
     remarkPlugins: [remarkReadingTime],
-    rehypePlugins: [rehypePluginImageNativeLazyLoading],
-    drafts: true
-  },
-  optimizeDeps: {
-    exclude: ['@astrojs/react-client']
+    rehypePlugins: [rehypePluginImageNativeLazyLoading]
   },
   // 预获取策略： https://docs.astro.build/zh-cn/guides/prefetch/#%E9%BB%98%E8%AE%A4%E9%A2%84%E8%8E%B7%E5%8F%96%E7%AD%96%E7%95%A5
   prefetch: {
@@ -75,7 +71,6 @@ export default defineConfig({
         return item;
       }
     }),
-    tailwind(),
     react()
     // sentry({
     //   dsn: PUBLIC_SENTRY_DNS,
@@ -85,6 +80,9 @@ export default defineConfig({
     //   },
     // })
   ],
+  vite: {
+    plugins: [tailwindcss()]
+  },
   output: 'server',
   adapter: vercel({
     webAnalytics: {
