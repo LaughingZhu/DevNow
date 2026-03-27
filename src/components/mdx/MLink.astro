@@ -2,7 +2,7 @@
 import { LinkPreview } from '../LinkPreview';
 
 const props = Astro.props;
-const { href, rel = 'noopener noreferrer' } = props;
+const { href } = props;
 ---
 
 <LinkPreview client:only='react' url={href}>

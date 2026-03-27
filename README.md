@@ -53,13 +53,13 @@ DevNow is a minimal open source tech blog project template, support Vercel one-c
 git@github.com:LaughingZhu/DevNow.git
 ```
 
-2. Install dependencies:
+1. Install dependencies:
 
 ```bash
 pnpm install
 ```
 
-3. Run the development server:
+1. Run the development server:
 
 ```bash
 pnpm dev

@@ -1,15 +1,8 @@
-/*
- * @Date: 2024-09-11 13:48:41
- * @LastEditors: LaughingZhu 474268433@qq.com
- * @LastEditTime: 2024-10-07 16:48:27
- * @Description:
- */
 import config from '@/config';
 import { categories } from '@/data/category';
-import type { ALL_CATEGORY_TYPE } from '@/utils/content';
 import { debounce } from 'lodash-es';
 import lunr from 'lunr';
-import { Fragment, useCallback, useEffect, useState, type FC } from 'react';
+import { Fragment, useCallback, useEffect, useRef, useState, type FC } from 'react';
 import { Button } from './shadcn/button';
 import {
   CommandDialog,
@@ -21,10 +14,6 @@ import {
   CommandSeparator
 } from './shadcn/command';
 
-interface Props {
-  category: ALL_CATEGORY_TYPE[];
-}
-
 interface SEARCH_TYPE {
   slug: string;
   title: string;
@@ -33,10 +22,11 @@ interface SEARCH_TYPE {
   category: string;
 }
 
-const Search: FC<Props> = () => {
+const Search: FC = () => {
   const [open, setOpen] = useState(false);
   const [LunrIdx, setLunrIdx] = useState<null | lunr.Index>(null);
   const [LunrDocs, setLunrDocs] = useState<SEARCH_TYPE[]>([]);
+  const initializedRef = useRef(false);
   const [content, setContent] = useState<
     | {
         label: string;
@@ -61,26 +51,25 @@ const Search: FC<Props> = () => {
     return () => document.removeEventListener('keydown', down);
   }, []);
 
+  // 仅在挂载时执行一次，并行加载搜索索引和文档数据
   useEffect(() => {
-    const _initLunrIndex = async () => {
-      if (!LunrIdx) {
-        const response = await fetch('/search-index.json');
-        const serializedIndex = await response.json();
-        setLunrIdx(lunr.Index.load(serializedIndex));
-      }
-    };
-    _initLunrIndex();
-  }, [LunrIdx]);
+    if (initializedRef.current) return;
+    initializedRef.current = true;
 
-  useEffect(() => {
-    const _initLunrDocs = async () => {
-      if (!LunrDocs.length) {
-        const response = await fetch('/search-docs.json');
-        setLunrDocs(await response.json());
+    const _initSearch = async () => {
+      try {
+        const [indexData, docsData] = await Promise.all([
+          fetch('/search-index.json').then((r) => r.json()),
+          fetch('/search-docs.json').then((r) => r.json())
+        ]);
+        setLunrIdx(lunr.Index.load(indexData));
+        setLunrDocs(docsData);
+      } catch (err) {
+        console.error('[Search] Failed to initialize search index:', err);
       }
     };
-    _initLunrDocs();
-  }, [LunrDocs.length]);
+    _initSearch();
+  }, []);
 
   const onInputChange = useCallback(
     debounce(async (search: string) => {
@@ -92,14 +81,16 @@ const Search: FC<Props> = () => {
       >();
 
       if (searchResult.length > 0) {
-        for (var i = 0; i < searchResult.length; i++) {
+        for (let i = 0; i < searchResult.length; i++) {
           const slug = searchResult[i]['ref'];
 
-          const doc = LunrDocs.filter((doc) => doc.slug == slug)[0];
+          const doc = LunrDocs.find((doc) => doc.slug === slug);
+          if (!doc) continue;
+
           const category = categories.find((item) => item.slug === doc.category);
-          if (!category) {
-            return;
-          } else if (!map.has(category.slug)) {
+          if (!category) continue;
+
+          if (!map.has(category.slug)) {
             map.set(category.slug, {
               label: category.title || 'DevNow',
               id: category.slug || 'DevNow',
@@ -107,23 +98,21 @@ const Search: FC<Props> = () => {
             });
           }
           const target = map.get(category.slug);
-          if (!target) return;
+          if (!target) continue;
           target.children.push({
             label: doc.title,
             id: doc.slug
           });
-          map.set(category.slug, target);
         }
       }
       setContent([...map.values()].sort((a, b) => a.label.localeCompare(b.label)));
     }, 200),
 
-    [LunrIdx, LunrDocs.length]
+    [LunrIdx, LunrDocs]
   );
 
   useEffect(() => {
     if (!content && !!LunrDocs.length && LunrIdx) {
-      console.log(11111);
       onInputChange('');
     }
   }, [onInputChange, content]);
@@ -143,18 +132,14 @@ const Search: FC<Props> = () => {
 
       {config.search && (
         <CommandDialog open={open} onOpenChange={setOpen}>
-          <CommandInput
-            // value={search}
-            onValueChange={onInputChange}
-            placeholder='Type a command or search...'
-          />
+          <CommandInput onValueChange={onInputChange} placeholder='Type a command or search...' />
 
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             {content?.map((item, index) => {
               return (
                 <Fragment key={item.id}>
-                  <CommandGroup key={item.id} heading={item.label}>
+                  <CommandGroup heading={item.label}>
                     {item.children.map((child) => (
                       <CommandItem
                         onSelect={() => {
@@ -167,7 +152,7 @@ const Search: FC<Props> = () => {
                       </CommandItem>
                     ))}
                   </CommandGroup>
-                  {index === content.length - 1 && <CommandSeparator />}
+                  {index < content.length - 1 && <CommandSeparator />}
                 </Fragment>
               );
             })}

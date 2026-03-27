@@ -8,7 +8,7 @@ import config, { DEFAULT_GRID_COLUMNS } from '@config/index';
 import { latestPosts } from '@utils/content';
 import clsx from 'clsx';
 import Layout from '../layouts/Layout.astro';
-const { pageSize, default_column, show_copyright_info, foot_site_info } = config;
+const { pageSize, defaultColumn, showCopyrightInfo, footSiteInfo } = config;
 ---
 
 <Layout>
@@ -22,7 +22,7 @@ const { pageSize, default_column, show_copyright_info, foot_site_info } = config
             .map((post) => <Postlist post={post} preloadImage={true} />)
         }
       </div>
-      <div class={clsx(`grid gap-10 mt-10 lg:gap-10`, DEFAULT_GRID_COLUMNS[default_column])}>
+      <div class={clsx(`grid gap-10 mt-10 lg:gap-10`, DEFAULT_GRID_COLUMNS[defaultColumn])}>
         {
           latestPosts
             .filter((item) => !item.data?.pin)
@@ -38,9 +38,7 @@ const { pageSize, default_column, show_copyright_info, foot_site_info } = config
             <Button>
               <a
                 href='/page/2'
-                target='_blank'
                 class='flex font-bold justify-center items-center rounded-full hover:translate-x-1 transition-transform duration-150 ease-in-out gap-1 group'
-                rel='noopener noreferrer'
               >
                 查看更多
                 <span class='group-hover:rotate-45 transition-transform duration-250 ease-in-out'>
@@ -53,5 +51,5 @@ const { pageSize, default_column, show_copyright_info, foot_site_info } = config
       }
     </main>
   </Container>
-  {(show_copyright_info || !!foot_site_info) && <Footer />}
+  {(showCopyrightInfo || !!footSiteInfo) && <Footer />}
 </Layout>

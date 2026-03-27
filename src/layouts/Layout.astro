@@ -14,9 +14,12 @@ interface Props {
   title?: string;
   desc?: string;
   image?: string;
+  /** 文章正文中是否包含 Twitter 嵌入，为 true 时才加载 Twitter widgets.js */
+  hasTwitterEmbed?: boolean;
 }
-const { title: DEFAULT_TITLE, description, logo, ico } = config;
-const { title, desc = description, image = logo } = Astro.props;
+const { title: DEFAULT_TITLE, description, keywords, logo, ico } = config;
+const { title, desc = description, image = logo, hasTwitterEmbed = false } = Astro.props;
+const safeDesc = (desc ?? '').slice(0, 160);
 const resolvedOGImage = checkImageUrl(image, Astro.site);
 const makeTitle = title ? title + ' | ' + DEFAULT_TITLE : description;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
@@ -41,7 +44,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
   }
 </script>
 
-<html lang='en'>
+<html lang='zh-CN'>
   <head>
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width' />
@@ -51,7 +54,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name='generator' content={Astro.generator} />
     <SEO
       title={makeTitle}
-      description={desc.slice(0, 160)}
+      description={safeDesc}
       canonical={canonicalURL}
       openGraph={{
         basic: {
@@ -64,15 +67,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
           alt: makeTitle
         },
         optional: {
-          description: desc.slice(0, 160)
+          description: safeDesc
         }
       }}
-      ,
       extend={{
         meta: [
           {
             name: 'keywords',
-            content: desc.slice(0, 100) || 'LaughingZhu Blog, blog, DevNow, 前端博客, 技术, 开源'
+            content: keywords
           }
         ]
       }}
@@ -92,6 +94,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     </style>
     <!-- Google tag (gtag.js) -->
     <Analytics id={PUBLIC_GOOGLE_ANALYTICS_ID} />
-    <script src='https://platform.twitter.com/widgets.js'></script>
+    {hasTwitterEmbed && <script src='https://platform.twitter.com/widgets.js' />}
   </body>
 </html>

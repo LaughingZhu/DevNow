@@ -27,7 +27,7 @@ const formatHeadings = formatHeading(headings);
 const hasHeadering = formatHeadings && !!formatHeadings.length;
 ---
 
-<BlogPost data={post.data} headings={formatHeadings} readTime={remarkPluginFrontmatter.minutesRead}>
+<BlogPost data={post.data} readTime={remarkPluginFrontmatter.minutesRead}>
   <div class='flex mt-8 w-full'>
     <!-- aside -->
     {

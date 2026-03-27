@@ -8,13 +8,23 @@ const branch =
   process.env.HEAD ||
   'main';
 
+const clientId = process.env.PUBLIC_TINA_CLIENT_ID;
+const token = process.env.PUBLIC_TINA_TOKEN;
+
+if (!clientId) {
+  throw new Error('Missing required environment variable: PUBLIC_TINA_CLIENT_ID');
+}
+if (!token) {
+  throw new Error('Missing required environment variable: PUBLIC_TINA_TOKEN');
+}
+
 export default defineConfig({
   branch,
 
   // Get this from tina.io
-  clientId: process.env.PUBLIC_TINA_CLIENT_ID,
+  clientId,
   // Get this from tina.io
-  token: process.env.PUBLIC_TINA_TOKEN,
+  token,
 
   build: {
     outputFolder: 'admin',

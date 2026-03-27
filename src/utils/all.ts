@@ -11,14 +11,22 @@ export const getFormattedDate = (date: string | number | Date) =>
       })
     : '';
 
+interface VFileWithAstro {
+  data: {
+    astro: {
+      frontmatter: Record<string, unknown>;
+    };
+  };
+}
+
 /** Estimated Reading time */
 export function remarkReadingTime() {
-  return function (tree: unknown, { data }: any) {
+  return function (tree: unknown, file: VFileWithAstro) {
     const textOnPage = toString(tree);
     const readingTime = getReadingTime(textOnPage);
     // readingTime.text will give us minutes read as a friendly string,
     // i.e. "3 min read"
-    data.astro.frontmatter.minutesRead = readingTime.text;
+    file.data.astro.frontmatter.minutesRead = readingTime.text;
   };
 }
 

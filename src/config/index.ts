@@ -6,8 +6,27 @@
  * @FilePath: /DevNow/src/config/index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
+export interface SiteConfig {
+  title: string;
+  author: string;
+  description: string;
+  keywords: string;
+  logo: string;
+  homePage: string;
+  githubId: string;
+  repo: string;
+  ico: string;
+  cdn: string;
+  giscus: boolean;
+  search: boolean;
+  pageSize: number;
+  defaultColumn: number;
+  showCopyrightInfo: boolean;
+  footSiteInfo: string;
+}
+
 // 配置项
-export const DEFAULT_GRID_COLUMNS: { [key: number]: string } = {
+export const DEFAULT_GRID_COLUMNS: Record<number, string> = {
   1: 'md:grid-cols-1 xl:grid-cols-1',
   2: 'md:grid-cols-2 xl:grid-cols-2',
   3: 'md:grid-cols-3 xl:grid-cols-3',
@@ -18,7 +37,7 @@ export const DEFAULT_GRID_COLUMNS: { [key: number]: string } = {
   8: 'md:grid-cols-8 xl:grid-cols-8'
 };
 
-export default {
+const config: SiteConfig = {
   /** 网站配置信息 start */
   title: 'DevNow',
   author: 'LaughingZhu',
@@ -36,12 +55,14 @@ export default {
   giscus: true,
   // use search
   search: true,
-  // pagntion 配置
+  // 分页配置
   pageSize: 18,
   /** 首页默认列数 */
-  default_column: 3,
+  defaultColumn: 3,
   /** 是否显示版权声明，默认不显示 */
-  show_copyright_info: false,
+  showCopyrightInfo: false,
   /** 域名备案信息开关, 为 '' 空则不显示 */
-  foot_site_info: ''
+  footSiteInfo: ''
 };
+
+export default config;

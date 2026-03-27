@@ -9,7 +9,7 @@ import Layout from '@layouts/Layout.astro';
 import { latestPosts } from '@utils/content';
 import { type Page } from 'astro';
 import clsx from 'clsx';
-const { default_column } = config;
+const { defaultColumn } = config;
 
 const { page } = Astro.props as { page: Page };
 // 在 server 模式中选择加入预渲染
@@ -25,7 +25,7 @@ export async function getStaticPaths({ paginate }: any) {
   <Container>
     <TitlePage title={`第 ${page.currentPage} 页`} />
     <main>
-      <div class={clsx('grid gap-10 mt-10 lg:gap-10', DEFAULT_GRID_COLUMNS[default_column])}>
+      <div class={clsx('grid gap-10 mt-10 lg:gap-10', DEFAULT_GRID_COLUMNS[defaultColumn])}>
         {page.data.map((post) => <Postlist post={post} />)}
       </div>
     </main>

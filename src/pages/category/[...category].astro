@@ -8,14 +8,14 @@ import Container from '../../components/Container.astro';
 import Layout from '../../layouts/Layout.astro';
 
 const { category = '' } = Astro.params;
-const posts = await filterPostsByCategory(category);
-const { default_column } = config;
+const posts = filterPostsByCategory(category);
+const { defaultColumn } = config;
 ---
 
 <Layout title=`类别-${category}`>
   <Container>
     <TitlePage title={category} />
-    <div class={clsx('grid gap-10 mt-10 lg:gap-10', DEFAULT_GRID_COLUMNS[default_column])}>
+    <div class={clsx('grid gap-10 mt-10 lg:gap-10', DEFAULT_GRID_COLUMNS[defaultColumn])}>
       {posts.map((post) => <Postlist post={post} aspect='square' />)}
     </div>
   </Container>

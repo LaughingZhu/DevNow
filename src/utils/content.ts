@@ -32,15 +32,15 @@ export const latestPosts = [
 ].sort((a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf());
 
 /**
- * 根据分类筛选最新帖子
+ * 根据分类筛选最新帖子（category 参数应传入小写字符串）
  * @param category 分类字符串，用于筛选帖子
  * @returns 返回一个数组，包含所有与分类匹配的帖子
  */
-export const filterPostsByCategory = async (category = '') => {
+export const filterPostsByCategory = (category = '') => {
   return latestPosts.filter((post) => post.data.category.toLowerCase() === category);
 };
 
-export const filterPostsByTag = async (tag = '') => {
+export const filterPostsByTag = (tag = '') => {
   return latestPosts.filter((post) =>
     post.data.tags.map((item) => item.toLowerCase()).includes(tag)
   );
@@ -54,7 +54,7 @@ export interface ALL_CATEGORY_TYPE {
 /**
  * @desc { 获取所有的分类 }
  */
-export const getAllCategories = async (): Promise<ALL_CATEGORY_TYPE[]> => {
+export const getAllCategories = (): ALL_CATEGORY_TYPE[] => {
   const map = new Map<
     string,
     { label: string; id: string; children: { label: string; id: string }[] }
@@ -78,7 +78,6 @@ export const getAllCategories = async (): Promise<ALL_CATEGORY_TYPE[]> => {
       label: post.data.title,
       id: post.id
     });
-    map.set(category.slug, target);
   });
 
   return [...map.values()].sort((a, b) => a.label.localeCompare(b.label));
