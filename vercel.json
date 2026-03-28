@@ -2,6 +2,7 @@
   "buildCommand": "pnpm build",
   "devCommand": "pnpm dev",
   "installCommand": "pnpm install",
+  "nodeVersion": "22.x",
   "git": {
     "deploymentEnabled": {
       "main": true
