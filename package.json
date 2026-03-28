@@ -94,5 +94,10 @@
   },
   "engines": {
     "node": "22.x"
+  },
+  "pnpm": {
+    "neverBuiltDependencies": [
+      "better-sqlite3"
+    ]
   }
 }
