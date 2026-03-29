@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+neverBuiltDependencies:
+  - better-sqlite3
+
 dependencies:
   '@astrojs/check':
     specifier: ^0.9.8
@@ -7916,7 +7919,6 @@ packages:
 
   /better-sqlite3@8.7.0:
     resolution: {integrity: sha512-99jZU4le+f3G6aIl6PmmV0cxUIWqKieHxsiF7G34CVFiE+/UabpYqkU0NJIkY/96mQKikHeBjtR27vFfs5JpEw==}
-    requiresBuild: true
     dependencies:
       bindings: 1.5.0
       prebuild-install: 7.1.2
