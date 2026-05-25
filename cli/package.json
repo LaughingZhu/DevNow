@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "commander": "^12.1.0",
+    "prompts": "^2.4.2"
+  },
+  "name": "create-devnow-app",
+  "version": "0.0.9",
+  "description": "create devnow app",
+  "main": "./index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "LaughingZhu",
+  "license": "MIT",
+  "bin": {
+    "create-devnow-app": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LaughingZhu/DevNow.git",
+    "directory": "cli"
+  }
+}
